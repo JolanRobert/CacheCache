@@ -40,7 +40,7 @@ public class Main extends JavaPlugin {
 	}
 	
 	private void registerCommands() {
-		this.getCommand("cc").setExecutor(GameCommands.instance);
-		this.getCommand("cc").setTabCompleter(CommandsCompleter.instance);
+		this.getCommand("cc").setExecutor(GameCommands.getInstance());
+		this.getCommand("cc").setTabCompleter(CommandsCompleter.getInstance());
 	}
 }

@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemStack;
 
 import cachecache.game.GameInventories;
 
@@ -13,15 +14,18 @@ public class InventoryListener implements Listener {
 	@EventHandler
 	public void onInventoryClickEvent(InventoryClickEvent event) {
 		Player player = (Player)event.getWhoClicked();
-		Material clickedItem = event.getClickedInventory().getItem(event.getSlot()).getType();
+		ItemStack clickedItem = event.getClickedInventory().getItem(event.getSlot());
 		if (clickedItem == null) return;
-		if (clickedItem == Material.BARRIER) player.closeInventory();
+		if (clickedItem.getType() == Material.BARRIER) player.closeInventory();
+		if (event.getInventory() != player.getInventory()) event.setCancelled(true);
 		
-		if (event.getInventory() == GameInventories.instance.getConfigInventory()) {			
-			switch (clickedItem) {
+		if (event.getInventory() == GameInventories.getInstance().getConfigInventory()) {			
+			switch (clickedItem.getType()) {
 			case LIME_TERRACOTTA:
+				GameInventories.getInstance().ChangeRoleState(event.getSlot(), true);
 				break;
 			case RED_TERRACOTTA:
+				GameInventories.getInstance().ChangeRoleState(event.getSlot(), false);
 				break;
 			default: return;
 			}

@@ -9,10 +9,11 @@ import org.bukkit.command.TabCompleter;
 
 public class CommandsCompleter implements TabCompleter {
 	
-	public static CommandsCompleter instance;
+	private static CommandsCompleter instance;
 
-	public void OnEnable() {
-		instance = this;
+	public static CommandsCompleter getInstance() {
+		if (instance == null) instance = new CommandsCompleter();
+		return instance;
 	}
 	
 	private List<String> result = new ArrayList<String>();

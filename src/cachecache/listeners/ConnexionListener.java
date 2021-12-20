@@ -8,9 +8,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import cachecache.commands.CommandsExecutor;
+import cachecache.commands.GameCommands;
+
 @SuppressWarnings("deprecation")
 public class ConnexionListener implements Listener {
-
+	
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event) {
 						

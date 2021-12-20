@@ -3,6 +3,7 @@ package cachecache;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -28,7 +29,7 @@ public class ItemEditor {
 
 	public static void setDisplayName(ItemStack item, String displayName) {
 		ItemMeta itemMeta = item.getItemMeta();
-		itemMeta.setDisplayName(displayName);
+		itemMeta.setDisplayName(ChatColor.RESET+displayName);
 		item.setItemMeta(itemMeta);
 	}
 }

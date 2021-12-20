@@ -6,7 +6,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="D:/Minecraft Any/Serveur/Local/1.17.1/cache/mojang_1.17.1.jar"/>
-	<classpathentry kind="lib" path="D:/Minecraft Any/Serveur/Local/1.17.1/cache/patched_1.17.1.jar"/>
+	<classpathentry kind="lib" path="D:/Minecraft Any/Serveur/1.17.1/cache/mojang_1.17.1.jar"/>
+	<classpathentry kind="lib" path="D:/Minecraft Any/Serveur/1.17.1/cache/patched_1.17.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -11,10 +11,16 @@ import cachecache.game.GameState;
 
 public class GameCommands implements CommandExecutor {
 	
-	public static GameCommands instance;
+	private static GameCommands instance;
+	private CommandsExecutor ce;
+
+	public static GameCommands getInstance() {
+		if (instance == null) instance = new GameCommands();
+		return instance;
+	}
 	
-	public void OnEnable() {
-		instance = this;
+	public GameCommands() {
+		ce = new CommandsExecutor();
 	}
 
 	@Override
@@ -32,29 +38,30 @@ public class GameCommands implements CommandExecutor {
 		if (!player.isOp()) return this.cancelCommand(player, "Vous n'avez pas les droits nécessaires pour exécuter cette commande.");
 		
 		if (args[0].equalsIgnoreCase("start")) {
-			if (GameManager.instance.getState() != GameState.WAITING) return this.cancelCommand(player, "Une partie est déjà en cours.");
-			else CommandsExecutor.instance.startGame(player);
+			if (GameManager.getInstance().getState() != GameState.WAITING) return this.cancelCommand(player, "Une partie est déjà en cours.");
+			else ce.startGame(player);
 		}
 		
 		else if (args[0].equalsIgnoreCase("config")) {
-			if (GameManager.instance.getState() != GameState.WAITING) return this.cancelCommand(player, "Une partie est déjà en cours.");
-			else CommandsExecutor.instance.configGame(player);
+			if (GameManager.getInstance().getState() != GameState.WAITING) return this.cancelCommand(player, "Une partie est déjà en cours.");
+			else ce.configGame(player);
 		}
 
 		else if (args[0].equalsIgnoreCase("forceend")) {
-			if (GameManager.instance.getState() == GameState.WAITING) return this.cancelCommand(player, "Aucune partie n'est en cours.");
-			else CommandsExecutor.instance.endGame(player);
+			if (GameManager.getInstance().getState() == GameState.WAITING) return this.cancelCommand(player, "Aucune partie n'est en cours.");
+			else ce.endGame(player);
 		}
 		
 		else if (args[0].equalsIgnoreCase("confirmforceend")) {
-			CommandsExecutor.instance.confirmEndGame(player);
-		} 
+			if (GameManager.getInstance().getState() == GameState.WAITING) return this.cancelCommand(player, "Aucune partie n'est en cours.");
+			else ce.confirmEndGame(player);
+		}
 		
 		return true;
 	}
 	
 	public boolean cancelCommand(Player player, String message) {
-		player.sendMessage(ChatColor.DARK_RED+"[CC]"+ChatColor.RED+message);
+		player.sendMessage(ChatColor.DARK_RED+"[CC] "+ChatColor.RED+message);
 		return true;
 	}
 }

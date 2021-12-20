@@ -4,20 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
+import org.bukkit.inventory.Inventory;
 
 import cachecache.PlayerRole;
 
 public class GameManager {
 	
-	public static GameManager instance;
+	private static GameManager instance;
 	
 	private GameState gameState;
-	
 	private List<PlayerRole> playerRoles = new ArrayList<PlayerRole>();
 
-	public void OnEnable() {
-		instance = this;
-		
+	public static GameManager getInstance() {
+		if (instance == null) instance = new GameManager();
+		return instance;
+	}
+	
+	public GameManager() {
 		this.setState(GameState.WAITING);
 	}
 	
