@@ -1,13 +1,13 @@
-package fr.cachecache.game;
+package cachecache.game;
 
 import org.bukkit.Difficulty;
 import org.bukkit.GameRule;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import fr.cachecache.commands.CommandsCompleter;
-import fr.cachecache.commands.GameCommands;
-import fr.cachecache.listeners.ConnexionListener;
-import fr.cachecache.listeners.InventoryListener;
+import cachecache.commands.CommandsCompleter;
+import cachecache.commands.GameCommands;
+import cachecache.listeners.ConnexionListener;
+import cachecache.listeners.InventoryListener;
 
 
 

@@ -1,4 +1,4 @@
-package fr.cachecache;
+package cachecache;
 
 public enum Role {
 	CHASSEUR("Chasseur"),

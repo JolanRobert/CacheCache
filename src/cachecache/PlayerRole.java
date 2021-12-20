@@ -1,4 +1,4 @@
-package fr.cachecache;
+package cachecache;
 
 import org.bukkit.entity.Player;
 

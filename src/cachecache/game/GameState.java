@@ -1,4 +1,4 @@
-package fr.cachecache.game;
+package cachecache.game;
 
 public enum GameState {
 	WAITING,

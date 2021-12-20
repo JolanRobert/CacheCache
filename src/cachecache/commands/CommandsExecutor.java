@@ -1,9 +1,9 @@
-package fr.cachecache.commands;
+package cachecache.commands;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-import fr.cachecache.game.GameInventories;
+import cachecache.game.GameInventories;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 

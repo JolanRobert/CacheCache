@@ -1,4 +1,4 @@
-package fr.cachecache.commands;
+package cachecache.commands;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -6,8 +6,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.cachecache.game.GameManager;
-import fr.cachecache.game.GameState;
+import cachecache.game.GameManager;
+import cachecache.game.GameState;
 
 public class GameCommands implements CommandExecutor {
 	

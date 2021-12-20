@@ -1,4 +1,4 @@
-package fr.cachecache.listeners;
+package cachecache.listeners;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -6,7 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
-import fr.cachecache.game.GameInventories;
+import cachecache.game.GameInventories;
 
 public class InventoryListener implements Listener {
 	

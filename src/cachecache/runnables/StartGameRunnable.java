@@ -1,4 +1,4 @@
-package fr.cachecache.runnables;
+package cachecache.runnables;
 
 import org.bukkit.scheduler.BukkitRunnable;
 

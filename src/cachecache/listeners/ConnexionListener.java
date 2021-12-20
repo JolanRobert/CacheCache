@@ -1,4 +1,4 @@
-package fr.cachecache.listeners;
+package cachecache.listeners;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

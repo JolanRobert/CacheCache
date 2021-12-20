@@ -1,12 +1,12 @@
-package fr.cachecache.game;
+package cachecache.game;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import fr.cachecache.ItemEditor;
-import fr.cachecache.Role;
+import cachecache.ItemEditor;
+import cachecache.Role;
 import net.md_5.bungee.api.ChatColor;
 
 public class GameInventories {
