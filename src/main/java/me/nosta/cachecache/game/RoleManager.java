@@ -3,6 +3,7 @@ package me.nosta.cachecache.game;
 import me.nosta.cachecache.elements.PlayerRole;
 import me.nosta.cachecache.elements.Role;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,11 +56,12 @@ public class RoleManager {
         playerRoles.clear();
     }
 
-    public void assignRoles() {
-
+    public void assignRoles(Player player, Role role) {
+        PlayerRole pr = new PlayerRole(player,role);
+        playerRoles.add(pr);
     }
 
-    public void giveRoleInfo() {
+    public void showRoleInfo() {
         for (PlayerRole pr : playerRoles) {
             pr.getPlayer().sendMessage(pr.getRole().getDescription());
         }
@@ -71,6 +73,10 @@ public class RoleManager {
         });
     }
 
+    public int getNbRoles() {
+        return this.getNbNonCivil()+this.getNbCivil();
+    }
+
     public int getNbCivil() {
         return roles.get(Role.CIVIL);
     }
@@ -79,5 +85,13 @@ public class RoleManager {
         int sum = 0;
         for (int value : roles.values()) { sum += value; }
         return sum-this.getNbCivil();
+    }
+
+    public HashMap<Role,Integer> getRoles() {
+        return roles;
+    }
+
+    public List<PlayerRole> getPlayerRoles() {
+        return playerRoles;
     }
 }

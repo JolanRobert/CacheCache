@@ -1,6 +1,7 @@
 package me.nosta.cachecache.game;
 
 import me.nosta.cachecache.Main;
+import me.nosta.cachecache.runnables.StartGameRunnable;
 import org.bukkit.Bukkit;
 
 public class GameManager {
@@ -20,6 +21,7 @@ public class GameManager {
 
 	public void startGame() {
 		this.setState(GameState.STARTING);
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.instance,new StartGameRunnable(),0,10);
 	}
 
 	public void endGame() {
