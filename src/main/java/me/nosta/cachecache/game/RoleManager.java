@@ -6,7 +6,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,13 +27,12 @@ public class RoleManager {
 
     public void initRoles() {
         roles.put(Role.CHASSEUR,1);
-        for (Role role : Arrays.copyOfRange(Role.values(), 1, Role.values().length)) { roles.put(role, 0); }
-        roles.replace(Role.CIVIL,Bukkit.getOnlinePlayers().size()-1);
+        roles.put(Role.CIVIL,Bukkit.getOnlinePlayers().size()-1);
     }
 
     public void addRole(Role role) {
-        if (role == Role.FRERE) roles.replace(role,2);
-        else roles.replace(role,1);
+        if (role == Role.FRERE) roles.put(role,2);
+        else roles.put(role,1);
 
         //Remove one civil
         if (roles.get(Role.CIVIL) > 0) roles.replace(Role.CIVIL, roles.get(Role.CIVIL)-1);
@@ -43,7 +41,7 @@ public class RoleManager {
     }
 
     public void removeRole(Role role) {
-        roles.replace(role,0);
+        roles.remove(role);
 
         //Add one civil
         if (this.getNbNonCivil() < Bukkit.getOnlinePlayers().size()-1) roles.replace(Role.CIVIL, roles.get(Role.CIVIL)+1);

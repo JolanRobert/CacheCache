@@ -45,11 +45,7 @@ public class StartGameRunnable extends BukkitRunnable {
 	}
 
 	public void assignRoles(Player hunter) {
-		HashMap<Role,Integer> roles = new HashMap<Role,Integer>();
-		//Filter only role activated
-		for (Role role : RoleManager.getInstance().getRoles().keySet()) {
-			if (RoleManager.getInstance().getRoles().get(role) != 0) roles.put(role,RoleManager.getInstance().getRoles().get(role));
-		}
+		HashMap<Role,Integer> roles = RoleManager.getInstance().getRoles();
 
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			if (p == hunter) RoleManager.getInstance().assignRoles(p,Role.CHASSEUR);

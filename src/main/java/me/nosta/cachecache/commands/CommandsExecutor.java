@@ -19,9 +19,9 @@ public class CommandsExecutor {
 	
 	public void endGame(Player player) {
 		player.sendMessage("End Game");
-		TextComponent msg = new TextComponent(ChatColor.DARK_RED+"[CC]"+ChatColor.RED+" Cliquer pour confirmer l'arrêt de la partie");
+		TextComponent msg = new TextComponent(ChatColor.DARK_RED+"[CC]"+ChatColor.RED+" Cliquer pour confirmer l'arrÃªt de la partie.");
 		msg.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/cc confirmforceend"));
-		msg.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(ChatColor.GREEN+"Cliquer pour arrêter la partie en cours.")));
+		msg.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(ChatColor.GREEN+"Cliquer pour arrÃªter la partie en cours.")));
 		
 		player.spigot().sendMessage(msg);
 	}
