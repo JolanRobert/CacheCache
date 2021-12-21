@@ -21,17 +21,13 @@ public class GameManager {
 
 	public void startGame() {
 		this.setState(GameState.STARTING);
-		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.instance,new StartGameRunnable(),0,10);
-	}
-
-	public void endGame() {
-		this.setState(GameState.FINISHED);
+		new StartGameRunnable().runTaskTimer(Main.instance,0,5);
 	}
 	
-	public void resetGame() {
-		this.setState(GameState.WAITING);
-		RoleManager.getInstance().resetRoles();
+	public void endGame() {
 		Bukkit.getScheduler().cancelTasks(Main.instance);
+		this.setState(GameState.WAITING);
+		RoleManager.getInstance().resetAll();
 	}
 	
 	public GameState getState() {return this.gameState;}

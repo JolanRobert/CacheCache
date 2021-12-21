@@ -1,5 +1,7 @@
 package me.nosta.cachecache.listeners;
 
+import me.nosta.cachecache.game.GameInventories;
+import me.nosta.cachecache.game.RoleManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -13,17 +15,21 @@ public class ConnexionListener implements Listener {
 	
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event) {
-						
 		Player player = event.getPlayer();		
 		event.setJoinMessage(ChatColor.DARK_GRAY+"["+ChatColor.GREEN+"+"+ChatColor.DARK_GRAY+"] "+player.getName()+ChatColor.GRAY+" ("+
 		ChatColor.YELLOW+Bukkit.getOnlinePlayers().size()+ChatColor.GRAY+"/"+ChatColor.YELLOW+Bukkit.getMaxPlayers()+ChatColor.GRAY+")");
+
+		RoleManager.getInstance().addPlayerRole(player);
+		GameInventories.getInstance().UpdateNbCivil();
 	}	
 	
 	@EventHandler
 	public void onQuit(PlayerQuitEvent event) {
 		Player player = event.getPlayer();
-		
 		event.setQuitMessage(ChatColor.DARK_GRAY+"["+ChatColor.RED+"-"+ChatColor.DARK_GRAY+"] "+player.getName()+ChatColor.GRAY+" ("+
 		ChatColor.YELLOW+(Bukkit.getOnlinePlayers().size()-1)+ChatColor.GRAY+"/"+ChatColor.YELLOW+Bukkit.getMaxPlayers()+ChatColor.GRAY+")");
+
+		RoleManager.getInstance().removePlayerRole(player);
+		GameInventories.getInstance().UpdateNbCivil();
 	}
 }

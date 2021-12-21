@@ -2,8 +2,6 @@ package me.nosta.cachecache.commands;
 
 import me.nosta.cachecache.game.GameManager;
 import me.nosta.cachecache.game.GameState;
-import me.nosta.cachecache.game.RoleManager;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -40,7 +38,6 @@ public class GameCommands implements CommandExecutor {
 		
 		if (args[0].equalsIgnoreCase("start")) {
 			if (GameManager.getInstance().getState() != GameState.WAITING) return this.cancelCommand(player, "Une partie est déjà en cours.");
-			if (RoleManager.getInstance().getNbRoles() != Bukkit.getOnlinePlayers().size()) return this.cancelCommand(player, "Le nombre de rôles sélectionnés doit correspondre au nombre de joueurs total.");
 			else ce.startGame(player);
 		}
 		

@@ -18,9 +18,9 @@ public class Main extends JavaPlugin {
 	public void onEnable() {
 		instance = this;
 
-		new GameManager();
-		new RoleManager();
-		new GameInventories();
+		GameManager.getInstance();
+		RoleManager.getInstance();
+		GameInventories.getInstance();
 		
 		this.config();
 		this.registerListeners();

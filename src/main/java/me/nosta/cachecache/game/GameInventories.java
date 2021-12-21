@@ -32,9 +32,9 @@ public class GameInventories {
 		ItemEditor.setDisplayName(item, "Chasseur");
 		ItemEditor.setLore(item, ChatColor.GREEN+""+ChatColor.BOLD+"ON"+ChatColor.GOLD+" [LOCK]");
 		this.configInventory.setItem(0, item);
-		
-		ItemEditor.setDisplayName(item, "Civil ("+RoleManager.getInstance().getNbCivil()+")");
+
 		this.configInventory.setItem(1, item);
+		UpdateNbCivil();
 		
 		item.setType(Material.RED_TERRACOTTA);
 		
@@ -58,15 +58,23 @@ public class GameInventories {
 		if (isActive) {
 			is.setType(Material.RED_TERRACOTTA);
 			ItemEditor.setLore(is, ChatColor.RED+""+ChatColor.BOLD+"OFF");
-			RoleManager.getInstance().removeRole(Role.valueOf(is.getItemMeta().getDisplayName().split(" ")[0]));
+			RoleManager.getInstance().removeRole(Role.values()[slot-7]);
 		}
 		else {
 			is.setType(Material.LIME_TERRACOTTA);
 			ItemEditor.setLore(is, ChatColor.GREEN+""+ChatColor.BOLD+"ON");
-			RoleManager.getInstance().addRole(Role.valueOf(is.getItemMeta().getDisplayName().split(" ")[0]));
+			RoleManager.getInstance().addRole(Role.values()[slot-7]);
 		}
 
-		ItemEditor.setDisplayName(this.configInventory.getContents()[1], "Civil ("+RoleManager.getInstance().getNbCivil()+")");
+		UpdateNbCivil();
+	}
+
+	public void UpdateNbCivil() {
+		int nbCivils = RoleManager.getInstance().getPlayerRoles().size()-RoleManager.getInstance().getNbNonCivils();
+		if (nbCivils < 0) nbCivils = 0;
+		if (nbCivils == 0) this.configInventory.getContents()[1].setType(Material.RED_TERRACOTTA);
+		else this.configInventory.getContents()[1].setType(Material.LIME_TERRACOTTA);
+		ItemEditor.setDisplayName(this.configInventory.getContents()[1], "Civil ("+nbCivils+")");
 	}
 	
 	public Inventory getConfigInventory() {return this.configInventory;}

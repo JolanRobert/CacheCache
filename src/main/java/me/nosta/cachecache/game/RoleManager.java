@@ -6,7 +6,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class RoleManager {
@@ -18,45 +17,56 @@ public class RoleManager {
         return instance;
     }
 
-    private HashMap<Role,Integer> roles = new HashMap<>();
     private List<PlayerRole> playerRoles = new ArrayList<>();
+    private List<Role> roles = new ArrayList<>();
+    private int nbNonCivils;
 
     public RoleManager() {
-        this.initRoles();
+        this.init();
     }
 
-    public void initRoles() {
-        roles.put(Role.CHASSEUR,1);
-        roles.put(Role.CIVIL,Bukkit.getOnlinePlayers().size()-1);
+    public void init() {
+        nbNonCivils = 1; //Chasseur
+
+        for (Role r : roles) {
+            if (r == Role.FRERE) nbNonCivils += 2;
+            else nbNonCivils++;
+        }
+
+        for (Player p : Bukkit.getOnlinePlayers()) { addPlayerRole(p); }
     }
 
     public void addRole(Role role) {
-        if (role == Role.FRERE) roles.put(role,2);
-        else roles.put(role,1);
+        roles.add(role);
 
-        //Remove one civil
-        if (roles.get(Role.CIVIL) > 0) roles.replace(Role.CIVIL, roles.get(Role.CIVIL)-1);
-
-        PrintRoles();
+        if (role == Role.FRERE) nbNonCivils += 2;
+        else nbNonCivils++;
     }
 
     public void removeRole(Role role) {
         roles.remove(role);
 
-        //Add one civil
-        if (this.getNbNonCivil() < Bukkit.getOnlinePlayers().size()-1) roles.replace(Role.CIVIL, roles.get(Role.CIVIL)+1);
-
-        PrintRoles();
+        if (role == Role.FRERE) nbNonCivils -= 2;
+        else nbNonCivils--;
     }
 
-    public void resetRoles() {
-        roles.clear();
-        playerRoles.clear();
-    }
-
-    public void assignRoles(Player player, Role role) {
-        PlayerRole pr = new PlayerRole(player,role);
+    public void addPlayerRole(Player player) {
+        PlayerRole pr = new PlayerRole(player);
         playerRoles.add(pr);
+    }
+
+    public void removePlayerRole(Player player) {
+        for (PlayerRole pr : playerRoles) {
+            if (pr.getPlayer() == player) {
+                playerRoles.remove(pr);
+                break;
+            }
+        }
+    }
+
+    public void resetAll() {
+        playerRoles.clear();
+        init();
     }
 
     public void showRoleInfo() {
@@ -65,31 +75,16 @@ public class RoleManager {
         }
     }
 
-    public void PrintRoles() {
-        roles.forEach((key, value) -> {
-            System.out.println(key.getName()+" : "+value);
-        });
-    }
+    public int getNbNonCivils() { return nbNonCivils; }
 
-    public int getNbRoles() {
-        return this.getNbNonCivil()+this.getNbCivil();
-    }
-
-    public int getNbCivil() {
-        return roles.get(Role.CIVIL);
-    }
-
-    public int getNbNonCivil() {
+    public int getNbNullPlayerRoles() {
         int sum = 0;
-        for (int value : roles.values()) { sum += value; }
-        return sum-this.getNbCivil();
+        for (PlayerRole pr : playerRoles) {
+            if (pr.getRole() == null) sum += 1;
+        }
+        return sum;
     }
 
-    public HashMap<Role,Integer> getRoles() {
-        return roles;
-    }
-
-    public List<PlayerRole> getPlayerRoles() {
-        return playerRoles;
-    }
+    public List<Role> getRoles() {return roles;}
+    public List<PlayerRole> getPlayerRoles() {return playerRoles;}
 }
