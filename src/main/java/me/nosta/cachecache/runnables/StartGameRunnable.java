@@ -20,7 +20,7 @@ public class StartGameRunnable extends BukkitRunnable {
 
 	@Override
 	public void run() {
-		if (timer < 4) showTitle();
+		if (timer < 6) showTitle();
 		else if (timer == 6) selectHunter();
 		else if (timer == 8) showRoleInfo();
 		timer += 0.25f;
@@ -48,30 +48,28 @@ public class StartGameRunnable extends BukkitRunnable {
 
 	public void assignRoles() {
 		List<Role> roles = new ArrayList<Role>(RoleManager.getInstance().getRoles());
-		Role rdmRole;
+		PlayerRole pr;
+		Role rdmRole = null;
 
-		boolean frere = false;
+		boolean nextIsFrere = false;
 
-		for (PlayerRole pr : RoleManager.getInstance().getPlayerRoles()) {
+		for (int i = 0; i < RoleManager.getInstance().getPlayerRoles().size(); i++) {
+			pr = RoleManager.getInstance().getPlayerRoles().get(i);
 			if (pr.getRole() != null) continue;
+
 			if (roles.size() > 0) {
-				if (!frere) {
+				if (nextIsFrere) nextIsFrere = false;
+				else {
 					rdmRole = roles.get(rdm.nextInt(roles.size())); //Get Rdm Role
 					if (rdmRole == Role.FRERE) {
 						if (RoleManager.getInstance().getNbNullPlayerRoles() > 1) {
-							pr.setRole(Role.FRERE);
-							frere = true;
+							nextIsFrere = true;
 						}
-						else roles.remove(rdmRole);
 					}
-					else pr.setRole(rdmRole);
-				}
-				else {
-					rdmRole = Role.FRERE;
-					frere = false;
 				}
 
-				roles.remove(rdmRole);
+				pr.setRole(rdmRole);
+				if (!nextIsFrere) roles.remove(rdmRole);
 			}
 			else {
 				pr.setRole(Role.CIVIL);

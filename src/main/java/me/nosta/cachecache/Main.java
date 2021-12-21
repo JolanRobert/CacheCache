@@ -34,7 +34,7 @@ public class Main extends JavaPlugin {
 		this.getServer().getWorld("world").setGameRule(GameRule.NATURAL_REGENERATION, false);
 		this.getServer().getWorld("world").setGameRule(GameRule.DO_FIRE_TICK, false);
 		this.getServer().getWorld("world").setGameRule(GameRule.DO_MOB_SPAWNING, false);
-		this.getServer().getWorld("world").setTime(18000);
+		//this.getServer().getWorld("world").setTime(18000);
 	}
 	
 
