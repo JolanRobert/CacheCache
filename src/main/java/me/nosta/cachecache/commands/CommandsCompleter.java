@@ -1,11 +1,11 @@
-package cachecache.commands;
-
-import java.util.ArrayList;
-import java.util.List;
+package me.nosta.cachecache.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CommandsCompleter implements TabCompleter {
 	

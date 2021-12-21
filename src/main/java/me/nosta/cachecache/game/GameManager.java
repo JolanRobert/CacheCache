@@ -1,18 +1,19 @@
-package cachecache.game;
+package me.nosta.cachecache.game;
+
+import me.nosta.cachecache.Main;
+import me.nosta.cachecache.elements.PlayerRole;
+import me.nosta.cachecache.elements.Role;
+import org.bukkit.Bukkit;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.bukkit.Bukkit;
-import org.bukkit.inventory.Inventory;
-
-import cachecache.PlayerRole;
 
 public class GameManager {
 	
 	private static GameManager instance;
 	
 	private GameState gameState;
+	private List<Role> roles = new ArrayList<>();
 	private List<PlayerRole> playerRoles = new ArrayList<PlayerRole>();
 
 	public static GameManager getInstance() {

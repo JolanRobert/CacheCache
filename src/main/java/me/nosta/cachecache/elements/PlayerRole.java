@@ -1,4 +1,4 @@
-package cachecache;
+package me.nosta.cachecache.elements;
 
 import org.bukkit.entity.Player;
 

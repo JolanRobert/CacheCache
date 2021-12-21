@@ -1,15 +1,15 @@
-package cachecache;
+package me.nosta.cachecache.elements;
 
 public enum Role {
 	CHASSEUR("Chasseur", ""),
 	CIVIL("Civil", ""),
-	INFILTRE("Infiltré", ""),
-	VETERAN("Vétéran", ""),
+	INFILTRE("Infiltrï¿½", ""),
+	VETERAN("Vï¿½tï¿½ran", ""),
 	REBELLE("Rebelle", ""),
 	SNIPER("Sniper", ""),
-	FRERE("Frères (2)", ""),
+	FRERE("Frï¿½res (2)", ""),
 	VOYANTE("Voyante", ""),
-	MEDECIN("Médecin", ""),
+	MEDECIN("Mï¿½decin", ""),
 	NINJA("Ninja", ""),
 	CAPITAINE("Capitaine", ""),
 	ANGE("Ange", ""),

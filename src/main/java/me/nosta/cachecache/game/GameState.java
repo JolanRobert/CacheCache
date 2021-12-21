@@ -1,4 +1,4 @@
-package cachecache.game;
+package me.nosta.cachecache.game;
 
 public enum GameState {
 	WAITING,

@@ -1,15 +1,14 @@
-package cachecache.commands;
+package me.nosta.cachecache.commands;
 
-import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
-
-import cachecache.game.GameInventories;
-import cachecache.game.GameManager;
-import cachecache.game.GameState;
+import me.nosta.cachecache.game.GameInventories;
+import me.nosta.cachecache.game.GameManager;
+import me.nosta.cachecache.game.GameState;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.hover.content.Text;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 public class CommandsExecutor {
 
@@ -22,7 +21,7 @@ public class CommandsExecutor {
 		player.sendMessage("End Game");
 		TextComponent msg = new TextComponent(ChatColor.DARK_RED+"[CC]"+ChatColor.RED+" Cliquer pour confirmer l'arrêt de la partie");
 		msg.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/cc confirmforceend"));
-		//msg.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(ChatColor.GREEN+"Cliquer pour arrêter la partie en cours.")));
+		msg.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(ChatColor.GREEN+"Cliquer pour arrêter la partie en cours.")));
 		
 		player.spigot().sendMessage(msg);
 	}

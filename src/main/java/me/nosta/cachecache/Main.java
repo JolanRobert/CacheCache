@@ -1,15 +1,12 @@
-package cachecache.game;
+package me.nosta.cachecache;
 
+import me.nosta.cachecache.commands.CommandsCompleter;
+import me.nosta.cachecache.commands.GameCommands;
+import me.nosta.cachecache.listeners.ConnexionListener;
+import me.nosta.cachecache.listeners.InventoryListener;
 import org.bukkit.Difficulty;
 import org.bukkit.GameRule;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import cachecache.commands.CommandsCompleter;
-import cachecache.commands.GameCommands;
-import cachecache.listeners.ConnexionListener;
-import cachecache.listeners.InventoryListener;
-
-
 
 public class Main extends JavaPlugin {
 	

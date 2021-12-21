@@ -1,18 +1,17 @@
-package cachecache.game;
+package me.nosta.cachecache.game;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
-
+import me.nosta.cachecache.elements.Role;
+import me.nosta.cachecache.utilities.ItemEditor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import cachecache.ItemEditor;
-import cachecache.Role;
-import net.md_5.bungee.api.ChatColor;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class GameInventories {
 	

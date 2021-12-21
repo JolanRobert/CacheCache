@@ -1,4 +1,4 @@
-package cachecache.listeners;
+package me.nosta.cachecache.listeners;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -7,9 +7,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-
-import cachecache.commands.CommandsExecutor;
-import cachecache.commands.GameCommands;
 
 @SuppressWarnings("deprecation")
 public class ConnexionListener implements Listener {

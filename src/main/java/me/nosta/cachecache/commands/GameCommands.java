@@ -1,13 +1,12 @@
-package cachecache.commands;
+package me.nosta.cachecache.commands;
 
+import me.nosta.cachecache.game.GameManager;
+import me.nosta.cachecache.game.GameState;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import cachecache.game.GameManager;
-import cachecache.game.GameState;
 
 public class GameCommands implements CommandExecutor {
 	
@@ -35,15 +34,15 @@ public class GameCommands implements CommandExecutor {
 		if (!label.equalsIgnoreCase("cc") || args.length <= 0) {return true;}
 		
 		//!OP
-		if (!player.isOp()) return this.cancelCommand(player, "Vous n'avez pas les droits nécessaires pour exécuter cette commande.");
+		if (!player.isOp()) return this.cancelCommand(player, "Vous n'avez pas les droits nï¿½cessaires pour exï¿½cuter cette commande.");
 		
 		if (args[0].equalsIgnoreCase("start")) {
-			if (GameManager.getInstance().getState() != GameState.WAITING) return this.cancelCommand(player, "Une partie est déjà en cours.");
+			if (GameManager.getInstance().getState() != GameState.WAITING) return this.cancelCommand(player, "Une partie est dï¿½jï¿½ en cours.");
 			else ce.startGame(player);
 		}
 		
 		else if (args[0].equalsIgnoreCase("config")) {
-			if (GameManager.getInstance().getState() != GameState.WAITING) return this.cancelCommand(player, "Une partie est déjà en cours.");
+			if (GameManager.getInstance().getState() != GameState.WAITING) return this.cancelCommand(player, "Une partie est dï¿½jï¿½ en cours.");
 			else ce.configGame(player);
 		}
 
