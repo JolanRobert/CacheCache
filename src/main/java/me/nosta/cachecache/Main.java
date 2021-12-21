@@ -2,6 +2,9 @@ package me.nosta.cachecache;
 
 import me.nosta.cachecache.commands.CommandsCompleter;
 import me.nosta.cachecache.commands.GameCommands;
+import me.nosta.cachecache.game.GameInventories;
+import me.nosta.cachecache.game.GameManager;
+import me.nosta.cachecache.game.RoleManager;
 import me.nosta.cachecache.listeners.ConnexionListener;
 import me.nosta.cachecache.listeners.InventoryListener;
 import org.bukkit.Difficulty;
@@ -14,6 +17,10 @@ public class Main extends JavaPlugin {
 
 	public void onEnable() {
 		instance = this;
+
+		new GameManager();
+		new RoleManager();
+		new GameInventories();
 		
 		this.config();
 		this.registerListeners();

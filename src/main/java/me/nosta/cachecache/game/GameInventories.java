@@ -9,16 +9,12 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class GameInventories {
 	
 	private static GameInventories instance;
 	
 	private Inventory configInventory;
-	private Map<Role,Boolean> roles;
 
 	public static GameInventories getInstance() {
 		if (instance == null) instance = new GameInventories();
@@ -26,7 +22,6 @@ public class GameInventories {
 	}
 	
 	public GameInventories() {
-		roles = new HashMap<Role,Boolean>();
 		this.createConfigInventory();
 	}
 	
@@ -38,8 +33,7 @@ public class GameInventories {
 		ItemEditor.setLore(item, ChatColor.GREEN+""+ChatColor.BOLD+"ON"+ChatColor.GOLD+" [LOCK]");
 		this.configInventory.setItem(0, item);
 		
-		ItemEditor.setDisplayName(item, "Civil ("+Bukkit.getOnlinePlayers().size()+")");
-		ItemEditor.setLore(item, ChatColor.GREEN+""+ChatColor.BOLD+"ON"+ChatColor.GOLD+" [LOCK]");
+		ItemEditor.setDisplayName(item, "Civil ("+RoleManager.getInstance().getNbCivil()+")");
 		this.configInventory.setItem(1, item);
 		
 		item.setType(Material.RED_TERRACOTTA);
@@ -49,7 +43,6 @@ public class GameInventories {
 			ItemEditor.setDisplayName(item, role.getName());
 			ItemEditor.setLore(item, ChatColor.RED+""+ChatColor.BOLD+"OFF");			
 			this.configInventory.setItem(index, item);
-			roles.put(role, false);
 			index++;			
 		}		
 		
@@ -65,24 +58,15 @@ public class GameInventories {
 		if (isActive) {
 			is.setType(Material.RED_TERRACOTTA);
 			ItemEditor.setLore(is, ChatColor.RED+""+ChatColor.BOLD+"OFF");
-			roles.replace(Role.values()[slot-7], false);
+			RoleManager.getInstance().removeRole(Role.valueOf(is.getItemMeta().getDisplayName().split(" ")[0]));
 		}
 		else {
 			is.setType(Material.LIME_TERRACOTTA);
-			ItemEditor.setLore(is, ChatColor.GREEN+""+ChatColor.BOLD+"ON");	
-			roles.replace(Role.values()[slot-7], true);
+			ItemEditor.setLore(is, ChatColor.GREEN+""+ChatColor.BOLD+"ON");
+			RoleManager.getInstance().addRole(Role.valueOf(is.getItemMeta().getDisplayName().split(" ")[0]));
 		}
-		
-		int nbCivils = Math.max(0, Math.min(Bukkit.getOnlinePlayers().size(), Bukkit.getOnlinePlayers().size() - (roles.keySet().stream().filter(role -> roles.get(role) == true).collect(Collectors.toSet()).size())));
-		ItemEditor.setDisplayName(this.configInventory.getContents()[1], "Civil ("+nbCivils+")");
-		
-		//PrintRoles();
-	}
-	
-	public void PrintRoles() {
-		for (Role role : roles.keySet()) {
-			System.out.println(role.getName()+" : "+roles.get(role));
-		}
+
+		ItemEditor.setDisplayName(this.configInventory.getContents()[1], "Civil ("+RoleManager.getInstance().getNbCivil()+")");
 	}
 	
 	public Inventory getConfigInventory() {return this.configInventory;}
