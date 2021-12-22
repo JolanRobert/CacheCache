@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -67,6 +68,8 @@ public class StartGameRunnable extends BukkitRunnable {
 			roles.remove(rdmRole);
 		}
 
+		roles.removeAll(Collections.singleton(RoleEnum.JUMEAU)); //spy can't be twin
+
 		//Twin Handling
 		List<PlayerRole> twins = playerRoles.stream().filter(p -> p.getRole() == RoleEnum.JUMEAU).collect(Collectors.toList());
 		if (twins.size() == 1) {
@@ -77,14 +80,18 @@ public class StartGameRunnable extends BukkitRunnable {
 			twins.get(1).setTwin(twins.get(0));
 		}
 
-		//Spy Handling
+		//Spy Handling + //Ange Handling
 		RoleEnum cover;
+		List<PlayerRole> potentialAdmirers = playerRoles.stream().filter(p -> p.getRole() != RoleEnum.CHASSEUR && p.getRole() != RoleEnum.ANGE).collect(Collectors.toList());
 		for (PlayerRole pr : playerRoles) {
 			if (pr.getRole() == RoleEnum.ESPION) {
 				if (roles.size() == 0) cover = RoleEnum.CIVIL;
 				else cover = roles.get(rdm.nextInt(roles.size()));
 				pr.setCover(cover);
-				break;
+			}
+			else if (pr.getRole() == RoleEnum.ANGE) {
+				if (potentialAdmirers.size() == 0) pr.setAdmirer(null);
+				else pr.setAdmirer(potentialAdmirers.get(rdm.nextInt(potentialAdmirers.size())));
 			}
 		}
 	}

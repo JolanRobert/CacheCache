@@ -8,12 +8,10 @@ public enum RoleEnum {
 	REBELLE("Rebelle", ""),
 	SNIPER("Sniper", ""),
 	JUMEAU("Jumeau", ""),
-	VOYANTE("Voyante", ""),
 	PRETRE("Prêtre", ""),
 	NINJA("Ninja", ""),
 	CAPITAINE("Capitaine", ""),
 	ANGE("Ange", ""),
-	MAGE("Mage", ""),
 	ASTRONAUTE("Astronaute", "");
 	
 	private String name;
