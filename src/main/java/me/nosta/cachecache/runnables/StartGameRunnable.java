@@ -51,16 +51,19 @@ public class StartGameRunnable extends BukkitRunnable {
 		List<RoleEnum> roles = new ArrayList<RoleEnum>(RoleManager.getInstance().getRoles());
 		RoleEnum rdmRole = null;
 
-		for (PlayerRole pr : playerRoles) {
-			if (pr.getRole() != null) continue;
+		PlayerRole pRole;
+		for (int i = 0; i < playerRoles.size(); i++) {
+			pRole = playerRoles.get(i);
+			if (pRole.getRole() != null) continue;
+
+			if (playerRoles.size()-i == 1) roles.remove(RoleEnum.JUMEAU);
 
 			if (roles.size() == 0) {
-				pr.setRole(RoleEnum.CIVIL);
+				pRole.setRole(RoleEnum.CIVIL);
 				continue;
 			}
-
 			rdmRole = roles.get(rdm.nextInt(roles.size()));
-			pr.setRole(rdmRole);
+			pRole.setRole(rdmRole);
 			roles.remove(rdmRole);
 		}
 
