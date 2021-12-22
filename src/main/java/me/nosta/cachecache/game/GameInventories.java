@@ -1,6 +1,6 @@
 package me.nosta.cachecache.game;
 
-import me.nosta.cachecache.elements.Role;
+import me.nosta.cachecache.elements.RoleEnum;
 import me.nosta.cachecache.utilities.ItemEditor;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
@@ -39,7 +39,7 @@ public class GameInventories {
 		item.setType(Material.RED_TERRACOTTA);
 		
 		int index = 9;
-		for (Role role : Arrays.copyOfRange(Role.values(), 2, Role.values().length)) {
+		for (RoleEnum role : Arrays.copyOfRange(RoleEnum.values(), 2, RoleEnum.values().length)) {
 			ItemEditor.setDisplayName(item, role.getName());
 			ItemEditor.setLore(item, ChatColor.RED+""+ChatColor.BOLD+"OFF");			
 			this.configInventory.setItem(index, item);
@@ -58,12 +58,12 @@ public class GameInventories {
 		if (isActive) {
 			is.setType(Material.RED_TERRACOTTA);
 			ItemEditor.setLore(is, ChatColor.RED+""+ChatColor.BOLD+"OFF");
-			RoleManager.getInstance().removeRole(Role.values()[slot-7]);
+			RoleManager.getInstance().removeRole(RoleEnum.values()[slot-7]);
 		}
 		else {
 			is.setType(Material.LIME_TERRACOTTA);
 			ItemEditor.setLore(is, ChatColor.GREEN+""+ChatColor.BOLD+"ON");
-			RoleManager.getInstance().addRole(Role.values()[slot-7]);
+			RoleManager.getInstance().addRole(RoleEnum.values()[slot-7]);
 		}
 
 		UpdateNbCivil();

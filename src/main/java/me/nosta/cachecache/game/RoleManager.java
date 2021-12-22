@@ -1,7 +1,7 @@
 package me.nosta.cachecache.game;
 
 import me.nosta.cachecache.elements.PlayerRole;
-import me.nosta.cachecache.elements.Role;
+import me.nosta.cachecache.elements.RoleEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -18,7 +18,7 @@ public class RoleManager {
     }
 
     private List<PlayerRole> playerRoles = new ArrayList<>();
-    private List<Role> roles = new ArrayList<>();
+    private List<RoleEnum> roles = new ArrayList<>();
     private int nbNonCivils;
 
     public RoleManager() {
@@ -28,25 +28,25 @@ public class RoleManager {
     public void init() {
         nbNonCivils = 1; //Chasseur
 
-        for (Role r : roles) {
-            if (r == Role.FRERE) nbNonCivils += 2;
+        for (RoleEnum r : roles) {
+            if (r == RoleEnum.JUMEAU) nbNonCivils += 2;
             else nbNonCivils++;
         }
 
         for (Player p : Bukkit.getOnlinePlayers()) { addPlayerRole(p); }
     }
 
-    public void addRole(Role role) {
+    public void addRole(RoleEnum role) {
         roles.add(role);
 
-        if (role == Role.FRERE) nbNonCivils += 2;
+        if (role == RoleEnum.JUMEAU) nbNonCivils += 2;
         else nbNonCivils++;
     }
 
-    public void removeRole(Role role) {
+    public void removeRole(RoleEnum role) {
         roles.remove(role);
 
-        if (role == Role.FRERE) nbNonCivils -= 2;
+        if (role == RoleEnum.JUMEAU) nbNonCivils -= 2;
         else nbNonCivils--;
     }
 
@@ -69,22 +69,8 @@ public class RoleManager {
         init();
     }
 
-    public void showRoleInfo() {
-        for (PlayerRole pr : playerRoles) {
-            pr.getPlayer().sendMessage(pr.getRole().getDescription());
-        }
-    }
-
     public int getNbNonCivils() { return nbNonCivils; }
 
-    public int getNbNullPlayerRoles() {
-        int sum = 0;
-        for (PlayerRole pr : playerRoles) {
-            if (pr.getRole() == null) sum += 1;
-        }
-        return sum;
-    }
-
-    public List<Role> getRoles() {return roles;}
+    public List<RoleEnum> getRoles() {return roles;}
     public List<PlayerRole> getPlayerRoles() {return playerRoles;}
 }

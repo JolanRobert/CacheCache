@@ -35,7 +35,7 @@ public class GameCommands implements CommandExecutor {
 		
 		//!OP
 		if (!player.isOp()) return this.cancelCommand(player, "Vous n'avez pas les droits nécessaires pour exécuter cette commande.");
-		
+
 		if (args[0].equalsIgnoreCase("start")) {
 			if (GameManager.getInstance().getState() != GameState.WAITING) return this.cancelCommand(player, "Une partie est déjà en cours.");
 			else ce.startGame(player);

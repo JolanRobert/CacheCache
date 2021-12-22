@@ -1,6 +1,6 @@
 package me.nosta.cachecache.elements;
 
-public enum Role {
+public enum RoleEnum {
 	CHASSEUR("Chasseur", "Vous êtes Chasseur"),
 	CIVIL("Civil", "Vous êtes Civil"),
 	INFILTRE("Infiltré", "Vous êtes Infiltré"),
@@ -19,7 +19,7 @@ public enum Role {
 	private String name;
 	private String description;
 	
-	private Role(String name, String description) {
+	private RoleEnum(String name, String description) {
 		this.name = name;
 		this.description = description;
 	}

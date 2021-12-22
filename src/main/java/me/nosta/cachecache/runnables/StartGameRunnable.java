@@ -1,7 +1,7 @@
 package me.nosta.cachecache.runnables;
 
 import me.nosta.cachecache.elements.PlayerRole;
-import me.nosta.cachecache.elements.Role;
+import me.nosta.cachecache.elements.RoleEnum;
 import me.nosta.cachecache.game.RoleManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -41,48 +41,59 @@ public class StartGameRunnable extends BukkitRunnable {
 		for (PlayerRole pr : RoleManager.getInstance().getPlayerRoles()) {
 			pr.getPlayer().sendTitle(ChatColor.RED+rdmPlayer.getName(),ChatColor.DARK_RED+"sera le chasseur !",0,40,20);
 			pr.getPlayer().playSound(pr.getPlayer().getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL,10000,1);
-			if (rdmPlayer == pr.getPlayer()) pr.setRole(Role.CHASSEUR);
+			if (rdmPlayer == pr.getPlayer()) pr.setRole(RoleEnum.CHASSEUR);
 		}
 		assignRoles();
 	}
 
 	public void assignRoles() {
-		List<Role> roles = new ArrayList<Role>(RoleManager.getInstance().getRoles());
-		PlayerRole pr;
-		Role rdmRole = null;
+		List<PlayerRole> playerRoles = RoleManager.getInstance().getPlayerRoles();
+		List<RoleEnum> roles = new ArrayList<RoleEnum>(RoleManager.getInstance().getRoles());
+		RoleEnum rdmRole = null;
 
-		boolean nextIsFrere = false;
-
-		for (int i = 0; i < RoleManager.getInstance().getPlayerRoles().size(); i++) {
-			pr = RoleManager.getInstance().getPlayerRoles().get(i);
+		for (PlayerRole pr : playerRoles) {
 			if (pr.getRole() != null) continue;
 
-			if (roles.size() > 0) {
-				if (nextIsFrere) nextIsFrere = false;
-				else {
-					rdmRole = roles.get(rdm.nextInt(roles.size())); //Get Rdm Role
-					if (rdmRole == Role.FRERE) {
-						if (RoleManager.getInstance().getNbNullPlayerRoles() > 1) {
-							nextIsFrere = true;
-						}
-					}
-				}
-
-				pr.setRole(rdmRole);
-				if (!nextIsFrere) roles.remove(rdmRole);
+			if (roles.size() == 0) {
+				pr.setRole(RoleEnum.CIVIL);
+				continue;
 			}
-			else {
-				pr.setRole(Role.CIVIL);
+
+			rdmRole = roles.get(rdm.nextInt(roles.size()));
+			pr.setRole(rdmRole);
+			roles.remove(rdmRole);
+		}
+
+		//Jumeaux Handling
+		PlayerRole twin;
+		for (PlayerRole pr : playerRoles) {
+			if (pr.getRole() == RoleEnum.JUMEAU) {
+				twin = playerRoles.get(rdm.nextInt(playerRoles.size()));
+				while (twin.getRole() == RoleEnum.CHASSEUR) twin = playerRoles.get(rdm.nextInt(playerRoles.size())); //make sure to not convert the hunter
+				twin.setRole(RoleEnum.JUMEAU);
+				twin.setTwin(pr);
+				pr.setTwin(twin);
+				break;
+			}
+		}
+
+		//Espion Handling
+		RoleEnum cover;
+		for (PlayerRole pr : playerRoles) {
+			if (pr.getRole() == RoleEnum.ESPION) {
+				if (roles.size() == 0) cover = RoleEnum.CIVIL;
+				else cover = roles.get(rdm.nextInt(roles.size()));
+				pr.setCover(cover);
+				break;
 			}
 		}
 	}
 
 	public void showRoleInfo() {
-		RoleManager.getInstance().showRoleInfo();
 		for (PlayerRole pr : RoleManager.getInstance().getPlayerRoles()) {
+			pr.showRoleInfo();
 			pr.getPlayer().playSound(pr.getPlayer().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP,10000,1);
 		}
-
 		this.cancel();
 	}
 }

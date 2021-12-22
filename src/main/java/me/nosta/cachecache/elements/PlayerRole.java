@@ -1,18 +1,37 @@
 package me.nosta.cachecache.elements;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class PlayerRole {
 
 	private Player player;
-	private Role role;
+	private RoleEnum role;
+
+	private PlayerRole twin; //Jumeaux
+	private RoleEnum cover; //Espion
 
 	public PlayerRole(Player player) {
 		this.player = player;
 	}
+
+	public void showRoleInfo() {
+		String roleInfo = "";
+		roleInfo += ChatColor.GOLD+"[CC] "+ChatColor.BLUE+"Vous êtes ";
+		if (role == RoleEnum.JUMEAU) roleInfo += ""+ChatColor.BOLD+ChatColor.GREEN+"Jumeau avec "+twin.getPlayer().getName()+" !";
+		else if (role == RoleEnum.CHASSEUR || role == RoleEnum.ESPION) roleInfo += ""+ChatColor.BOLD+ChatColor.RED+role.getName()+" !";
+		else roleInfo += ""+ChatColor.BOLD+ChatColor.GREEN+role.getName()+" !";
+
+		if (role == RoleEnum.CHASSEUR || role == RoleEnum.ESPION) roleInfo += ChatColor.BLUE+"Votre objectif est d'empêcher les survivants de s'enfuir de la ville.";
+		else roleInfo += ChatColor.BLUE+"Votre objectif est de vous enfuir de la ville.";
+
+		this.player.sendMessage(roleInfo);
+	}
 	
 	public Player getPlayer() {return this.player;}
-	public Role getRole() {return this.role;}
-	public void setRole(Role role) {this.role = role;}
+	public RoleEnum getRole() {return this.role;}
+	public void setRole(RoleEnum role) {this.role = role;}
 
+	public void setCover(RoleEnum cover) {this.cover = cover;}
+	public void setTwin(PlayerRole twin) {this.twin = twin;}
 }
