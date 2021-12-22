@@ -26,9 +26,10 @@ public class CommandsCompleter implements TabCompleter {
 		if (label.equalsIgnoreCase("cc")) {
 			
 			if (args.length == 1) {
-				s = "start"; if (s.startsWith(args[0].toLowerCase())) result.add(s);
-				s = "forceend"; if (s.startsWith(args[0].toLowerCase())) result.add(s);
 				s = "config"; if (s.startsWith(args[0].toLowerCase())) result.add(s);
+				s = "help"; if (s.startsWith(args[0].toLowerCase())) result.add(s);
+				s = "start"; if (s.startsWith(args[0].toLowerCase())) result.add(s);
+				s = "stop"; if (s.startsWith(args[0].toLowerCase())) result.add(s);
 			}
 		}
 		

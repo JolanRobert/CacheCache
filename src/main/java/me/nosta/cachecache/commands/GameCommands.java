@@ -36,24 +36,28 @@ public class GameCommands implements CommandExecutor {
 		//!OP
 		if (!player.isOp()) return this.cancelCommand(player, "Vous n'avez pas les droits nécessaires pour exécuter cette commande.");
 
-		if (args[0].equalsIgnoreCase("start")) {
-			if (GameManager.getInstance().getState() != GameState.WAITING) return this.cancelCommand(player, "Une partie est déjà en cours.");
-			else ce.startGame(player);
-		}
-		
-		else if (args[0].equalsIgnoreCase("config")) {
+		if (args[0].equalsIgnoreCase("config")) {
 			if (GameManager.getInstance().getState() != GameState.WAITING) return this.cancelCommand(player, "Une partie est déjà en cours.");
 			else ce.configGame(player);
 		}
 
-		else if (args[0].equalsIgnoreCase("forceend")) {
+		else if (args[0].equalsIgnoreCase("help")) {
+			ce.helpInfo(player);
+		}
+
+		else if (args[0].equalsIgnoreCase("start")) {
+			if (GameManager.getInstance().getState() != GameState.WAITING) return this.cancelCommand(player, "Une partie est déjà en cours.");
+			else ce.startGame(player);
+		}
+
+		else if (args[0].equalsIgnoreCase("stop") && args.length == 1) {
+			if (GameManager.getInstance().getState() == GameState.WAITING) return this.cancelCommand(player, "Aucune partie n'est en cours.");
+			else ce.stopGame(player);
+		}
+
+		else if (args[0].equalsIgnoreCase("stop") && args[1].equalsIgnoreCase("confirm")) {
 			if (GameManager.getInstance().getState() == GameState.WAITING) return this.cancelCommand(player, "Aucune partie n'est en cours.");
 			else ce.endGame(player);
-		}
-		
-		else if (args[0].equalsIgnoreCase("confirmforceend")) {
-			if (GameManager.getInstance().getState() == GameState.WAITING) return this.cancelCommand(player, "Aucune partie n'est en cours.");
-			else ce.confirmEndGame(player);
 		}
 		
 		return true;

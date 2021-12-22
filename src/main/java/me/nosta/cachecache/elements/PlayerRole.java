@@ -18,12 +18,12 @@ public class PlayerRole {
 	public void showRoleInfo() {
 		String roleInfo = "";
 		roleInfo += ChatColor.GOLD+"[CC] "+ChatColor.BLUE+"Vous êtes ";
-		if (role == RoleEnum.JUMEAU) roleInfo += ""+ChatColor.BOLD+ChatColor.GREEN+"Jumeau avec "+twin.getPlayer().getName()+" !";
-		else if (role == RoleEnum.CHASSEUR || role == RoleEnum.ESPION) roleInfo += ""+ChatColor.BOLD+ChatColor.RED+role.getName()+" !";
+		if (role == RoleEnum.JUMEAU) roleInfo += ""+ChatColor.GREEN+ChatColor.BOLD+"Jumeau avec "+twin.getPlayer().getName()+" !";
+		else if (role == RoleEnum.CHASSEUR || role == RoleEnum.ESPION) roleInfo += ""+ChatColor.RED+ChatColor.BOLD+role.getName()+" !";
 		else roleInfo += ""+ChatColor.BOLD+ChatColor.GREEN+role.getName()+" !";
 
-		if (role == RoleEnum.CHASSEUR || role == RoleEnum.ESPION) roleInfo += ChatColor.BLUE+"Votre objectif est d'empêcher les survivants de s'enfuir de la ville.";
-		else roleInfo += ChatColor.BLUE+"Votre objectif est de vous enfuir de la ville.";
+		if (role == RoleEnum.CHASSEUR || role == RoleEnum.ESPION) roleInfo += ChatColor.BLUE+" Votre objectif est d'empêcher les survivants de s'enfuir de la ville.";
+		else roleInfo += ChatColor.BLUE+" Votre objectif est de vous enfuir de la ville.";
 
 		this.player.sendMessage(roleInfo);
 	}
