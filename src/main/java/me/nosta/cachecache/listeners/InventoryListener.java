@@ -14,7 +14,6 @@ public class InventoryListener implements Listener {
 		Player player = (Player)event.getWhoClicked();
 		if (event.getClickedInventory().getItem(event.getSlot()) == null) return;
 		Material clickedItem = event.getClickedInventory().getItem(event.getSlot()).getType();
-		if (clickedItem == Material.BARRIER) player.closeInventory();
 		
 		if (event.getInventory() == GameInventories.getInstance().getConfigInventory()) {			
 			switch (clickedItem) {
@@ -24,6 +23,10 @@ public class InventoryListener implements Listener {
 			case RED_TERRACOTTA:
 				GameInventories.getInstance().ChangeRoleState(event.getSlot(), false);
 				break;
+			case BARRIER:
+				player.closeInventory();
+				break;
+
 			default: return;
 			}
 			event.setCancelled(true);

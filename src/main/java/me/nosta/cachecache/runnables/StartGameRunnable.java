@@ -11,6 +11,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class StartGameRunnable extends BukkitRunnable {
 
@@ -47,14 +48,15 @@ public class StartGameRunnable extends BukkitRunnable {
 	}
 
 	public void assignRoles() {
-		List<PlayerRole> playerRoles = RoleManager.getInstance().getPlayerRoles();
+		//Remove Hunter
+		List<PlayerRole> playerRoles = RoleManager.getInstance().getPlayerRoles().stream().filter(pr -> pr.getRole() == null).collect(Collectors.toList());
 		List<RoleEnum> roles = new ArrayList<RoleEnum>(RoleManager.getInstance().getRoles());
+
 		RoleEnum rdmRole = null;
 
 		PlayerRole pRole;
 		for (int i = 0; i < playerRoles.size(); i++) {
 			pRole = playerRoles.get(i);
-			if (pRole.getRole() != null) continue;
 
 			if (playerRoles.size()-i == 1) roles.remove(RoleEnum.JUMEAU);
 
@@ -71,8 +73,8 @@ public class StartGameRunnable extends BukkitRunnable {
 		PlayerRole twin;
 		for (PlayerRole pr : playerRoles) {
 			if (pr.getRole() == RoleEnum.JUMEAU) {
-				twin = playerRoles.get(rdm.nextInt(playerRoles.size()));
-				while (twin.getRole() == RoleEnum.CHASSEUR) twin = playerRoles.get(rdm.nextInt(playerRoles.size())); //make sure to not convert the hunter
+				List<PlayerRole> tmp = playerRoles.stream().filter(p -> p.getRole() == RoleEnum.CIVIL).collect(Collectors.toList());
+				twin = tmp.get(rdm.nextInt(tmp.size()));
 				twin.setRole(RoleEnum.JUMEAU);
 				twin.setTwin(pr);
 				pr.setTwin(twin);
