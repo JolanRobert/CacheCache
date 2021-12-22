@@ -55,10 +55,8 @@ public class StartGameRunnable extends BukkitRunnable {
 		RoleEnum rdmRole = null;
 
 		PlayerRole pRole;
-		for (int i = 0; i < playerRoles.size(); i++) {
-			pRole = playerRoles.get(i);
-
-			if (playerRoles.size()-i == 1) roles.remove(RoleEnum.JUMEAU);
+		for (PlayerRole playerRole : playerRoles) {
+			pRole = playerRole;
 
 			if (roles.size() == 0) {
 				pRole.setRole(RoleEnum.CIVIL);
@@ -69,20 +67,17 @@ public class StartGameRunnable extends BukkitRunnable {
 			roles.remove(rdmRole);
 		}
 
-		//Jumeaux Handling
-		PlayerRole twin;
-		for (PlayerRole pr : playerRoles) {
-			if (pr.getRole() == RoleEnum.JUMEAU) {
-				List<PlayerRole> tmp = playerRoles.stream().filter(p -> p.getRole() == RoleEnum.CIVIL).collect(Collectors.toList());
-				twin = tmp.get(rdm.nextInt(tmp.size()));
-				twin.setRole(RoleEnum.JUMEAU);
-				twin.setTwin(pr);
-				pr.setTwin(twin);
-				break;
-			}
+		//Twin Handling
+		List<PlayerRole> twins = playerRoles.stream().filter(p -> p.getRole() == RoleEnum.JUMEAU).collect(Collectors.toList());
+		if (twins.size() == 1) {
+			twins.get(0).setRole(RoleEnum.CIVIL);
+		}
+		else if (twins.size() == 2) {
+			twins.get(0).setTwin(twins.get(1));
+			twins.get(1).setTwin(twins.get(0));
 		}
 
-		//Espion Handling
+		//Spy Handling
 		RoleEnum cover;
 		for (PlayerRole pr : playerRoles) {
 			if (pr.getRole() == RoleEnum.ESPION) {

@@ -39,14 +39,20 @@ public class RoleManager {
     public void addRole(RoleEnum role) {
         roles.add(role);
 
-        if (role == RoleEnum.JUMEAU) nbNonCivils += 2;
+        if (role == RoleEnum.JUMEAU) {
+            nbNonCivils += 2;
+            roles.add(role);
+        }
         else nbNonCivils++;
     }
 
     public void removeRole(RoleEnum role) {
         roles.remove(role);
 
-        if (role == RoleEnum.JUMEAU) nbNonCivils -= 2;
+        if (role == RoleEnum.JUMEAU) {
+            nbNonCivils -= 2;
+            roles.remove(role);
+        }
         else nbNonCivils--;
     }
 
