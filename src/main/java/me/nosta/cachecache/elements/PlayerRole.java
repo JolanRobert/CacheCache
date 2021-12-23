@@ -1,5 +1,6 @@
 package me.nosta.cachecache.elements;
 
+import me.nosta.cachecache.game.ScoreboardManager;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -35,9 +36,10 @@ public class PlayerRole {
 	
 	public Player getPlayer() {return this.player;}
 	public RoleEnum getRole() {return this.role;}
-	public void setRole(RoleEnum role) {this.role = role;}
 	public TeamEnum getTeam() {return team;}
-	public void setTeam(TeamEnum team) {this.team = team;}
+
+	public void setRole(RoleEnum role) {this.role = role;}
+	public void setTeam(TeamEnum team) {ScoreboardManager.getInstance().joinTeam(team,player);}
 
 	public void setCover(RoleEnum cover) {this.cover = cover;}
 	public void setTwin(PlayerRole twin) {this.twin = twin;}

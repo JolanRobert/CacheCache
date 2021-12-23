@@ -51,12 +51,17 @@ public class ScoreboardManager {
     }
 
     public void joinTeam(TeamEnum team, Player player) {
-        if (team == TeamEnum.HUNTER) hunter.addPlayer(player);
-        else if (team == TeamEnum.SURVIVOR) survivor.addPlayer(player);
+        if (team == TeamEnum.HUNTER) {
+            survivor.removePlayer(player);
+            hunter.addPlayer(player);
+        }
+        else if (team == TeamEnum.SURVIVOR) {
+            hunter.removePlayer(player);
+            survivor.addPlayer(player);
+        }
     }
 
     public void resetAll() {
-        hunter.getEntities().forEach(player -> hunter.removeEntity(player));
-        survivor.getEntities().forEach(player -> survivor.removeEntity(player));
+        init();
     }
 }

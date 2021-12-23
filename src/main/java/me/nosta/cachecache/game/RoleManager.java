@@ -69,8 +69,14 @@ public class RoleManager {
         init();
     }
 
-    public int getNbNonCivils() { return nbNonCivils; }
+    public PlayerRole getPlayerRole(Player player) {
+        for (PlayerRole pr : playerRoles) {
+            if (pr.getPlayer() == player) return pr;
+        }
+        return null;
+    }
 
+    public int getNbNonCivils() {return nbNonCivils;}
     public List<RoleEnum> getRoles() {return roles;}
     public List<PlayerRole> getPlayerRoles() {return playerRoles;}
 }

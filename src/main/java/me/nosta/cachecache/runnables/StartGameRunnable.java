@@ -4,7 +4,6 @@ import me.nosta.cachecache.elements.PlayerRole;
 import me.nosta.cachecache.elements.RoleEnum;
 import me.nosta.cachecache.elements.TeamEnum;
 import me.nosta.cachecache.game.RoleManager;
-import me.nosta.cachecache.game.ScoreboardManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -45,10 +44,7 @@ public class StartGameRunnable extends BukkitRunnable {
 		for (PlayerRole pr : RoleManager.getInstance().getPlayerRoles()) {
 			pr.getPlayer().sendTitle(ChatColor.RED+rdmPlayer.getName(),ChatColor.DARK_RED+"sera le chasseur !",0,40,20);
 			pr.getPlayer().playSound(pr.getPlayer().getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL,10000,1);
-			if (rdmPlayer == pr.getPlayer()) {
-				pr.setRole(RoleEnum.CHASSEUR);
-				pr.setTeam(TeamEnum.HUNTER);
-			}
+			if (rdmPlayer == pr.getPlayer()) pr.setRole(RoleEnum.CHASSEUR);
 		}
 		assignRoles();
 	}
@@ -61,8 +57,6 @@ public class StartGameRunnable extends BukkitRunnable {
 		RoleEnum rdmRole;
 
 		for (PlayerRole pr : playerRoles) {
-			pr.setTeam(TeamEnum.SURVIVOR);
-
 			if (roles.size() == 0) {
 				pr.setRole(RoleEnum.CIVIL);
 				continue;
@@ -110,7 +104,10 @@ public class StartGameRunnable extends BukkitRunnable {
 	public void finalOperations() {
 		for (PlayerRole pr : RoleManager.getInstance().getPlayerRoles()) {
 			pr.showRoleInfo();
-			ScoreboardManager.getInstance().joinTeam(pr.getTeam(), pr.getPlayer());
+
+			if (pr.getRole() == RoleEnum.CHASSEUR) pr.setTeam(TeamEnum.HUNTER);
+			else pr.setTeam(TeamEnum.SURVIVOR);
+
 			pr.getPlayer().playSound(pr.getPlayer().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP,10000,1);
 		}
 		this.cancel();

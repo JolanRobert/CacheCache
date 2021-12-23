@@ -7,6 +7,7 @@ import me.nosta.cachecache.game.InventoryManager;
 import me.nosta.cachecache.game.RoleManager;
 import me.nosta.cachecache.game.ScoreboardManager;
 import me.nosta.cachecache.listeners.ConnexionListener;
+import me.nosta.cachecache.listeners.DamageListener;
 import me.nosta.cachecache.listeners.InventoryListener;
 import org.bukkit.Difficulty;
 import org.bukkit.GameRule;
@@ -49,6 +50,7 @@ public class Main extends JavaPlugin {
 
 	public void registerListeners() {
 		this.getServer().getPluginManager().registerEvents(new ConnexionListener(), this);
+		this.getServer().getPluginManager().registerEvents(new DamageListener(), this);
 		this.getServer().getPluginManager().registerEvents(new InventoryListener(), this);
 	}
 	
