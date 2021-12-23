@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class StartGameRunnable extends BukkitRunnable {
 
-	private Random rdm = new Random();
+	private final Random rdm = new Random();
 
 	private float timer = 0;
 
@@ -51,20 +51,18 @@ public class StartGameRunnable extends BukkitRunnable {
 	public void assignRoles() {
 		//Remove Hunter
 		List<PlayerRole> playerRoles = RoleManager.getInstance().getPlayerRoles().stream().filter(pr -> pr.getRole() == null).collect(Collectors.toList());
-		List<RoleEnum> roles = new ArrayList<RoleEnum>(RoleManager.getInstance().getRoles());
+		List<RoleEnum> roles = new ArrayList<>(RoleManager.getInstance().getRoles());
 
-		RoleEnum rdmRole = null;
+		RoleEnum rdmRole;
 
-		PlayerRole pRole;
-		for (PlayerRole playerRole : playerRoles) {
-			pRole = playerRole;
-
+		for (PlayerRole pr : playerRoles) {
 			if (roles.size() == 0) {
-				pRole.setRole(RoleEnum.CIVIL);
+				pr.setRole(RoleEnum.CIVIL);
 				continue;
 			}
+
 			rdmRole = roles.get(rdm.nextInt(roles.size()));
-			pRole.setRole(rdmRole);
+			pr.setRole(rdmRole);
 			roles.remove(rdmRole);
 		}
 
@@ -73,14 +71,18 @@ public class StartGameRunnable extends BukkitRunnable {
 		//Twin Handling
 		List<PlayerRole> twins = playerRoles.stream().filter(p -> p.getRole() == RoleEnum.JUMEAU).collect(Collectors.toList());
 		if (twins.size() == 1) {
-			twins.get(0).setRole(RoleEnum.CIVIL);
-		}
-		else if (twins.size() == 2) {
-			twins.get(0).setTwin(twins.get(1));
-			twins.get(1).setTwin(twins.get(0));
+			List<PlayerRole> survivors = playerRoles.stream().filter(p -> p.getRole() != RoleEnum.CHASSEUR && p.getRole() != RoleEnum.JUMEAU).collect(Collectors.toList());
+			if (survivors.size() == 0) twins.get(0).setRole(RoleEnum.CIVIL);
+			else {
+				PlayerRole newTwin = survivors.get(rdm.nextInt(survivors.size()));
+				roles.add(newTwin.getRole());
+				newTwin.setRole(RoleEnum.JUMEAU);
+				twins.get(0).setTwin(newTwin);
+				newTwin.setTwin(twins.get(0));
+			}
 		}
 
-		//Spy Handling + //Ange Handling
+		//Spy Handling + Ange Handling
 		RoleEnum cover;
 		List<PlayerRole> potentialAdmirers = playerRoles.stream().filter(p -> p.getRole() != RoleEnum.CHASSEUR && p.getRole() != RoleEnum.ANGE).collect(Collectors.toList());
 		for (PlayerRole pr : playerRoles) {
