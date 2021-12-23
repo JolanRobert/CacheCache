@@ -2,7 +2,9 @@ package me.nosta.cachecache.runnables;
 
 import me.nosta.cachecache.elements.PlayerRole;
 import me.nosta.cachecache.elements.RoleEnum;
+import me.nosta.cachecache.elements.TeamEnum;
 import me.nosta.cachecache.game.RoleManager;
+import me.nosta.cachecache.game.ScoreboardManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -24,12 +26,12 @@ public class StartGameRunnable extends BukkitRunnable {
 	public void run() {
 		if (timer < 6) showTitle();
 		else if (timer == 6) selectHunter();
-		else if (timer == 8) showRoleInfo();
+		else if (timer == 8) finalOperations();
 		timer += 0.25f;
 	}
 
 	public void showTitle() {
-		if (timer < 4 || timer < 6 && timer%0.5f == 0) {
+		if (timer <= 2 || timer <= 4 && timer%0.5f == 0 || timer < 6 && timer%1 == 0) {
 			Player rdmPlayer = RoleManager.getInstance().getPlayerRoles().get(rdm.nextInt(RoleManager.getInstance().getPlayerRoles().size())).getPlayer();
 			for (PlayerRole pr : RoleManager.getInstance().getPlayerRoles()) {
 				pr.getPlayer().sendTitle(ChatColor.RED+rdmPlayer.getName(),null,0,40,0);
@@ -43,7 +45,10 @@ public class StartGameRunnable extends BukkitRunnable {
 		for (PlayerRole pr : RoleManager.getInstance().getPlayerRoles()) {
 			pr.getPlayer().sendTitle(ChatColor.RED+rdmPlayer.getName(),ChatColor.DARK_RED+"sera le chasseur !",0,40,20);
 			pr.getPlayer().playSound(pr.getPlayer().getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL,10000,1);
-			if (rdmPlayer == pr.getPlayer()) pr.setRole(RoleEnum.CHASSEUR);
+			if (rdmPlayer == pr.getPlayer()) {
+				pr.setRole(RoleEnum.CHASSEUR);
+				pr.setTeam(TeamEnum.HUNTER);
+			}
 		}
 		assignRoles();
 	}
@@ -56,6 +61,8 @@ public class StartGameRunnable extends BukkitRunnable {
 		RoleEnum rdmRole;
 
 		for (PlayerRole pr : playerRoles) {
+			pr.setTeam(TeamEnum.SURVIVOR);
+
 			if (roles.size() == 0) {
 				pr.setRole(RoleEnum.CIVIL);
 				continue;
@@ -98,9 +105,12 @@ public class StartGameRunnable extends BukkitRunnable {
 		}
 	}
 
-	public void showRoleInfo() {
+	//Show role info
+	//Add to team
+	public void finalOperations() {
 		for (PlayerRole pr : RoleManager.getInstance().getPlayerRoles()) {
 			pr.showRoleInfo();
+			ScoreboardManager.getInstance().joinTeam(pr.getTeam(), pr.getPlayer());
 			pr.getPlayer().playSound(pr.getPlayer().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP,10000,1);
 		}
 		this.cancel();

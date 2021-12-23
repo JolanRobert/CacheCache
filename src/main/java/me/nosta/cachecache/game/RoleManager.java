@@ -33,7 +33,7 @@ public class RoleManager {
             else nbNonCivils++;
         }
 
-        for (Player p : Bukkit.getOnlinePlayers()) { addPlayerRole(p); }
+        Bukkit.getOnlinePlayers().forEach(this::addPlayerRole);
     }
 
     public void addRole(RoleEnum role) {

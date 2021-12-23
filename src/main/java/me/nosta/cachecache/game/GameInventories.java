@@ -10,18 +10,18 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 
-public class GameInventories {
+public class InventoryManager {
 	
-	private static GameInventories instance;
+	private static InventoryManager instance;
 	
 	private Inventory configInventory;
 
-	public static GameInventories getInstance() {
-		if (instance == null) instance = new GameInventories();
+	public static InventoryManager getInstance() {
+		if (instance == null) instance = new InventoryManager();
 		return instance;
 	}
 	
-	public GameInventories() {
+	public InventoryManager() {
 		this.createConfigInventory();
 	}
 	

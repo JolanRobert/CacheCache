@@ -28,6 +28,7 @@ public class GameManager {
 		Bukkit.getScheduler().cancelTasks(Main.instance);
 		this.setState(GameState.WAITING);
 		RoleManager.getInstance().resetAll();
+		ScoreboardManager.getInstance().resetAll();
 	}
 	
 	public GameState getState() {return this.gameState;}

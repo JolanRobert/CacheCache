@@ -2,13 +2,15 @@ package me.nosta.cachecache;
 
 import me.nosta.cachecache.commands.CommandsCompleter;
 import me.nosta.cachecache.commands.GameCommands;
-import me.nosta.cachecache.game.GameInventories;
 import me.nosta.cachecache.game.GameManager;
+import me.nosta.cachecache.game.InventoryManager;
 import me.nosta.cachecache.game.RoleManager;
+import me.nosta.cachecache.game.ScoreboardManager;
 import me.nosta.cachecache.listeners.ConnexionListener;
 import me.nosta.cachecache.listeners.InventoryListener;
 import org.bukkit.Difficulty;
 import org.bukkit.GameRule;
+import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
@@ -20,7 +22,8 @@ public class Main extends JavaPlugin {
 
 		GameManager.getInstance();
 		RoleManager.getInstance();
-		GameInventories.getInstance();
+		InventoryManager.getInstance();
+		ScoreboardManager.getInstance();
 		
 		this.config();
 		this.registerListeners();
@@ -29,12 +32,18 @@ public class Main extends JavaPlugin {
 	
 	
 	public void config() {
-		this.getServer().getWorld("world").setDifficulty(Difficulty.PEACEFUL);
-		this.getServer().getWorld("world").setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
-		this.getServer().getWorld("world").setGameRule(GameRule.NATURAL_REGENERATION, false);
-		this.getServer().getWorld("world").setGameRule(GameRule.DO_FIRE_TICK, false);
-		this.getServer().getWorld("world").setGameRule(GameRule.DO_MOB_SPAWNING, false);
-		//this.getServer().getWorld("world").setTime(18000);
+		World world = this.getServer().getWorld("world");
+		world.setDifficulty(Difficulty.PEACEFUL);
+		world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
+		world.setGameRule(GameRule.NATURAL_REGENERATION, false);
+		world.setGameRule(GameRule.DO_FIRE_TICK, false);
+		world.setGameRule(GameRule.DO_MOB_SPAWNING, false);
+
+		world.setGameRule(GameRule.DROWNING_DAMAGE, false);
+		world.setGameRule(GameRule.FALL_DAMAGE, false);
+		world.setGameRule(GameRule.FIRE_DAMAGE, false);
+		world.setGameRule(GameRule.FREEZE_DAMAGE, false);
+		//world.setTime(18000);
 	}
 	
 

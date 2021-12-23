@@ -1,6 +1,6 @@
 package me.nosta.cachecache.commands;
 
-import me.nosta.cachecache.game.GameInventories;
+import me.nosta.cachecache.game.InventoryManager;
 import me.nosta.cachecache.game.GameManager;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 public class CommandsExecutor {
 
 	public void configGame(Player player) {
-		player.openInventory(GameInventories.getInstance().getConfigInventory());
+		player.openInventory(InventoryManager.getInstance().getConfigInventory());
 	}
 
 	public void helpInfo(Player player) {

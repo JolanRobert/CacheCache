@@ -1,6 +1,6 @@
 package me.nosta.cachecache.listeners;
 
-import me.nosta.cachecache.game.GameInventories;
+import me.nosta.cachecache.game.InventoryManager;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,13 +15,13 @@ public class InventoryListener implements Listener {
 		if (event.getClickedInventory().getItem(event.getSlot()) == null) return;
 		Material clickedItem = event.getClickedInventory().getItem(event.getSlot()).getType();
 		
-		if (event.getInventory() == GameInventories.getInstance().getConfigInventory()) {			
+		if (event.getInventory() == InventoryManager.getInstance().getConfigInventory()) {
 			switch (clickedItem) {
 			case LIME_TERRACOTTA:
-				GameInventories.getInstance().ChangeRoleState(event.getSlot(), true);
+				InventoryManager.getInstance().ChangeRoleState(event.getSlot(), true);
 				break;
 			case RED_TERRACOTTA:
-				GameInventories.getInstance().ChangeRoleState(event.getSlot(), false);
+				InventoryManager.getInstance().ChangeRoleState(event.getSlot(), false);
 				break;
 			case BARRIER:
 				player.closeInventory();
