@@ -77,6 +77,13 @@ public class RoleManager {
         return null;
     }
 
+    public PlayerRole getEspion() {
+        for (PlayerRole pr : playerRoles) {
+            if (pr.getRole() == RoleEnum.ESPION) return pr;
+        }
+        return null;
+    }
+
     public int getNbNonCivils() {return nbNonCivils;}
     public List<RoleEnum> getRoles() {return roles;}
     public List<PlayerRole> getPlayerRoles() {return playerRoles;}

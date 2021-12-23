@@ -1,5 +1,6 @@
 package me.nosta.cachecache.elements;
 
+import me.nosta.cachecache.game.RoleManager;
 import me.nosta.cachecache.game.ScoreboardManager;
 import me.nosta.cachecache.utilities.ItemEditor;
 import org.bukkit.ChatColor;
@@ -38,6 +39,11 @@ public class PlayerRole {
 		if (role == RoleEnum.ANGE) roleInfo += ChatColor.GOLD+"\n[Ange] "+ChatColor.BLUE+"Votre adorateur est "+ChatColor.GREEN+admirer.getPlayer().getName()+".";
 		else if (role == RoleEnum.JUMEAU) roleInfo += ChatColor.GOLD+"\n[Jumeau] "+ChatColor.BLUE+"Votre Jumeau est "+ChatColor.GREEN+twin.getPlayer().getName()+".";
 		else if (role == RoleEnum.ESPION) roleInfo += ChatColor.GOLD+"\n[Espion] "+ChatColor.BLUE+"Votre rôle de couverture est "+ChatColor.RED+cover.getName()+".";
+		else if (role == RoleEnum.CHASSEUR) {
+			PlayerRole espion = RoleManager.getInstance().getEspion();
+			if (espion != null) roleInfo += ChatColor.GOLD+"\n[Chasseur] "+ChatColor.BLUE+"Votre Espion est "+ChatColor.RED+espion.getPlayer().getName()+".";
+			else roleInfo += ChatColor.GOLD+"\n[Chasseur] "+ChatColor.BLUE+"Il n'y a pas d'Espion dans la partie.";
+		}
 
 		this.player.sendMessage(roleInfo);
 	}
