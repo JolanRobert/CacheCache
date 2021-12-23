@@ -70,16 +70,16 @@ public class RoleManager {
         init();
     }
 
-    public PlayerRole getPlayerRole(Player player) {
+    public PlayerRole getPlayerRoleWithPlayer(Player player) {
         for (PlayerRole pr : playerRoles) {
             if (pr.getPlayer() == player) return pr;
         }
         return null;
     }
 
-    public PlayerRole getEspion() {
+    public PlayerRole getPlayerRoleWithRole(RoleEnum role) {
         for (PlayerRole pr : playerRoles) {
-            if (pr.getRole() == RoleEnum.ESPION) return pr;
+            if (pr.getRole() == role) return pr;
         }
         return null;
     }

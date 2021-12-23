@@ -18,21 +18,21 @@ public class ChatListener implements Listener {
     public void onChat(AsyncPlayerChatEvent event) {
         if (GameManager.getInstance().getState() == GameState.WAITING || GameManager.getInstance().getState() == GameState.STARTING) return;
 
-        PlayerRole sender = RoleManager.getInstance().getPlayerRole(event.getPlayer());
+        PlayerRole sender = RoleManager.getInstance().getPlayerRoleWithPlayer(event.getPlayer());
         String msg = event.getMessage();
 
         //Global chat
         if (msg.startsWith("!")) {
-            if (sender.getTeam() == TeamEnum.HUNTER) Bukkit.broadcastMessage(ChatColor.RED+sender.getPlayer().getName()+ChatColor.WHITE+": "+msg.substring(1));
-            else if (sender.getTeam() == TeamEnum.SURVIVOR) Bukkit.broadcastMessage(ChatColor.GREEN+sender.getPlayer().getName()+ChatColor.WHITE+": "+msg.substring(1));
+            if (sender.getTeam() == TeamEnum.HUNTER) Bukkit.broadcastMessage(ChatColor.RED+sender.getPlayer().getName()+": "+ChatColor.WHITE+msg.substring(1));
+            else if (sender.getTeam() == TeamEnum.SURVIVOR) Bukkit.broadcastMessage(ChatColor.GREEN+sender.getPlayer().getName()+": "+ChatColor.WHITE+msg.substring(1));
         }
 
         else {
             if (sender.getTeam() == TeamEnum.SURVIVOR) {
-                if (sender.getRole() == RoleEnum.ESPION && msg.startsWith("%")) hunterMsg(ChatColor.DARK_RED+"[Espion] "+ChatColor.RED+msg.substring(1));
-                else survivorMsg(ChatColor.DARK_GREEN+"[Survivants] "+ChatColor.GREEN+sender.getPlayer().getName()+": "+msg);
+                if (sender.getRole() == RoleEnum.ESPION && msg.startsWith("$")) hunterMsg(ChatColor.DARK_RED+"(Espion) "+ChatColor.RED+sender.getPlayer().getName()+": "+msg.substring(1));
+                else survivorMsg(ChatColor.DARK_GREEN+"(Survivant) "+ChatColor.GREEN+sender.getPlayer().getName()+": "+msg);
             }
-            else if (sender.getTeam() == TeamEnum.HUNTER) sender.getPlayer().sendMessage(ChatColor.DARK_RED+"[CC] "+ChatColor.RED+"Les chasseurs n'ont pas de chat privé.");
+            else if (sender.getTeam() == TeamEnum.HUNTER) sender.getPlayer().sendMessage(ChatColor.RED+"Les chasseurs n'ont pas de chat privé.");
         }
 
         event.setCancelled(true);
@@ -40,7 +40,7 @@ public class ChatListener implements Listener {
 
     public void hunterMsg(String msg) {
         for (PlayerRole pr : RoleManager.getInstance().getPlayerRoles()) {
-            if (pr.getTeam() == TeamEnum.HUNTER) pr.getPlayer().sendMessage(msg);
+            if (pr.getTeam() == TeamEnum.HUNTER || pr.getRole() == RoleEnum.ESPION) pr.getPlayer().sendMessage(msg);
         }
     }
 

@@ -1,7 +1,6 @@
 package me.nosta.cachecache.game;
 
 import dev.jcsoftware.jscoreboards.JPerPlayerMethodBasedScoreboard;
-import dev.jcsoftware.jscoreboards.JScoreboardTeam;
 import me.nosta.cachecache.elements.TeamEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -23,7 +22,7 @@ public class ScoreboardManager {
     private Scoreboard bukkitSB;
 
     private JPerPlayerMethodBasedScoreboard scoreboard;
-    private JScoreboardTeam hunter, survivor;
+    private Team hunter, survivor;
 
 
 
@@ -34,30 +33,48 @@ public class ScoreboardManager {
     public void init() {
         bukkitSB = Objects.requireNonNull(Bukkit.getScoreboardManager()).getMainScoreboard();
 
+        //Quests
         scoreboard = new JPerPlayerMethodBasedScoreboard();
         Bukkit.getOnlinePlayers().forEach(player -> scoreboard.addPlayer(player));
 
-        hunter = scoreboard.createTeam("Hunter","",ChatColor.RED);
-        survivor = scoreboard.createTeam("Survivor","",ChatColor.GREEN);
-        setTeamOptions(hunter);
-        setTeamOptions(survivor);
+        //Teams
+        if (bukkitSB.getTeam("Hunter") == null) {
+            hunter = bukkitSB.registerNewTeam("Hunter");
+            hunter.setColor(ChatColor.RED);
+            setTeamOptions(hunter);
+        }
+        else hunter = bukkitSB.getTeam("Hunter");
+
+        if (bukkitSB.getTeam("Survivor") == null) {
+            survivor = bukkitSB.registerNewTeam("Survivor");
+            survivor.setColor(ChatColor.GREEN);
+            setTeamOptions(survivor);
+        }
+        else survivor = bukkitSB.getTeam("Survivor");
+
+        //Remove everyone from teams
+        for (Team team : bukkitSB.getTeams()) {
+            for (String player : team.getEntries()) {
+                team.removeEntry(player);
+            }
+        }
     }
 
-    public void setTeamOptions(JScoreboardTeam team) {
-        Team bTeam = team.toBukkitTeam(bukkitSB);
-        bTeam.setAllowFriendlyFire(false);
-        bTeam.setCanSeeFriendlyInvisibles(true);
-        bTeam.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.FOR_OWN_TEAM);
+    public void setTeamOptions(Team team) {
+        team.setAllowFriendlyFire(false);
+        team.setCanSeeFriendlyInvisibles(true);
+        team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.FOR_OWN_TEAM);
     }
 
     public void joinTeam(TeamEnum team, Player player) {
+        player.setScoreboard(bukkitSB);
         if (team == TeamEnum.HUNTER) {
-            survivor.removePlayer(player);
-            hunter.addPlayer(player);
+            survivor.removeEntry(player.getName());
+            hunter.addEntry(player.getName());
         }
         else if (team == TeamEnum.SURVIVOR) {
-            hunter.removePlayer(player);
-            survivor.addPlayer(player);
+            hunter.removeEntry(player.getName());
+            survivor.addEntry(player.getName());
         }
     }
 

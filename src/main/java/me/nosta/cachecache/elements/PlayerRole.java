@@ -11,6 +11,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.ArrayList;
+
 public class PlayerRole {
 
 	private Player player;
@@ -40,7 +42,7 @@ public class PlayerRole {
 		else if (role == RoleEnum.JUMEAU) roleInfo += ChatColor.GOLD+"\n[Jumeau] "+ChatColor.BLUE+"Votre Jumeau est "+ChatColor.GREEN+twin.getPlayer().getName()+".";
 		else if (role == RoleEnum.ESPION) roleInfo += ChatColor.GOLD+"\n[Espion] "+ChatColor.BLUE+"Votre rôle de couverture est "+ChatColor.RED+cover.getName()+".";
 		else if (role == RoleEnum.CHASSEUR) {
-			PlayerRole espion = RoleManager.getInstance().getEspion();
+			PlayerRole espion = RoleManager.getInstance().getPlayerRoleWithRole(RoleEnum.ESPION);
 			if (espion != null) roleInfo += ChatColor.GOLD+"\n[Chasseur] "+ChatColor.BLUE+"Votre Espion est "+ChatColor.RED+espion.getPlayer().getName()+".";
 			else roleInfo += ChatColor.GOLD+"\n[Chasseur] "+ChatColor.BLUE+"Il n'y a pas d'Espion dans la partie.";
 		}
@@ -49,6 +51,8 @@ public class PlayerRole {
 	}
 
 	public void giveRolePowers() {
+		ArrayList<String> lore = new ArrayList<String>();
+
 		RoleEnum myRole;
 		if (role == RoleEnum.ESPION) myRole = cover;
 		else myRole = role;
@@ -75,7 +79,9 @@ public class PlayerRole {
 				ItemStack camouflage = new ItemStack(Material.NETHER_STAR);
 				ItemEditor.setUnbreakable(camouflage);
 				ItemEditor.setDisplayName(camouflage, ChatColor.YELLOW+"Camouflage ("+powerUse+" utilisations)");
-				ItemEditor.setLore(camouflage,ChatColor.BLUE+"Rend invisible et octroie un bonus de vitesse pendant 10s");
+				lore.add(""+ChatColor.BLUE+powerUse+" utilisations");
+				lore.add(ChatColor.BLUE+"Rend invisible et octroie un bonus de vitesse pendant 10s");
+				ItemEditor.setLore(camouflage,lore);
 				player.getInventory().addItem(camouflage);
 				break;
 			case REBELLE:
@@ -83,14 +89,16 @@ public class PlayerRole {
 				ItemStack dagger = new ItemStack(Material.IRON_SWORD);
 				ItemEditor.setUnbreakable(dagger);
 				ItemEditor.setDisplayName(dagger, ChatColor.YELLOW+"Dague ("+powerUse+" utilisations)");
-				ItemEditor.setLore(dagger,ChatColor.BLUE+"Renvoie un chasseur à son spawn en le frappant");				;
+				lore.add(""+ChatColor.BLUE+powerUse+" utilisations");
+				lore.add(ChatColor.BLUE+"Renvoie un chasseur à son spawn en le frappant");
+				ItemEditor.setLore(dagger,lore);
 				dagger.addEnchantment(Enchantment.DAMAGE_ALL,1);
 				player.getInventory().addItem(dagger);
 				break;
 			case SNIPER:
 				ItemStack bow = new ItemStack(Material.BOW);
 				ItemEditor.setUnbreakable(bow);
-				ItemEditor.setDisplayName(bow, ChatColor.YELLOW+"Fusil de précision");				;
+				ItemEditor.setDisplayName(bow, ChatColor.YELLOW+"Fusil de précision");
 				bow.addEnchantment(Enchantment.ARROW_KNOCKBACK,10);
 				player.getInventory().addItem(bow);
 				break;
