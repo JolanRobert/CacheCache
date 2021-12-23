@@ -110,7 +110,10 @@ public class PlayerRole {
 	public TeamEnum getTeam() {return team;}
 
 	public void setRole(RoleEnum role) {this.role = role;}
-	public void setTeam(TeamEnum team) {ScoreboardManager.getInstance().joinTeam(team,player);}
+	public void setTeam(TeamEnum team) {
+		this.team = team;
+		ScoreboardManager.getInstance().joinTeam(team,player);
+	}
 
 	public void setCover(RoleEnum cover) {this.cover = cover;}
 	public void setTwin(PlayerRole twin) {this.twin = twin;}

@@ -3,6 +3,8 @@ package me.nosta.cachecache.runnables;
 import me.nosta.cachecache.elements.PlayerRole;
 import me.nosta.cachecache.elements.RoleEnum;
 import me.nosta.cachecache.elements.TeamEnum;
+import me.nosta.cachecache.game.GameManager;
+import me.nosta.cachecache.game.GameState;
 import me.nosta.cachecache.game.RoleManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -113,5 +115,6 @@ public class StartGameRunnable extends BukkitRunnable {
 			pr.getPlayer().playSound(pr.getPlayer().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP,10000,1);
 		}
 		this.cancel();
+		GameManager.getInstance().setState(GameState.PLAYING);
 	}
 }
