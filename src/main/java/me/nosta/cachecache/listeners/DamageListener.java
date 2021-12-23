@@ -12,6 +12,8 @@ public class DamageListener implements Listener {
 
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
+        event.setDamage(0);
+
         if (!(event.getEntity() instanceof Player) || !(event.getDamager() instanceof Player)) return;
         PlayerRole victim = RoleManager.getInstance().getPlayerRole((Player)event.getEntity());
         PlayerRole attacker = RoleManager.getInstance().getPlayerRole((Player)event.getDamager());

@@ -53,6 +53,7 @@ public class RoleManager {
     public void addPlayerRole(Player player) {
         PlayerRole pr = new PlayerRole(player);
         playerRoles.add(pr);
+        pr.clearAll();
     }
 
     public void removePlayerRole(Player player) {

@@ -3,16 +3,16 @@ package me.nosta.cachecache.elements;
 public enum RoleEnum {
 	CHASSEUR("Chasseur", ""),
 	CIVIL("Civil", ""),
+	ANGE("Ange", ""),
+	ASTRONAUTE("Astronaute", ""),
+	CAPITAINE("Capitaine", ""),
 	ESPION("Espion", ""),
-	VETERAN("Vétéran", ""),
+	JUMEAU("Jumeau", ""),
+	NINJA("Ninja", ""),
+	PRETRE("Prêtre", ""),
 	REBELLE("Rebelle", ""),
 	SNIPER("Sniper", ""),
-	JUMEAU("Jumeau", ""),
-	PRETRE("Prêtre", ""),
-	NINJA("Ninja", ""),
-	CAPITAINE("Capitaine", ""),
-	ANGE("Ange", ""),
-	ASTRONAUTE("Astronaute", "");
+	VETERAN("Vétéran", "");
 	
 	private String name;
 	private String description;

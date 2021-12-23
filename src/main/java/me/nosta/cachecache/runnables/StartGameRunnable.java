@@ -108,6 +108,8 @@ public class StartGameRunnable extends BukkitRunnable {
 			if (pr.getRole() == RoleEnum.CHASSEUR) pr.setTeam(TeamEnum.HUNTER);
 			else pr.setTeam(TeamEnum.SURVIVOR);
 
+			pr.giveRolePowers();
+
 			pr.getPlayer().playSound(pr.getPlayer().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP,10000,1);
 		}
 		this.cancel();
