@@ -1,4 +1,4 @@
-package me.nosta.cachecache.elements;
+package me.nosta.cachecache.enums;
 
 public enum QuestEnum {
     QUEST1("Quest1","Desc Quest1"),

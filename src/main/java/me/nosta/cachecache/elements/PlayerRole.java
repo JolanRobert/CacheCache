@@ -1,7 +1,9 @@
 package me.nosta.cachecache.elements;
 
-import me.nosta.cachecache.game.RoleManager;
-import me.nosta.cachecache.game.ScoreboardManager;
+import me.nosta.cachecache.enums.RoleEnum;
+import me.nosta.cachecache.enums.TeamEnum;
+import me.nosta.cachecache.managers.RoleManager;
+import me.nosta.cachecache.managers.ScoreboardManager;
 import me.nosta.cachecache.utilities.ItemEditor;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -24,6 +26,7 @@ public class PlayerRole {
 	private PlayerRole admirer; //Ange
 
 	private int powerUse; //for role that have limited usages of their power
+	private int cooldown; // for role that have cooldowns
 
 	public PlayerRole(Player player) {
 		this.player = player;
@@ -58,7 +61,7 @@ public class PlayerRole {
 
 		switch (myRole) {
 			case CHASSEUR:
-				giveKnife();
+				giveHunterKnife();
 				player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,Integer.MAX_VALUE,0,false,false));
 				break;
 			case ASTRONAUTE:
@@ -112,7 +115,7 @@ public class PlayerRole {
 		}
 	}
 
-	public void giveKnife() {
+	public void giveHunterKnife() {
 		ItemStack knife = new ItemStack(Material.GOLDEN_SWORD);
 		ItemEditor.setUnbreakable(knife);
 		ItemEditor.setDisplayName(knife, ChatColor.YELLOW+"Poignard");
@@ -137,9 +140,14 @@ public class PlayerRole {
 
 	public PlayerRole getTwin() {return this.twin;}
 
+	public int getPowerUse() {return this.powerUse;}
+	public void gainPowerUse() {this.powerUse++;}
+	public void losePowerUse() {this.powerUse--;}
+
+	public int getCooldown() {return this.cooldown;}
+	public void setCooldown(int cooldown) {this.cooldown = cooldown;}
+
 	public void setCover(RoleEnum cover) {this.cover = cover;}
 	public void setTwin(PlayerRole twin) {this.twin = twin;}
 	public void setAdmirer(PlayerRole admirer) {this.admirer = admirer;}
-
-
 }

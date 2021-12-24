@@ -2,8 +2,8 @@ package me.nosta.cachecache.runnables;
 
 import me.nosta.cachecache.Main;
 import me.nosta.cachecache.elements.PlayerRole;
-import me.nosta.cachecache.elements.RoleEnum;
-import me.nosta.cachecache.game.RoleManager;
+import me.nosta.cachecache.enums.RoleEnum;
+import me.nosta.cachecache.managers.RoleManager;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;

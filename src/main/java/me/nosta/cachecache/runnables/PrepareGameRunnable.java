@@ -2,10 +2,10 @@ package me.nosta.cachecache.runnables;
 
 import me.nosta.cachecache.Main;
 import me.nosta.cachecache.elements.PlayerRole;
-import me.nosta.cachecache.elements.RoleEnum;
-import me.nosta.cachecache.elements.TeamEnum;
-import me.nosta.cachecache.game.GameManager;
-import me.nosta.cachecache.game.RoleManager;
+import me.nosta.cachecache.enums.RoleEnum;
+import me.nosta.cachecache.enums.TeamEnum;
+import me.nosta.cachecache.managers.GameManager;
+import me.nosta.cachecache.managers.RoleManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -39,7 +39,7 @@ public class PrepareGameRunnable extends BukkitRunnable {
 			Player rdmPlayer = RoleManager.getInstance().getPlayerRoles().get(rdm.nextInt(RoleManager.getInstance().getPlayerRoles().size())).getPlayer();
 			for (PlayerRole pr : RoleManager.getInstance().getPlayerRoles()) {
 				pr.getPlayer().sendTitle(ChatColor.RED+rdmPlayer.getName(),null,0,40,0);
-				pr.getPlayer().playSound(pr.getPlayer().getLocation(), Sound.UI_BUTTON_CLICK,10000,1);
+				pr.getPlayer().playSound(pr.getPlayer().getLocation(), Sound.UI_BUTTON_CLICK,Integer.MAX_VALUE,1);
 			}
 		}
 	}
@@ -48,7 +48,7 @@ public class PrepareGameRunnable extends BukkitRunnable {
 		Player rdmPlayer = RoleManager.getInstance().getPlayerRoles().get(rdm.nextInt(RoleManager.getInstance().getPlayerRoles().size())).getPlayer();
 		for (PlayerRole pr : RoleManager.getInstance().getPlayerRoles()) {
 			pr.getPlayer().sendTitle(ChatColor.RED+rdmPlayer.getName(),ChatColor.DARK_RED+"sera le chasseur !",0,40,20);
-			pr.getPlayer().playSound(pr.getPlayer().getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL,10000,1);
+			pr.getPlayer().playSound(pr.getPlayer().getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL,Integer.MAX_VALUE,1);
 			if (rdmPlayer == pr.getPlayer()) pr.setRole(RoleEnum.CHASSEUR);
 		}
 		assignRoles();
@@ -116,7 +116,7 @@ public class PrepareGameRunnable extends BukkitRunnable {
 			//Items and Effects
 			pr.giveRolePowers();
 
-			pr.getPlayer().playSound(pr.getPlayer().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP,10000,1);
+			pr.getPlayer().playSound(pr.getPlayer().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP,Integer.MAX_VALUE,1);
 		}
 		this.cancel();
 		GameManager.getInstance().startGame();

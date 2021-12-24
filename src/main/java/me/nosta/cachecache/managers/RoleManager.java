@@ -1,7 +1,7 @@
-package me.nosta.cachecache.game;
+package me.nosta.cachecache.managers;
 
 import me.nosta.cachecache.elements.PlayerRole;
-import me.nosta.cachecache.elements.RoleEnum;
+import me.nosta.cachecache.enums.RoleEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

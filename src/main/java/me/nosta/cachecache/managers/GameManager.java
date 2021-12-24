@@ -1,6 +1,8 @@
-package me.nosta.cachecache.game;
+package me.nosta.cachecache.managers;
 
 import me.nosta.cachecache.Main;
+import me.nosta.cachecache.enums.GameState;
+import me.nosta.cachecache.enums.RunnableEnum;
 import org.bukkit.Bukkit;
 
 public class GameManager {

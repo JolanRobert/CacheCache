@@ -1,4 +1,4 @@
-package me.nosta.cachecache.elements;
+package me.nosta.cachecache.enums;
 
 public enum TeamEnum {
     CHASSEUR,

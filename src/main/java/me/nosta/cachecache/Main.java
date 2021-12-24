@@ -2,10 +2,10 @@ package me.nosta.cachecache;
 
 import me.nosta.cachecache.commands.CommandsCompleter;
 import me.nosta.cachecache.commands.GameCommands;
-import me.nosta.cachecache.game.GameManager;
-import me.nosta.cachecache.game.InventoryManager;
-import me.nosta.cachecache.game.RoleManager;
-import me.nosta.cachecache.game.ScoreboardManager;
+import me.nosta.cachecache.managers.GameManager;
+import me.nosta.cachecache.managers.InventoryManager;
+import me.nosta.cachecache.managers.RoleManager;
+import me.nosta.cachecache.managers.ScoreboardManager;
 import me.nosta.cachecache.listeners.ChatListener;
 import me.nosta.cachecache.listeners.ConnexionListener;
 import me.nosta.cachecache.listeners.DamageListener;
@@ -42,6 +42,7 @@ public class Main extends JavaPlugin {
 		world.setGameRule(GameRule.NATURAL_REGENERATION, false);
 		world.setGameRule(GameRule.DO_FIRE_TICK, false);
 		world.setGameRule(GameRule.DO_MOB_SPAWNING, false);
+		world.setGameRule(GameRule.SHOW_DEATH_MESSAGES, false);
 
 		world.setGameRule(GameRule.DROWNING_DAMAGE, false);
 		world.setGameRule(GameRule.FALL_DAMAGE, false);

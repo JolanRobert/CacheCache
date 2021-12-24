@@ -1,7 +1,7 @@
 package me.nosta.cachecache.commands;
 
-import me.nosta.cachecache.game.GameManager;
-import me.nosta.cachecache.game.GameState;
+import me.nosta.cachecache.managers.GameManager;
+import me.nosta.cachecache.enums.GameState;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

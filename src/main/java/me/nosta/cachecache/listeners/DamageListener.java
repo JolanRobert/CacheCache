@@ -1,11 +1,12 @@
 package me.nosta.cachecache.listeners;
 
 import me.nosta.cachecache.elements.PlayerRole;
-import me.nosta.cachecache.elements.RoleEnum;
-import me.nosta.cachecache.elements.TeamEnum;
-import me.nosta.cachecache.game.RoleManager;
-import me.nosta.cachecache.game.RunnableEnum;
-import me.nosta.cachecache.game.RunnableManager;
+import me.nosta.cachecache.enums.RoleEnum;
+import me.nosta.cachecache.enums.TeamEnum;
+import me.nosta.cachecache.managers.PowerManager;
+import me.nosta.cachecache.managers.RoleManager;
+import me.nosta.cachecache.enums.RunnableEnum;
+import me.nosta.cachecache.managers.RunnableManager;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -29,23 +30,30 @@ public class DamageListener implements Listener {
 
             //Hunter hits Survivor
             if (attacker.getTeam() == TeamEnum.CHASSEUR && victim.getTeam() == TeamEnum.SURVIVANT) {
-                victim.setTeam(TeamEnum.CHASSEUR);
-
-                if (victim.getRole() == RoleEnum.CAPITAINE) RunnableManager.getInstance().stopRunnable(RunnableEnum.CAPITAINE);
-
-                else if (victim.getRole() == RoleEnum.JUMEAU) {
-                    PlayerRole twin = victim.getTwin();
-                    twin.setRole(RoleEnum.CHASSEUR);
-                    twin.clearAll();
-                    twin.giveKnife();
-                    RunnableManager.getInstance().stopRunnable(RunnableEnum.JUMEAU);
+                switch (victim.getRole()) {
+                    case ANGE:
+                        break;
+                    case CAPITAINE:
+                        RunnableManager.getInstance().stopRunnable(RunnableEnum.CAPITAINE);
+                        transformToHunter(victim);
+                        break;
+                    case JUMEAU:
+                        RunnableManager.getInstance().stopRunnable(RunnableEnum.JUMEAU);
+                        transformToHunter(victim.getTwin());
+                        transformToHunter(victim);
+                        break;
+                    case SNIPER:
+                        RunnableManager.getInstance().stopRunnable(RunnableEnum.SNIPER);
+                        transformToHunter(victim);
+                        break;
+                    case VETERAN:
+                        if (victim.getPowerUse() > 0) PowerManager.getInstance().triggerPowerVeteran(victim,attacker);
+                        else transformToHunter(victim);
+                        break;
+                    default:
+                        transformToHunter(victim);
+                        break;
                 }
-
-                else if (victim.getRole() == RoleEnum.SNIPER) RunnableManager.getInstance().stopRunnable(RunnableEnum.SNIPER);
-
-                victim.setRole(RoleEnum.CHASSEUR);
-                victim.clearAll();
-                victim.giveKnife();
             }
 
             //Rebelle hits Hunter
@@ -63,6 +71,19 @@ public class DamageListener implements Listener {
                 victim.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,5*20,0,false,false));
             }
         }
+    }
+
+    public void transformToHunter(PlayerRole pr) {
+        //Expert handling
+        if (pr.getRole() != RoleEnum.VETERAN) {
+            PlayerRole veteran = RoleManager.getInstance().getPlayerRoleWithRole(RoleEnum.VETERAN);
+            if (veteran != null && veteran.getPowerUse() < 2) veteran.gainPowerUse();
+        }
+
+        pr.setTeam(TeamEnum.CHASSEUR);
+        pr.setRole(RoleEnum.CHASSEUR);
+        pr.clearAll();
+        pr.giveHunterKnife();
     }
 
     @EventHandler

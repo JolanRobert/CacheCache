@@ -1,7 +1,7 @@
 package me.nosta.cachecache.commands;
 
-import me.nosta.cachecache.game.GameManager;
-import me.nosta.cachecache.game.InventoryManager;
+import me.nosta.cachecache.managers.GameManager;
+import me.nosta.cachecache.managers.InventoryManager;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;

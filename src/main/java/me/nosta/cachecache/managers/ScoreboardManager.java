@@ -1,7 +1,7 @@
-package me.nosta.cachecache.game;
+package me.nosta.cachecache.managers;
 
 import dev.jcsoftware.jscoreboards.JPerPlayerMethodBasedScoreboard;
-import me.nosta.cachecache.elements.TeamEnum;
+import me.nosta.cachecache.enums.TeamEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;

@@ -1,11 +1,11 @@
 package me.nosta.cachecache.listeners;
 
 import me.nosta.cachecache.elements.PlayerRole;
-import me.nosta.cachecache.elements.RoleEnum;
-import me.nosta.cachecache.elements.TeamEnum;
-import me.nosta.cachecache.game.GameManager;
-import me.nosta.cachecache.game.GameState;
-import me.nosta.cachecache.game.RoleManager;
+import me.nosta.cachecache.enums.RoleEnum;
+import me.nosta.cachecache.enums.TeamEnum;
+import me.nosta.cachecache.managers.GameManager;
+import me.nosta.cachecache.enums.GameState;
+import me.nosta.cachecache.managers.RoleManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;

@@ -1,4 +1,4 @@
-package me.nosta.cachecache.game;
+package me.nosta.cachecache.enums;
 
 public enum GameState {
 	WAITING,

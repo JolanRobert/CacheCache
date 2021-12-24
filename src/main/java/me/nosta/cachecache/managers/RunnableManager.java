@@ -1,11 +1,9 @@
-package me.nosta.cachecache.game;
+package me.nosta.cachecache.managers;
 
 import me.nosta.cachecache.elements.PlayerRole;
-import me.nosta.cachecache.elements.RoleEnum;
-import me.nosta.cachecache.runnables.CapitaineRunnable;
-import me.nosta.cachecache.runnables.JumeauRunnable;
-import me.nosta.cachecache.runnables.PrepareGameRunnable;
-import me.nosta.cachecache.runnables.SniperRunnable;
+import me.nosta.cachecache.enums.RoleEnum;
+import me.nosta.cachecache.enums.RunnableEnum;
+import me.nosta.cachecache.runnables.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,6 +20,7 @@ public class RunnableManager {
     private PrepareGameRunnable prepareGameRunnable; //auto cancel
     private CapitaineRunnable capitaineRunnable;
     private JumeauRunnable jumeauRunnable;
+    private NinjaRunnable ninjaRunnable; //auto cancel
     private SniperRunnable sniperRunnable;
 
     public void launchRunnable(RunnableEnum runnableEnum) {
@@ -36,6 +35,10 @@ public class RunnableManager {
             case JUMEAU:
                 List<PlayerRole> twins = RoleManager.getInstance().getPlayerRoles().stream().filter(pr -> pr.getRole() == RoleEnum.JUMEAU).collect(Collectors.toList());
                 if (twins.size() == 2) jumeauRunnable = new JumeauRunnable(twins.get(0),twins.get(1));
+                break;
+            case NINJA:
+                PlayerRole ninja = RoleManager.getInstance().getPlayerRoleWithRole(RoleEnum.NINJA);
+                if (ninja != null) ninjaRunnable = new NinjaRunnable(ninja);
                 break;
             case SNIPER:
                 PlayerRole sniper = RoleManager.getInstance().getPlayerRoleWithRole(RoleEnum.SNIPER);

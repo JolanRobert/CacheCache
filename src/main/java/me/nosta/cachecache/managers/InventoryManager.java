@@ -1,6 +1,6 @@
-package me.nosta.cachecache.game;
+package me.nosta.cachecache.managers;
 
-import me.nosta.cachecache.elements.RoleEnum;
+import me.nosta.cachecache.enums.RoleEnum;
 import me.nosta.cachecache.utilities.ItemEditor;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;

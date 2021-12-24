@@ -1,7 +1,7 @@
 package me.nosta.cachecache.listeners;
 
-import me.nosta.cachecache.game.InventoryManager;
-import me.nosta.cachecache.game.RoleManager;
+import me.nosta.cachecache.managers.InventoryManager;
+import me.nosta.cachecache.managers.RoleManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
