@@ -68,11 +68,11 @@ public class ScoreboardManager {
 
     public void joinTeam(TeamEnum team, Player player) {
         player.setScoreboard(bukkitSB);
-        if (team == TeamEnum.HUNTER) {
+        if (team == TeamEnum.CHASSEUR) {
             survivor.removeEntry(player.getName());
             hunter.addEntry(player.getName());
         }
-        else if (team == TeamEnum.SURVIVOR) {
+        else if (team == TeamEnum.SURVIVANT) {
             hunter.removeEntry(player.getName());
             survivor.addEntry(player.getName());
         }

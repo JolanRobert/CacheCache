@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class PlayerRole {
 
-	private Player player;
+	private final Player player;
 	private RoleEnum role;
 	private TeamEnum team;
 
@@ -44,7 +44,6 @@ public class PlayerRole {
 		else if (role == RoleEnum.CHASSEUR) {
 			PlayerRole espion = RoleManager.getInstance().getEspion();
 			if (espion != null) roleInfo += ChatColor.GOLD+"\n[Chasseur] "+ChatColor.BLUE+"Votre Espion est "+ChatColor.RED+espion.getPlayer().getName()+".";
-			else roleInfo += ChatColor.GOLD+"\n[Chasseur] "+ChatColor.BLUE+"Il n'y a pas d'Espion dans la partie.";
 		}
 
 		this.player.sendMessage(roleInfo);
@@ -77,9 +76,9 @@ public class PlayerRole {
 				player.getInventory().addItem(assembly);
 				break;
 			case JUMEAU:
-				ItemStack tracker = new ItemStack(Material.COMPASS);
+				/*ItemStack tracker = new ItemStack(Material.COMPASS);
 				ItemEditor.setDisplayName(tracker, ChatColor.YELLOW+"Tracker "+twin.getPlayer().getName());
-				player.getInventory().addItem(tracker);
+				player.getInventory().addItem(tracker);*/
 				break;
 			case NINJA:
 				powerUse = 3;

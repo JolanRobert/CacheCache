@@ -1,5 +1,6 @@
 package me.nosta.cachecache.runnables;
 
+import me.nosta.cachecache.Main;
 import me.nosta.cachecache.elements.PlayerRole;
 import me.nosta.cachecache.elements.RoleEnum;
 import me.nosta.cachecache.elements.TeamEnum;
@@ -21,6 +22,10 @@ public class PrepareGameRunnable extends BukkitRunnable {
 	private final Random rdm = new Random();
 
 	private float timer = 0;
+
+	public PrepareGameRunnable() {
+		runTaskTimer(Main.getInstance(),0,5);
+	}
 
 	@Override
 	public void run() {
@@ -108,8 +113,8 @@ public class PrepareGameRunnable extends BukkitRunnable {
 			pr.showRoleInfo();
 
 			//Teams
-			if (pr.getRole() == RoleEnum.CHASSEUR) pr.setTeam(TeamEnum.HUNTER);
-			else pr.setTeam(TeamEnum.SURVIVOR);
+			if (pr.getRole() == RoleEnum.CHASSEUR) pr.setTeam(TeamEnum.CHASSEUR);
+			else pr.setTeam(TeamEnum.SURVIVANT);
 
 			//Items and Effects
 			pr.giveRolePowers();

@@ -19,9 +19,9 @@ public class DamageListener implements Listener {
         PlayerRole victim = RoleManager.getInstance().getPlayerRoleWithPlayer((Player)event.getEntity());
         PlayerRole attacker = RoleManager.getInstance().getPlayerRoleWithPlayer((Player)event.getDamager());
 
-        if (attacker.getTeam() == TeamEnum.HUNTER) {
-            victim.setTeam(TeamEnum.HUNTER);
-            victim.setRole(RoleEnum.CIVIL);
+        if (attacker.getTeam() == TeamEnum.CHASSEUR) {
+            victim.setTeam(TeamEnum.CHASSEUR);
+            victim.setRole(RoleEnum.CHASSEUR);
             victim.clearAll();
             victim.giveKnife();
         }

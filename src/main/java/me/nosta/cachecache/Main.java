@@ -17,7 +17,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
 	
-	public static Main instance;
+	private static Main instance;
+
+	public static Main getInstance() {return instance;}
 
 	public void onEnable() {
 		instance = this;
