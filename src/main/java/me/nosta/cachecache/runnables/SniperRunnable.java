@@ -20,6 +20,6 @@ public class SniperRunnable extends BukkitRunnable {
     @Override
     public void run() {
         sniper.getInventory().addItem(new ItemStack(Material.ARROW));
-        sniper.getPlayer().playSound(sniper.getPlayer().getLocation(), Sound.ENTITY_ITEM_PICKUP,10000,1);
+        sniper.getPlayer().playSound(sniper.getPlayer().getLocation(), Sound.ENTITY_ITEM_PICKUP,Integer.MAX_VALUE,1);
     }
 }

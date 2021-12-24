@@ -17,10 +17,8 @@ public class RunnableManager {
         return instance;
     }
 
-    private PrepareGameRunnable prepareGameRunnable; //auto cancel
     private CapitaineRunnable capitaineRunnable;
     private JumeauRunnable jumeauRunnable;
-    private NinjaRunnable ninjaRunnable; //auto cancel
     private SniperRunnable sniperRunnable;
 
     public void launchRunnable(RunnableEnum runnableEnum) {
@@ -38,7 +36,7 @@ public class RunnableManager {
                 break;
             case NINJA:
                 PlayerRole ninja = RoleManager.getInstance().getPlayerRoleWithRole(RoleEnum.NINJA);
-                if (ninja != null) ninjaRunnable = new NinjaRunnable(ninja);
+                if (ninja != null) new NinjaRunnable(ninja);
                 break;
             case SNIPER:
                 PlayerRole sniper = RoleManager.getInstance().getPlayerRoleWithRole(RoleEnum.SNIPER);

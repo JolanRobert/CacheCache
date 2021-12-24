@@ -14,6 +14,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PlayerRole {
 
@@ -53,8 +54,6 @@ public class PlayerRole {
 	}
 
 	public void giveRolePowers() {
-		ArrayList<String> lore = new ArrayList<String>();
-
 		RoleEnum myRole;
 		if (role == RoleEnum.ESPION) myRole = cover;
 		else myRole = role;
@@ -73,9 +72,7 @@ public class PlayerRole {
 				powerUse = 1;
 				ItemStack assembly = new ItemStack(Material.NETHER_STAR);
 				ItemEditor.setDisplayName(assembly, ChatColor.YELLOW+"Ralliement");
-				lore.add(ChatColor.BLUE+"(1 utilisation)");
-				lore.add(ChatColor.BLUE+"Téléporte tous les survivants sur votre position");
-				ItemEditor.setLore(assembly,lore);
+				ItemEditor.setLore(assembly,new ArrayList<>(Arrays.asList(ChatColor.BLUE+"(1 utilisation)",ChatColor.BLUE+"Téléporte tous les survivants sur votre position")));
 				player.getInventory().addItem(assembly);
 				break;
 			case JUMEAU:
@@ -87,9 +84,7 @@ public class PlayerRole {
 				powerUse = 3;
 				ItemStack camouflage = new ItemStack(Material.NETHER_STAR);
 				ItemEditor.setDisplayName(camouflage, ChatColor.YELLOW+"Camouflage");
-				lore.add(ChatColor.BLUE+"("+powerUse+" utilisations/60s de cooldown)");
-				lore.add(ChatColor.BLUE+"Rend invisible et octroie un bonus de vitesse pendant 10s");
-				ItemEditor.setLore(camouflage,lore);
+				ItemEditor.setLore(camouflage, new ArrayList<>(Arrays.asList(ChatColor.BLUE+"("+powerUse+" utilisations/60s de cooldown)",ChatColor.BLUE+"Rend invisible et octroie un bonus de vitesse pendant 10s")));
 				player.getInventory().addItem(camouflage);
 				break;
 			case REBELLE:
@@ -97,9 +92,7 @@ public class PlayerRole {
 				ItemStack dagger = new ItemStack(Material.IRON_SWORD);
 				ItemEditor.setUnbreakable(dagger);
 				ItemEditor.setDisplayName(dagger, ChatColor.YELLOW+"Dague");
-				lore.add(ChatColor.BLUE+"("+powerUse+" utilisations)");
-				lore.add(ChatColor.BLUE+"Renvoie un chasseur à son spawn en le frappant");
-				ItemEditor.setLore(dagger,lore);
+				ItemEditor.setLore(dagger, new ArrayList<>(Arrays.asList(ChatColor.BLUE+"("+powerUse+" utilisations)",ChatColor.BLUE+"Renvoie un chasseur à son spawn en le frappant")));
 				dagger.addEnchantment(Enchantment.DAMAGE_ALL,1);
 				player.getInventory().addItem(dagger);
 				break;

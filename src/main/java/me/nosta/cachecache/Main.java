@@ -2,14 +2,11 @@ package me.nosta.cachecache;
 
 import me.nosta.cachecache.commands.CommandsCompleter;
 import me.nosta.cachecache.commands.GameCommands;
+import me.nosta.cachecache.listeners.*;
 import me.nosta.cachecache.managers.GameManager;
 import me.nosta.cachecache.managers.InventoryManager;
 import me.nosta.cachecache.managers.RoleManager;
 import me.nosta.cachecache.managers.ScoreboardManager;
-import me.nosta.cachecache.listeners.ChatListener;
-import me.nosta.cachecache.listeners.ConnexionListener;
-import me.nosta.cachecache.listeners.DamageListener;
-import me.nosta.cachecache.listeners.InventoryListener;
 import org.bukkit.Difficulty;
 import org.bukkit.GameRule;
 import org.bukkit.World;
@@ -57,6 +54,7 @@ public class Main extends JavaPlugin {
 		this.getServer().getPluginManager().registerEvents(new ConnexionListener(), this);
 		this.getServer().getPluginManager().registerEvents(new DamageListener(), this);
 		this.getServer().getPluginManager().registerEvents(new InventoryListener(), this);
+		this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
 	}
 	
 	private void registerCommands() {

@@ -1,6 +1,5 @@
 package me.nosta.cachecache.managers;
 
-import dev.jcsoftware.jscoreboards.JPerPlayerMethodBasedScoreboard;
 import me.nosta.cachecache.enums.TeamEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -21,7 +20,6 @@ public class ScoreboardManager {
 
     private Scoreboard bukkitSB;
 
-    private JPerPlayerMethodBasedScoreboard scoreboard;
     private Team hunter, survivor;
 
 
@@ -32,10 +30,6 @@ public class ScoreboardManager {
 
     public void init() {
         bukkitSB = Objects.requireNonNull(Bukkit.getScoreboardManager()).getMainScoreboard();
-
-        //Quests
-        scoreboard = new JPerPlayerMethodBasedScoreboard();
-        Bukkit.getOnlinePlayers().forEach(player -> scoreboard.addPlayer(player));
 
         //Teams
         if (bukkitSB.getTeam("Hunter") == null) {

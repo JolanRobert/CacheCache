@@ -24,8 +24,8 @@ public class JumeauRunnable extends BukkitRunnable {
     @Override
     public void run() {
         if (twin1.getLocation().distance(twin2.getLocation()) <= 20) {
-            twin1.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,1*20,1,false,false));
-            twin2.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,1*20,1,false,false));
+            twin1.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,25,1,false,false));
+            twin2.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,25,1,false,false));
         }
 
         int distance = (int)twin1.getLocation().distance(twin2.getLocation());

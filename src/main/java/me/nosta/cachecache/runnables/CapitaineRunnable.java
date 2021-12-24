@@ -27,7 +27,7 @@ public class CapitaineRunnable extends BukkitRunnable {
         hunters = RoleManager.getInstance().getPlayerRoles().stream().filter(pr -> pr.getRole() == RoleEnum.CHASSEUR).collect(Collectors.toList());
         for (PlayerRole pr : hunters) {
             if (capitaine.getLocation().distance(pr.getPlayer().getLocation()) <= 30) {
-                pr.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,0,1*20));
+                pr.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,25,0,false,false));
             }
         }
     }

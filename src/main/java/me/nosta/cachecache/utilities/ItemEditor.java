@@ -16,16 +16,16 @@ public class ItemEditor {
 		itemMeta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
 		item.setItemMeta(itemMeta);
 	}
-	
-	public static void setLore(ItemStack item, String lore) {		
-		ItemMeta itemMeta = item.getItemMeta();		
+
+	public static void setLore(ItemStack item, String lore) {
+		ItemMeta itemMeta = item.getItemMeta();
 		itemMeta.setLore(Collections.singletonList(lore));
 		itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		item.setItemMeta(itemMeta);
 	}
-	
-	public static void setLore(ItemStack item, ArrayList<String> lore) {		
-		ItemMeta itemMeta = item.getItemMeta();		
+
+	public static void setLore(ItemStack item, ArrayList<String> lore) {
+		ItemMeta itemMeta = item.getItemMeta();
 		itemMeta.setLore(lore);
 		itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		item.setItemMeta(itemMeta);
