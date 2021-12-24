@@ -42,7 +42,7 @@ public class PlayerRole {
 		else if (role == RoleEnum.JUMEAU) roleInfo += ChatColor.GOLD+"\n[Jumeau] "+ChatColor.BLUE+"Votre Jumeau est "+ChatColor.GREEN+twin.getPlayer().getName()+".";
 		else if (role == RoleEnum.ESPION) roleInfo += ChatColor.GOLD+"\n[Espion] "+ChatColor.BLUE+"Votre rôle de couverture est "+ChatColor.RED+cover.getName()+".";
 		else if (role == RoleEnum.CHASSEUR) {
-			PlayerRole espion = RoleManager.getInstance().getEspion();
+			PlayerRole espion = RoleManager.getInstance().getPlayerRoleWithRole(RoleEnum.ESPION);
 			if (espion != null) roleInfo += ChatColor.GOLD+"\n[Chasseur] "+ChatColor.BLUE+"Votre Espion est "+ChatColor.RED+espion.getPlayer().getName()+".";
 		}
 

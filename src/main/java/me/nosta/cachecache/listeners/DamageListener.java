@@ -7,10 +7,14 @@ import me.nosta.cachecache.game.RoleManager;
 import me.nosta.cachecache.game.RunnableEnum;
 import me.nosta.cachecache.game.RunnableManager;
 import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class DamageListener implements Listener {
 
@@ -33,7 +37,7 @@ public class DamageListener implements Listener {
                     twin.setRole(RoleEnum.CHASSEUR);
                     twin.clearAll();
                     twin.giveKnife();
-                    RunnableManager.getInstance().stopRunnable(RunnableEnum.TWIN);
+                    RunnableManager.getInstance().stopRunnable(RunnableEnum.JUMEAU);
                 }
 
                 victim.setRole(RoleEnum.CHASSEUR);
@@ -41,18 +45,27 @@ public class DamageListener implements Listener {
                 victim.giveKnife();
             }
 
-            //Survivor hits Hunter
-            else if (attacker.getTeam() == TeamEnum.SURVIVANT && victim.getTeam() == TeamEnum.CHASSEUR) {
+            //Rebelle hits Hunter
+            else if (attacker.getRole() == RoleEnum.REBELLE && victim.getRole() == RoleEnum.CHASSEUR) {
 
             }
         }
 
         //Bow damage handling
         else if (event.getEntity() instanceof Player && event.getDamager() instanceof Arrow && ((Arrow) event.getDamager()).getShooter() instanceof Player) {
+            PlayerRole victim = RoleManager.getInstance().getPlayerRoleWithPlayer((Player)event.getEntity());
+            PlayerRole attacker = RoleManager.getInstance().getPlayerRoleWithPlayer((Player)((Arrow) event.getDamager()).getShooter());
 
+            if (attacker.getRole() == RoleEnum.SNIPER && victim.getRole() == RoleEnum.CHASSEUR) {
+                victim.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,5*20,0,false,false));
+            }
         }
+    }
 
-        else return;
-
+    @EventHandler
+    public void onProjectileHit(ProjectileHitEvent event) {
+        if (!(event.getEntity() instanceof Arrow)) return;
+        Entity arrow = event.getEntity();
+        arrow.remove();
     }
 }

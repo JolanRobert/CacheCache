@@ -24,7 +24,7 @@ public class GameManager {
 
 	public void startGame() {
 		this.setState(GameState.PLAYING);
-		RunnableManager.getInstance().launchRunnable(RunnableEnum.TWIN);
+		RunnableManager.getInstance().launchRunnable(RunnableEnum.JUMEAU);
 	}
 	
 	public void endGame() {

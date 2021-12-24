@@ -9,11 +9,11 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class TwinRunnable extends BukkitRunnable {
+public class JumeauRunnable extends BukkitRunnable {
 
     Player twin1, twin2;
 
-    public TwinRunnable(Player twin1, Player twin2) {
+    public JumeauRunnable(Player twin1, Player twin2) {
         this.twin1 = twin1;
         this.twin2 = twin2;
     }
