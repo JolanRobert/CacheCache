@@ -33,19 +33,23 @@ public class PowerManager {
         }
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> RoleManager.getInstance().getPlayerRoles().forEach(pr -> pr.getPlayer().setInvulnerable(false)), 5*20);
-        capitaine.getPlayer().sendMessage(ChatColor.DARK_GREEN+"(Capitaine) "+ChatColor.GREEN+"Vous ralliez tous les survivants à vous !");
+        capitaine.getPlayer().sendMessage(ChatColor.DARK_GREEN+"(Capitaine) "+ChatColor.GREEN+"Activation du Ralliement !");
     }
 
     public void triggerPowerNinja(PlayerRole ninja) {
-        if (ninja.getCooldown() >= 0) ninja.getPlayer().sendMessage(ChatColor.DARK_GREEN+"(Ninja) "+ChatColor.GREEN+"Camouflage rechargé dans "+ninja.getCooldown()+"s");
+        if (ninja.getCooldown() > 0) {
+            ninja.getPlayer().sendMessage(ChatColor.DARK_GREEN+"(Ninja) "+ChatColor.GREEN+"Camouflage rechargé dans "+ninja.getCooldown()+"s");
+            return;
+        }
         ninja.losePowerUse();
         if (ninja.getPowerUse() == 0) ninja.getPlayer().getInventory().remove(Material.NETHER_STAR);
 
         ninja.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED,10*20,1,false,false));
         ninja.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY,10*20,0,false,false));
-        ninja.getPlayer().sendMessage(ChatColor.DARK_GREEN+"(Ninja) "+ChatColor.GREEN+"Vous utilisez votre camouflage ! ("+ninja.getPowerUse()+" utilisation(s) restantes)");
 
-        RunnableManager.getInstance().launchRunnable(RunnableEnum.NINJA);
+        ninja.getPlayer().sendMessage(ChatColor.DARK_GREEN+"(Ninja) "+ChatColor.GREEN+"Activation du Camouflage !"+" ("+(3-ninja.getPowerUse())+"/3)");
+
+        if (ninja.getPowerUse() > 0) RunnableManager.getInstance().launchRunnable(RunnableEnum.NINJA);
     }
 
     public void triggerPowerVeteran(PlayerRole veteran, PlayerRole hunter) {

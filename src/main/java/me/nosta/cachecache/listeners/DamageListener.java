@@ -21,10 +21,9 @@ public class DamageListener implements Listener {
 
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
-        event.setDamage(0);
-
         //Melee damage handling
         if (event.getEntity() instanceof Player && event.getDamager() instanceof Player) {
+            event.setDamage(0);
             PlayerRole victim = RoleManager.getInstance().getPlayerRoleWithPlayer((Player)event.getEntity());
             PlayerRole attacker = RoleManager.getInstance().getPlayerRoleWithPlayer((Player)event.getDamager());
 

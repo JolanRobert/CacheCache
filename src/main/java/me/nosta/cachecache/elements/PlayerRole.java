@@ -132,6 +132,7 @@ public class PlayerRole {
 	}
 
 	public PlayerRole getTwin() {return this.twin;}
+	public RoleEnum getCover() {return this.cover;}
 
 	public int getPowerUse() {return this.powerUse;}
 	public void gainPowerUse() {this.powerUse++;}

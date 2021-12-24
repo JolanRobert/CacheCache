@@ -26,21 +26,21 @@ public class PlayerListener implements Listener {
 
         if (mainHand.getType() != Material.NETHER_STAR && offHand.getType() != Material.NETHER_STAR) return;
 
+        event.setCancelled(true);
+
         PlayerRole pr = RoleManager.getInstance().getPlayerRoleWithPlayer(player);
-        if (pr == null || pr.getRole() != RoleEnum.CAPITAINE) return;
+        if (pr == null) return;
 
 
-        if (pr.getRole() == RoleEnum.CAPITAINE) {
+        if (pr.getRole() == RoleEnum.CAPITAINE || pr.getCover() == RoleEnum.CAPITAINE) {
             if (hasCorrectItem(mainHand,offHand,"Ralliement")) {
                 PowerManager.getInstance().triggerPowerCapitaine(pr);
-                event.setCancelled(true);
             }
         }
 
-        else if (pr.getRole() == RoleEnum.NINJA) {
+        else if (pr.getRole() == RoleEnum.NINJA || pr.getCover() == RoleEnum.NINJA) {
             if (hasCorrectItem(mainHand,offHand,"Camouflage")) {
                 PowerManager.getInstance().triggerPowerNinja(pr);
-                event.setCancelled(true);
             }
         }
     }
