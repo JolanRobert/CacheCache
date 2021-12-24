@@ -31,14 +31,17 @@ public class DamageListener implements Listener {
             if (attacker.getTeam() == TeamEnum.CHASSEUR && victim.getTeam() == TeamEnum.SURVIVANT) {
                 victim.setTeam(TeamEnum.CHASSEUR);
 
-                //Twin Kill
-                if (victim.getRole() == RoleEnum.JUMEAU) {
+                if (victim.getRole() == RoleEnum.CAPITAINE) RunnableManager.getInstance().stopRunnable(RunnableEnum.CAPITAINE);
+
+                else if (victim.getRole() == RoleEnum.JUMEAU) {
                     PlayerRole twin = victim.getTwin();
                     twin.setRole(RoleEnum.CHASSEUR);
                     twin.clearAll();
                     twin.giveKnife();
                     RunnableManager.getInstance().stopRunnable(RunnableEnum.JUMEAU);
                 }
+
+                else if (victim.getRole() == RoleEnum.SNIPER) RunnableManager.getInstance().stopRunnable(RunnableEnum.SNIPER);
 
                 victim.setRole(RoleEnum.CHASSEUR);
                 victim.clearAll();

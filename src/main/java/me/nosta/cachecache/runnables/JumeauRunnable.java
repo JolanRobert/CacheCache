@@ -1,5 +1,7 @@
 package me.nosta.cachecache.runnables;
 
+import me.nosta.cachecache.Main;
+import me.nosta.cachecache.elements.PlayerRole;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
@@ -13,9 +15,10 @@ public class JumeauRunnable extends BukkitRunnable {
 
     Player twin1, twin2;
 
-    public JumeauRunnable(Player twin1, Player twin2) {
-        this.twin1 = twin1;
-        this.twin2 = twin2;
+    public JumeauRunnable(PlayerRole twin1, PlayerRole twin2) {
+        this.twin1 = twin1.getPlayer();
+        this.twin2 = twin2.getPlayer();
+        this.runTaskTimer(Main.getInstance(),0,1*20);
     }
 
     @Override

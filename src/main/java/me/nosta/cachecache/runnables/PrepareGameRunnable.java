@@ -1,5 +1,6 @@
 package me.nosta.cachecache.runnables;
 
+import me.nosta.cachecache.Main;
 import me.nosta.cachecache.elements.PlayerRole;
 import me.nosta.cachecache.elements.RoleEnum;
 import me.nosta.cachecache.elements.TeamEnum;
@@ -20,6 +21,10 @@ public class PrepareGameRunnable extends BukkitRunnable {
 
 	private final Random rdm = new Random();
 	private float timer = 0;
+
+	public PrepareGameRunnable() {
+		this.runTaskTimer(Main.getInstance(),0, 5);
+	}
 
 	@Override
 	public void run() {

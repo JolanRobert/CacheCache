@@ -24,7 +24,9 @@ public class GameManager {
 
 	public void startGame() {
 		this.setState(GameState.PLAYING);
+		RunnableManager.getInstance().launchRunnable(RunnableEnum.CAPITAINE);
 		RunnableManager.getInstance().launchRunnable(RunnableEnum.JUMEAU);
+		RunnableManager.getInstance().launchRunnable(RunnableEnum.SNIPER);
 	}
 	
 	public void endGame() {

@@ -7,7 +7,6 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class RoleManager {
 
@@ -83,10 +82,6 @@ public class RoleManager {
             if (pr.getRole() == roleEnum) return pr;
         }
         return null;
-    }
-
-    public List<PlayerRole> getJumeaux() {
-        return playerRoles.stream().filter(p -> p.getRole() == RoleEnum.JUMEAU).collect(Collectors.toList());
     }
 
     public int getNbNonCivils() {return nbNonCivils;}
