@@ -48,6 +48,9 @@ public class PowerManager {
         ninja.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY,10*20,0,false,false));
 
         ninja.getPlayer().sendMessage(ChatColor.DARK_GREEN+"(Ninja) "+ChatColor.GREEN+"Activation du Camouflage !"+" ("+(3-ninja.getPowerUse())+"/3)");
+        ninja.getPlayer().playSound(ninja.getPlayer().getLocation(), Sound.ITEM_FIRECHARGE_USE, Integer.MAX_VALUE, 1);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () ->
+                ninja.getPlayer().playSound(ninja.getPlayer().getLocation(), Sound.ITEM_FIRECHARGE_USE, Integer.MAX_VALUE, 1), 10*20);
 
         if (ninja.getPowerUse() > 0) RunnableManager.getInstance().launchRunnable(RunnableEnum.NINJA);
     }
@@ -63,7 +66,7 @@ public class PowerManager {
         hunter.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,5*20,0,false,false));
 
         veteran.getPlayer().removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
-        veteran.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,Integer.MAX_VALUE,veteran.getPowerUse()-1,false,false));
+        if (veteran.getPowerUse() > 0) veteran.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,Integer.MAX_VALUE,veteran.getPowerUse()-1,false,false));
 
         veteran.getPlayer().playEffect(EntityEffect.TOTEM_RESURRECT);
     }

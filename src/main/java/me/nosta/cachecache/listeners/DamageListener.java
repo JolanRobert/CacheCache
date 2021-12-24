@@ -21,9 +21,10 @@ public class DamageListener implements Listener {
 
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
+        event.setDamage(0);
+
         //Melee damage handling
         if (event.getEntity() instanceof Player && event.getDamager() instanceof Player) {
-            event.setDamage(0);
             PlayerRole victim = RoleManager.getInstance().getPlayerRoleWithPlayer((Player)event.getEntity());
             PlayerRole attacker = RoleManager.getInstance().getPlayerRoleWithPlayer((Player)event.getDamager());
 
@@ -76,7 +77,11 @@ public class DamageListener implements Listener {
         //Expert handling
         if (pr.getRole() != RoleEnum.VETERAN) {
             PlayerRole veteran = RoleManager.getInstance().getPlayerRoleWithRole(RoleEnum.VETERAN);
-            if (veteran != null && veteran.getPowerUse() < 2) veteran.gainPowerUse();
+            if (veteran != null && veteran.getPowerUse() < 2) {
+                veteran.gainPowerUse();
+                veteran.getPlayer().removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
+                veteran.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,Integer.MAX_VALUE,veteran.getPowerUse()-1,false,false));
+            }
         }
 
         pr.setTeam(TeamEnum.CHASSEUR);
