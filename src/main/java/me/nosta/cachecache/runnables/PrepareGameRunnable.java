@@ -4,7 +4,6 @@ import me.nosta.cachecache.elements.PlayerRole;
 import me.nosta.cachecache.elements.RoleEnum;
 import me.nosta.cachecache.elements.TeamEnum;
 import me.nosta.cachecache.game.GameManager;
-import me.nosta.cachecache.game.GameState;
 import me.nosta.cachecache.game.RoleManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -17,7 +16,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class StartGameRunnable extends BukkitRunnable {
+public class PrepareGameRunnable extends BukkitRunnable {
 
 	private final Random rdm = new Random();
 
@@ -105,16 +104,19 @@ public class StartGameRunnable extends BukkitRunnable {
 	//Add to team
 	public void finalOperations() {
 		for (PlayerRole pr : RoleManager.getInstance().getPlayerRoles()) {
+			//Role Infos
 			pr.showRoleInfo();
 
+			//Teams
 			if (pr.getRole() == RoleEnum.CHASSEUR) pr.setTeam(TeamEnum.HUNTER);
 			else pr.setTeam(TeamEnum.SURVIVOR);
 
+			//Items and Effects
 			pr.giveRolePowers();
 
 			pr.getPlayer().playSound(pr.getPlayer().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP,10000,1);
 		}
 		this.cancel();
-		GameManager.getInstance().setState(GameState.PLAYING);
+		GameManager.getInstance().startGame();
 	}
 }

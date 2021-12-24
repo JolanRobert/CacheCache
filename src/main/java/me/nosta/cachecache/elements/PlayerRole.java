@@ -42,7 +42,7 @@ public class PlayerRole {
 		else if (role == RoleEnum.JUMEAU) roleInfo += ChatColor.GOLD+"\n[Jumeau] "+ChatColor.BLUE+"Votre Jumeau est "+ChatColor.GREEN+twin.getPlayer().getName()+".";
 		else if (role == RoleEnum.ESPION) roleInfo += ChatColor.GOLD+"\n[Espion] "+ChatColor.BLUE+"Votre rôle de couverture est "+ChatColor.RED+cover.getName()+".";
 		else if (role == RoleEnum.CHASSEUR) {
-			PlayerRole espion = RoleManager.getInstance().getPlayerRoleWithRole(RoleEnum.ESPION);
+			PlayerRole espion = RoleManager.getInstance().getEspion();
 			if (espion != null) roleInfo += ChatColor.GOLD+"\n[Chasseur] "+ChatColor.BLUE+"Votre Espion est "+ChatColor.RED+espion.getPlayer().getName()+".";
 			else roleInfo += ChatColor.GOLD+"\n[Chasseur] "+ChatColor.BLUE+"Il n'y a pas d'Espion dans la partie.";
 		}
@@ -59,27 +59,33 @@ public class PlayerRole {
 
 		switch (myRole) {
 			case CHASSEUR:
-				player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,10000,0,false,false));
+				giveKnife();
+				player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,Integer.MAX_VALUE,0,false,false));
 				break;
 			case ASTRONAUTE:
-				player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP,10000,2,false,false));
-				player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING,10000,0,false,false));
-				player.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE,10000,0,false,false));
+				player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP,Integer.MAX_VALUE,2,false,false));
+				player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING,Integer.MAX_VALUE,0,false,false));
+				player.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE,Integer.MAX_VALUE,0,false,false));
 				break;
 			case CAPITAINE:
 				powerUse = 1;
 				ItemStack assembly = new ItemStack(Material.NETHER_STAR);
-				ItemEditor.setUnbreakable(assembly);
-				ItemEditor.setDisplayName(assembly, ChatColor.YELLOW+"Ralliement (1 utilisation)");
-				ItemEditor.setLore(assembly,ChatColor.BLUE+"Téléporte tous les survivants sur votre position");
+				ItemEditor.setDisplayName(assembly, ChatColor.YELLOW+"Ralliement");
+				lore.add(ChatColor.BLUE+"(1 utilisation)");
+				lore.add(ChatColor.BLUE+"Téléporte tous les survivants sur votre position");
+				ItemEditor.setLore(assembly,lore);
 				player.getInventory().addItem(assembly);
+				break;
+			case JUMEAU:
+				ItemStack tracker = new ItemStack(Material.COMPASS);
+				ItemEditor.setDisplayName(tracker, ChatColor.YELLOW+"Tracker "+twin.getPlayer().getName());
+				player.getInventory().addItem(tracker);
 				break;
 			case NINJA:
 				powerUse = 3;
 				ItemStack camouflage = new ItemStack(Material.NETHER_STAR);
-				ItemEditor.setUnbreakable(camouflage);
-				ItemEditor.setDisplayName(camouflage, ChatColor.YELLOW+"Camouflage ("+powerUse+" utilisations)");
-				lore.add(""+ChatColor.BLUE+powerUse+" utilisations");
+				ItemEditor.setDisplayName(camouflage, ChatColor.YELLOW+"Camouflage");
+				lore.add(ChatColor.BLUE+"("+powerUse+" utilisations/60s de cooldown)");
 				lore.add(ChatColor.BLUE+"Rend invisible et octroie un bonus de vitesse pendant 10s");
 				ItemEditor.setLore(camouflage,lore);
 				player.getInventory().addItem(camouflage);
@@ -88,8 +94,8 @@ public class PlayerRole {
 				powerUse = 3;
 				ItemStack dagger = new ItemStack(Material.IRON_SWORD);
 				ItemEditor.setUnbreakable(dagger);
-				ItemEditor.setDisplayName(dagger, ChatColor.YELLOW+"Dague ("+powerUse+" utilisations)");
-				lore.add(""+ChatColor.BLUE+powerUse+" utilisations");
+				ItemEditor.setDisplayName(dagger, ChatColor.YELLOW+"Dague");
+				lore.add(ChatColor.BLUE+"("+powerUse+" utilisations)");
 				lore.add(ChatColor.BLUE+"Renvoie un chasseur à son spawn en le frappant");
 				ItemEditor.setLore(dagger,lore);
 				dagger.addEnchantment(Enchantment.DAMAGE_ALL,1);
@@ -99,17 +105,24 @@ public class PlayerRole {
 				ItemStack bow = new ItemStack(Material.BOW);
 				ItemEditor.setUnbreakable(bow);
 				ItemEditor.setDisplayName(bow, ChatColor.YELLOW+"Fusil de précision");
-				bow.addEnchantment(Enchantment.ARROW_KNOCKBACK,10);
+				bow.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK,10);
 				player.getInventory().addItem(bow);
 				break;
 			default:
 				break;
 		}
+	}
 
+	public void giveKnife() {
+		ItemStack knife = new ItemStack(Material.GOLDEN_SWORD);
+		ItemEditor.setUnbreakable(knife);
+		ItemEditor.setDisplayName(knife, ChatColor.YELLOW+"Poignard");
+		knife.addEnchantment(Enchantment.DAMAGE_ALL,1);
+		player.getInventory().addItem(knife);
 	}
 
 	public void clearAll() {
-		player.getInventory().clear();
+		//player.getInventory().clear();
 		player.getActivePotionEffects().forEach(effect -> player.removePotionEffect(effect.getType()));
 	}
 	

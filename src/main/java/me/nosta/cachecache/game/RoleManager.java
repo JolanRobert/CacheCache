@@ -39,7 +39,7 @@ public class RoleManager {
     public void addRole(RoleEnum role) {
         roles.add(role);
 
-        if (role == RoleEnum.JUMEAU) roles.add(role);
+        if (role == RoleEnum.JUMEAU) nbNonCivils += 2;
         else nbNonCivils++;
     }
 
@@ -77,9 +77,9 @@ public class RoleManager {
         return null;
     }
 
-    public PlayerRole getPlayerRoleWithRole(RoleEnum role) {
+    public PlayerRole getEspion() {
         for (PlayerRole pr : playerRoles) {
-            if (pr.getRole() == role) return pr;
+            if (pr.getRole() == RoleEnum.ESPION) return pr;
         }
         return null;
     }

@@ -63,7 +63,7 @@ public class ScoreboardManager {
     public void setTeamOptions(Team team) {
         team.setAllowFriendlyFire(false);
         team.setCanSeeFriendlyInvisibles(true);
-        team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.FOR_OWN_TEAM);
+        team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.FOR_OTHER_TEAMS);
     }
 
     public void joinTeam(TeamEnum team, Player player) {

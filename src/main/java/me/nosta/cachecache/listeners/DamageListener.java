@@ -1,6 +1,7 @@
 package me.nosta.cachecache.listeners;
 
 import me.nosta.cachecache.elements.PlayerRole;
+import me.nosta.cachecache.elements.RoleEnum;
 import me.nosta.cachecache.elements.TeamEnum;
 import me.nosta.cachecache.game.RoleManager;
 import org.bukkit.entity.Player;
@@ -18,6 +19,11 @@ public class DamageListener implements Listener {
         PlayerRole victim = RoleManager.getInstance().getPlayerRoleWithPlayer((Player)event.getEntity());
         PlayerRole attacker = RoleManager.getInstance().getPlayerRoleWithPlayer((Player)event.getDamager());
 
-        if (attacker.getTeam() == TeamEnum.HUNTER) victim.setTeam(TeamEnum.HUNTER);
+        if (attacker.getTeam() == TeamEnum.HUNTER) {
+            victim.setTeam(TeamEnum.HUNTER);
+            victim.setRole(RoleEnum.CIVIL);
+            victim.clearAll();
+            victim.giveKnife();
+        }
     }
 }

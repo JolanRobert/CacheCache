@@ -25,7 +25,7 @@ public class CommandsExecutor {
 	}
 
 	public void startGame(Player player) {
-		GameManager.getInstance().startGame();
+		GameManager.getInstance().prepareGame();
 	}
 	
 	public void stopGame(Player player) {
