@@ -1,6 +1,5 @@
 package me.nosta.cachecache.runnables;
 
-import me.nosta.cachecache.Main;
 import me.nosta.cachecache.elements.PlayerRole;
 import me.nosta.cachecache.elements.RoleEnum;
 import me.nosta.cachecache.elements.TeamEnum;
@@ -20,12 +19,7 @@ import java.util.stream.Collectors;
 public class PrepareGameRunnable extends BukkitRunnable {
 
 	private final Random rdm = new Random();
-
 	private float timer = 0;
-
-	public PrepareGameRunnable() {
-		runTaskTimer(Main.getInstance(),0,5);
-	}
 
 	@Override
 	public void run() {
@@ -105,8 +99,6 @@ public class PrepareGameRunnable extends BukkitRunnable {
 		}
 	}
 
-	//Show role info
-	//Add to team
 	public void finalOperations() {
 		for (PlayerRole pr : RoleManager.getInstance().getPlayerRoles()) {
 			//Role Infos

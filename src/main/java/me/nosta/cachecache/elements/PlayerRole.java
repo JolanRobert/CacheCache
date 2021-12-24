@@ -135,6 +135,8 @@ public class PlayerRole {
 		ScoreboardManager.getInstance().joinTeam(team,player);
 	}
 
+	public PlayerRole getTwin() {return this.twin;}
+
 	public void setCover(RoleEnum cover) {this.cover = cover;}
 	public void setTwin(PlayerRole twin) {this.twin = twin;}
 	public void setAdmirer(PlayerRole admirer) {this.admirer = admirer;}

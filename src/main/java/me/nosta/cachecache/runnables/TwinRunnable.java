@@ -1,6 +1,5 @@
 package me.nosta.cachecache.runnables;
 
-import me.nosta.cachecache.Main;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
@@ -17,7 +16,6 @@ public class TwinRunnable extends BukkitRunnable {
     public TwinRunnable(Player twin1, Player twin2) {
         this.twin1 = twin1;
         this.twin2 = twin2;
-        this.runTaskTimer(Main.getInstance(), 0, 20);
     }
 
     @Override
