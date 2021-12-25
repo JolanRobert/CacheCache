@@ -5,11 +5,11 @@ import me.nosta.cachecache.elements.PlayerRole;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 public class JumeauRunnable extends BukkitRunnable {
 
@@ -38,18 +38,12 @@ public class JumeauRunnable extends BukkitRunnable {
         twin2.setCompassTarget(twin1.getLocation());*/
     }
 
-    public String getDirection(Player origin, Player target) {
-        Location direction = origin.getLocation();
-        direction = direction.subtract(target.getLocation());
-        float yaw = direction.getYaw();
-        System.out.println(direction.getYaw());
-        if (yaw >= 337.5f || yaw <= 22.5f) return " ↑ ";
-        else if (yaw > 22.5f && yaw < 67.5f) return " ↗ ";
-        else if (yaw >= 67.5f && yaw <= 112.5f) return " → ";
-        else if (yaw > 112.5f && yaw < 157.5f) return " ↘ ";
-        else if (yaw >= 157.5f && yaw < 202.5f) return " ↓ ";
-        else if (yaw > 202.5f && yaw < 247.5f) return " ↙ ";
-        else if (yaw >= 247.5f && yaw <= 292.5f) return " ← ";
-        else return " ↖ ";
+    public String getDirection(Player twin1, Player twin2) {
+        Vector originPos = twin1.getLocation().toVector();
+        Vector targetPos = twin2.getLocation().toVector();
+        Vector direction = (targetPos.subtract(originPos)).normalize();
+
+        System.out.println("direction");
+        return " ↑ ";
     }
 }

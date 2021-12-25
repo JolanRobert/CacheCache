@@ -29,11 +29,12 @@ public class PowerManager {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,5*20,0,false,false));
                 player.setInvulnerable(true);
                 player.playSound(player.getLocation(), Sound.EVENT_RAID_HORN,Integer.MAX_VALUE,1);
+                player.sendMessage(ChatColor.DARK_GREEN+"(Capitaine) "+ChatColor.GREEN+"Vous avez été téléporté au Capitaine !");
             }
         }
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> RoleManager.getInstance().getPlayerRoles().forEach(pr -> pr.getPlayer().setInvulnerable(false)), 5*20);
-        capitaine.getPlayer().sendMessage(ChatColor.DARK_GREEN+"(Capitaine) "+ChatColor.GREEN+"Activation du Ralliement !");
+        capitaine.getPlayer().sendMessage(ChatColor.DARK_GREEN+"(Capitaine) "+ChatColor.GREEN+"Ralliement activé ! (1/1)");
     }
 
     public void triggerPowerNinja(PlayerRole ninja) {
@@ -47,11 +48,11 @@ public class PowerManager {
         ninja.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED,10*20,1,false,false));
         ninja.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY,10*20,0,false,false));
 
-        ninja.getPlayer().sendMessage(ChatColor.DARK_GREEN+"(Ninja) "+ChatColor.GREEN+"Activation du Camouflage !"+" ("+(3-ninja.getPowerUse())+"/3)");
         ninja.getPlayer().playSound(ninja.getPlayer().getLocation(), Sound.ITEM_FIRECHARGE_USE, Integer.MAX_VALUE, 1);
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () ->
                 ninja.getPlayer().playSound(ninja.getPlayer().getLocation(), Sound.ITEM_FIRECHARGE_USE, Integer.MAX_VALUE, 1), 10*20);
 
+        ninja.getPlayer().sendMessage(ChatColor.DARK_GREEN+"(Ninja) "+ChatColor.GREEN+"Camouflage activé !"+" ("+(3-ninja.getPowerUse())+"/3)");
         if (ninja.getPowerUse() > 0) RunnableManager.getInstance().launchRunnable(RunnableEnum.NINJA);
     }
 
@@ -69,5 +70,8 @@ public class PowerManager {
         if (veteran.getPowerUse() > 0) veteran.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,Integer.MAX_VALUE,veteran.getPowerUse()-1,false,false));
 
         veteran.getPlayer().playEffect(EntityEffect.TOTEM_RESURRECT);
+
+        veteran.getPlayer().sendMessage(ChatColor.DARK_GREEN+"(Vétéran) "+ChatColor.GREEN+"Vous avez été protégé de l'attaque de "+ChatColor.RED+hunter.getPlayer().getName()+" ! "+ChatColor.GREEN+(2-veteran.getPowerUse())+"/2)");
+        veteran.getPlayer().sendMessage(ChatColor.DARK_RED+"(Vétéran) "+ChatColor.RED+"Vous avez été étourdi par le Vétéran !");
     }
 }

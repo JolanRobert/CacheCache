@@ -103,6 +103,9 @@ public class PlayerRole {
 				bow.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK,10);
 				player.getInventory().addItem(bow);
 				break;
+			case VETERAN:
+				powerUse = 2;
+				player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,Integer.MAX_VALUE,1,false,false));
 			default:
 				break;
 		}

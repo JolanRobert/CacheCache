@@ -2,13 +2,13 @@ package me.nosta.cachecache.listeners;
 
 import me.nosta.cachecache.elements.PlayerRole;
 import me.nosta.cachecache.enums.RoleEnum;
+import me.nosta.cachecache.enums.RunnableEnum;
 import me.nosta.cachecache.enums.TeamEnum;
 import me.nosta.cachecache.managers.PowerManager;
 import me.nosta.cachecache.managers.RoleManager;
-import me.nosta.cachecache.enums.RunnableEnum;
 import me.nosta.cachecache.managers.RunnableManager;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -35,23 +35,24 @@ public class DamageListener implements Listener {
                         break;
                     case CAPITAINE:
                         RunnableManager.getInstance().stopRunnable(RunnableEnum.CAPITAINE);
-                        transformToHunter(victim);
+                        transformToHunter(attacker,victim);
                         break;
                     case JUMEAU:
                         RunnableManager.getInstance().stopRunnable(RunnableEnum.JUMEAU);
-                        transformToHunter(victim.getTwin());
-                        transformToHunter(victim);
+                        victim.getPlayer().sendMessage(ChatColor.DARK_GREEN+"(Jumeau) "+ChatColor.GREEN+"Vous emportez votre Jumeau dans la mort !");
+                        victim.getTwin().getPlayer().sendMessage(ChatColor.DARK_GREEN+"(Jumeau) "+ChatColor.GREEN+"Votre Jumeau vous emporte dans la mort !");
+                        transformToHunter(attacker,victim,victim.getTwin());
                         break;
                     case SNIPER:
                         RunnableManager.getInstance().stopRunnable(RunnableEnum.SNIPER);
-                        transformToHunter(victim);
+                        transformToHunter(attacker,victim);
                         break;
                     case VETERAN:
                         if (victim.getPowerUse() > 0) PowerManager.getInstance().triggerPowerVeteran(victim,attacker);
-                        else transformToHunter(victim);
+                        else transformToHunter(attacker,victim);
                         break;
                     default:
-                        transformToHunter(victim);
+                        transformToHunter(attacker,victim);
                         break;
                 }
             }
@@ -73,27 +74,39 @@ public class DamageListener implements Listener {
         }
     }
 
-    public void transformToHunter(PlayerRole pr) {
+    public void transformToHunter(PlayerRole hunter, PlayerRole survivor) {
         //Expert handling
-        if (pr.getRole() != RoleEnum.VETERAN) {
+        /*if (pr.getRole() != RoleEnum.VETERAN) {
             PlayerRole veteran = RoleManager.getInstance().getPlayerRoleWithRole(RoleEnum.VETERAN);
             if (veteran != null && veteran.getPowerUse() < 2) {
                 veteran.gainPowerUse();
                 veteran.getPlayer().removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
                 veteran.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,Integer.MAX_VALUE,veteran.getPowerUse()-1,false,false));
             }
+        }*/
+
+        for (PlayerRole pr : RoleManager.getInstance().getPlayerRoles()) {
+            if (pr.getTeam() == TeamEnum.CHASSEUR) {
+                pr.getPlayer().sendMessage(ChatColor.DARK_RED+"(Chasseur) "+ChatColor.RED+pr.getPlayer().getName()+" a tué "+ChatColor.GREEN+survivor.getPlayer().getName()+ChatColor.RED+" !");
+            }
         }
 
-        pr.setTeam(TeamEnum.CHASSEUR);
-        pr.setRole(RoleEnum.CHASSEUR);
-        pr.clearAll();
-        pr.giveHunterKnife();
+        survivor.getPlayer().sendMessage(ChatColor.DARK_RED+"[CC] "+ChatColor.RED+"Vous êtes mort ! Vous rejoignez l'équipe des Chasseurs !");
+
+        survivor.setTeam(TeamEnum.CHASSEUR);
+        survivor.setRole(RoleEnum.CHASSEUR);
+        survivor.clearAll();
+        survivor.giveHunterKnife();
+    }
+
+    public void transformToHunter(PlayerRole hunter, PlayerRole twin1, PlayerRole twin2) {
+        transformToHunter(hunter,twin1);
+        transformToHunter(hunter,twin2);
     }
 
     @EventHandler
     public void onProjectileHit(ProjectileHitEvent event) {
         if (!(event.getEntity() instanceof Arrow)) return;
-        Entity arrow = event.getEntity();
-        arrow.remove();
+        event.getEntity().remove();
     }
 }

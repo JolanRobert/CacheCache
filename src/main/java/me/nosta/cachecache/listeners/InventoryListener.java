@@ -11,6 +11,7 @@ public class InventoryListener implements Listener {
 	
 	@EventHandler
 	public void onInventoryClickEvent(InventoryClickEvent event) {
+		if (event.getClickedInventory() == null) return;
 		if (event.getClickedInventory().getItem(event.getSlot()) == null) return;
 		Player player = (Player)event.getWhoClicked();
 		ItemStack clickedItem = event.getClickedInventory().getItem(event.getSlot());
