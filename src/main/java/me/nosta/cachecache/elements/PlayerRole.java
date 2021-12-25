@@ -102,7 +102,6 @@ public class PlayerRole {
 				break;
 			case VETERAN:
 				powerUse = 2;
-				player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,Integer.MAX_VALUE,1,false,false));
 			default:
 				break;
 		}

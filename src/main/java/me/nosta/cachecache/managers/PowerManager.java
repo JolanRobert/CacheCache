@@ -75,9 +75,6 @@ public class PowerManager {
         hunter.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,5*20,0,false,false));
         hunter.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,5*20,0,false,false));
 
-        veteran.getPlayer().removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
-        if (veteran.getPowerUse() > 0) veteran.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,Integer.MAX_VALUE,veteran.getPowerUse()-1,false,false));
-
         veteran.getPlayer().playEffect(EntityEffect.TOTEM_RESURRECT);
 
         veteran.getPlayer().sendMessage(ChatColor.DARK_GREEN+"(Vétéran) "+ChatColor.GREEN+"Vous avez été protégé de l'attaque de "+ChatColor.RED+hunter.getPlayer().getName()+" ! "+ChatColor.GREEN+(2-veteran.getPowerUse())+"/2)");
