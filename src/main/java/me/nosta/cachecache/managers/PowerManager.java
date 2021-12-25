@@ -56,6 +56,15 @@ public class PowerManager {
         if (ninja.getPowerUse() > 0) RunnableManager.getInstance().launchRunnable(RunnableEnum.NINJA);
     }
 
+    public void triggerPowerRebelle(PlayerRole rebelle, PlayerRole hunter) {
+        rebelle.losePowerUse();
+        if (rebelle.getPowerUse() == 0) rebelle.getPlayer().getInventory().remove(Material.IRON_SWORD);
+        hunter.getPlayer().teleport(hunter.getPlayer().getLocation().add(0,30,0));
+
+        rebelle.getPlayer().sendMessage(ChatColor.DARK_GREEN+"(Rebelle) "+ChatColor.GREEN+"Vous avez renvoyé "+ChatColor.RED+hunter.getPlayer().getName()+ChatColor.GREEN+" à son spawn ! "+ChatColor.GREEN+(3-rebelle.getPowerUse())+"/3)");
+        hunter.getPlayer().sendMessage(ChatColor.DARK_RED+"(Rebelle) "+ChatColor.RED+"Vous avez été renvoyé au spawn par le Rebelle !");
+    }
+
     public void triggerPowerVeteran(PlayerRole veteran, PlayerRole hunter) {
         veteran.losePowerUse();
         veteran.getPlayer().setInvulnerable(true);

@@ -14,6 +14,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -59,7 +60,11 @@ public class DamageListener implements Listener {
 
             //Rebelle hits Hunter
             else if (attacker.getRole() == RoleEnum.REBELLE && victim.getRole() == RoleEnum.CHASSEUR) {
-
+                if (attacker.getRole() == RoleEnum.REBELLE && attacker.getPowerUse() > 0) {
+                    ItemStack mainHand = attacker.getPlayer().getInventory().getItemInMainHand();
+                    ItemStack offHand = attacker.getPlayer().getInventory().getItemInOffHand();
+                    if (PlayerListener.hasCorrectItem(mainHand,offHand,"Dague")) PowerManager.getInstance().triggerPowerRebelle(attacker,victim);
+                }
             }
         }
 

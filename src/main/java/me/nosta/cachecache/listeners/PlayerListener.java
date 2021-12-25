@@ -45,7 +45,7 @@ public class PlayerListener implements Listener {
         }
     }
 
-    public boolean hasCorrectItem(ItemStack mainHand, ItemStack offHand, String itemName) {
+    public static boolean hasCorrectItem(ItemStack mainHand, ItemStack offHand, String itemName) {
         if (mainHand.getType() == Material.NETHER_STAR) {
             if (mainHand.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.YELLOW+itemName)) return true;
         }

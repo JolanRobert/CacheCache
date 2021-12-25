@@ -36,18 +36,20 @@ public class PlayerRole {
 	public void showRoleInfo() {
 		String roleInfo = "";
 		roleInfo += ChatColor.GOLD+"[Rôle] "+ChatColor.BLUE+"Vous êtes ";
-		if (role == RoleEnum.CHASSEUR || role == RoleEnum.ESPION) roleInfo += ""+ChatColor.RED+role.getName()+" !";
-		else roleInfo += ""+ChatColor.GREEN+role.getName()+" !";
+		if (role == RoleEnum.CHASSEUR || role == RoleEnum.ESPION) roleInfo += ChatColor.RED+role.getName()+" !";
+		else roleInfo += ChatColor.GREEN+role.getName()+" !";
 
-		if (role == RoleEnum.CHASSEUR || role == RoleEnum.ESPION) roleInfo += ChatColor.BLUE+" Votre objectif est d'empêcher les survivants de s'enfuir de la ville.";
+		if (role == RoleEnum.CHASSEUR || role == RoleEnum.ESPION) roleInfo += ChatColor.BLUE+" Votre objectif est de tuer tous les Survivants.";
 		else roleInfo += ChatColor.BLUE+" Votre objectif est de vous enfuir de la ville.";
 
-		if (role == RoleEnum.ANGE) roleInfo += ChatColor.GOLD+"\n[Ange] "+ChatColor.BLUE+"Votre adorateur est "+ChatColor.GREEN+admirer.getPlayer().getName()+".";
-		else if (role == RoleEnum.JUMEAU) roleInfo += ChatColor.GOLD+"\n[Jumeau] "+ChatColor.BLUE+"Votre Jumeau est "+ChatColor.GREEN+twin.getPlayer().getName()+".";
-		else if (role == RoleEnum.ESPION) roleInfo += ChatColor.GOLD+"\n[Espion] "+ChatColor.BLUE+"Votre rôle de couverture est "+ChatColor.RED+cover.getName()+".";
+		roleInfo += role.getDescription();
+
+		if (role == RoleEnum.ANGE) roleInfo += ChatColor.DARK_GREEN+"\n(Ange) "+ChatColor.BLUE+"Votre adorateur est "+ChatColor.GREEN+admirer.getPlayer().getName()+".";
+		else if (role == RoleEnum.JUMEAU) roleInfo += ChatColor.DARK_GREEN+"\n(Jumeau) "+ChatColor.BLUE+"Votre Jumeau est "+ChatColor.GREEN+twin.getPlayer().getName()+".";
+		else if (role == RoleEnum.ESPION) roleInfo += ChatColor.DARK_GREEN+"\n(Espion) "+ChatColor.BLUE+"Votre rôle de couverture est "+ChatColor.RED+cover.getName()+".";
 		else if (role == RoleEnum.CHASSEUR) {
 			PlayerRole espion = RoleManager.getInstance().getPlayerRoleWithRole(RoleEnum.ESPION);
-			if (espion != null) roleInfo += ChatColor.GOLD+"\n[Chasseur] "+ChatColor.BLUE+"Votre Espion est "+ChatColor.RED+espion.getPlayer().getName()+".";
+			if (espion != null) roleInfo += ChatColor.DARK_RED+"\n(Chasseur) "+ChatColor.BLUE+"Votre Espion est "+ChatColor.RED+espion.getPlayer().getName()+".";
 		}
 
 		this.player.sendMessage(roleInfo);
@@ -74,11 +76,6 @@ public class PlayerRole {
 				ItemEditor.setDisplayName(assembly, ChatColor.YELLOW+"Ralliement");
 				ItemEditor.setLore(assembly,new ArrayList<>(Arrays.asList(ChatColor.BLUE+"(1 utilisation)",ChatColor.BLUE+"Téléporte tous les survivants sur votre position")));
 				player.getInventory().addItem(assembly);
-				break;
-			case JUMEAU:
-				/*ItemStack tracker = new ItemStack(Material.COMPASS);
-				ItemEditor.setDisplayName(tracker, ChatColor.YELLOW+"Tracker "+twin.getPlayer().getName());
-				player.getInventory().addItem(tracker);*/
 				break;
 			case NINJA:
 				powerUse = 3;

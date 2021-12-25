@@ -32,7 +32,7 @@ public class ChatListener implements Listener {
                 if (sender.getRole() == RoleEnum.ESPION && msg.startsWith("$")) hunterMsg(ChatColor.DARK_RED+"(Espion) "+ChatColor.RED+sender.getPlayer().getName()+": "+msg.substring(1));
                 else survivorMsg(ChatColor.DARK_GREEN+"(Survivant) "+ChatColor.GREEN+sender.getPlayer().getName()+": "+msg);
             }
-            else if (sender.getTeam() == TeamEnum.CHASSEUR) sender.getPlayer().sendMessage(ChatColor.RED+"Les chasseurs n'ont pas de chat privé.");
+            else if (sender.getTeam() == TeamEnum.CHASSEUR) sender.getPlayer().sendMessage(ChatColor.RED+"Les Chasseurs n'ont pas de chat privé.");
         }
 
         event.setCancelled(true);

@@ -2,7 +2,6 @@ package me.nosta.cachecache.listeners;
 
 import me.nosta.cachecache.managers.InventoryManager;
 import me.nosta.cachecache.managers.RoleManager;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,8 +15,7 @@ public class ConnexionListener implements Listener {
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();		
-		event.setJoinMessage(ChatColor.DARK_GRAY+"["+ChatColor.GREEN+"+"+ChatColor.DARK_GRAY+"] "+player.getName()+ChatColor.GRAY+" ("+
-		ChatColor.YELLOW+Bukkit.getOnlinePlayers().size()+ChatColor.GRAY+"/"+ChatColor.YELLOW+Bukkit.getMaxPlayers()+ChatColor.GRAY+")");
+		event.setJoinMessage(ChatColor.DARK_GRAY+"["+ChatColor.GREEN+"+"+ChatColor.DARK_GRAY+"] "+ChatColor.GRAY+player.getName());
 
 		RoleManager.getInstance().addPlayerRole(player);
 		InventoryManager.getInstance().UpdateNbCivil();
@@ -26,8 +24,7 @@ public class ConnexionListener implements Listener {
 	@EventHandler
 	public void onQuit(PlayerQuitEvent event) {
 		Player player = event.getPlayer();
-		event.setQuitMessage(ChatColor.DARK_GRAY+"["+ChatColor.RED+"-"+ChatColor.DARK_GRAY+"] "+player.getName()+ChatColor.GRAY+" ("+
-		ChatColor.YELLOW+(Bukkit.getOnlinePlayers().size()-1)+ChatColor.GRAY+"/"+ChatColor.YELLOW+Bukkit.getMaxPlayers()+ChatColor.GRAY+")");
+		event.setQuitMessage(ChatColor.DARK_GRAY+"["+ChatColor.RED+"-"+ChatColor.DARK_GRAY+"] "+ChatColor.GRAY+player.getName());
 
 		RoleManager.getInstance().removePlayerRole(player);
 		InventoryManager.getInstance().UpdateNbCivil();
