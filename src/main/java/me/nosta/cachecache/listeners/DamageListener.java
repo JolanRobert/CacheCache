@@ -8,13 +8,13 @@ import me.nosta.cachecache.managers.PowerManager;
 import me.nosta.cachecache.managers.RoleManager;
 import me.nosta.cachecache.managers.RunnableManager;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -31,7 +31,11 @@ public class DamageListener implements Listener {
 
             //Hunter hits Survivor
             if (attacker.getTeam() == TeamEnum.CHASSEUR && victim.getTeam() == TeamEnum.SURVIVANT) {
-                switch (victim.getRole()) {
+                if (!PlayerListener.hasCorrectItem(attacker.getPlayer(),Material.GOLDEN_SWORD,"Poignard")) return;
+
+                RoleEnum role = victim.getRole() == RoleEnum.ESPION ? victim.getCover() : victim.getRole();
+
+                switch (role) {
                     case ANGE:
                         break;
                     case CAPITAINE:
@@ -60,10 +64,9 @@ public class DamageListener implements Listener {
 
             //Rebelle hits Hunter
             else if (attacker.getRole() == RoleEnum.REBELLE && victim.getRole() == RoleEnum.CHASSEUR) {
-                if (attacker.getRole() == RoleEnum.REBELLE && attacker.getPowerUse() > 0) {
-                    ItemStack mainHand = attacker.getPlayer().getInventory().getItemInMainHand();
-                    ItemStack offHand = attacker.getPlayer().getInventory().getItemInOffHand();
-                    if (PlayerListener.hasCorrectItem(mainHand,offHand,"Dague")) PowerManager.getInstance().triggerPowerRebelle(attacker,victim);
+                RoleEnum role = victim.getRole() == RoleEnum.ESPION ? victim.getCover() : victim.getRole();
+                if (role == RoleEnum.REBELLE && attacker.getPowerUse() > 0) {
+                    if (PlayerListener.hasCorrectItem(attacker.getPlayer(), Material.IRON_SWORD,"Dague")) PowerManager.getInstance().triggerPowerRebelle(attacker,victim);
                 }
             }
         }
@@ -80,23 +83,13 @@ public class DamageListener implements Listener {
     }
 
     public void transformToHunter(PlayerRole hunter, PlayerRole survivor) {
-        //Expert handling
-        /*if (pr.getRole() != RoleEnum.VETERAN) {
-            PlayerRole veteran = RoleManager.getInstance().getPlayerRoleWithRole(RoleEnum.VETERAN);
-            if (veteran != null && veteran.getPowerUse() < 2) {
-                veteran.gainPowerUse();
-                veteran.getPlayer().removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
-                veteran.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,Integer.MAX_VALUE,veteran.getPowerUse()-1,false,false));
-            }
-        }*/
-
         for (PlayerRole pr : RoleManager.getInstance().getPlayerRoles()) {
             if (pr.getTeam() == TeamEnum.CHASSEUR) {
-                pr.getPlayer().sendMessage(ChatColor.DARK_RED+"(Chasseur) "+ChatColor.RED+pr.getPlayer().getName()+" a tué "+ChatColor.GREEN+survivor.getPlayer().getName()+ChatColor.RED+" !");
+                pr.getPlayer().sendMessage(ChatColor.DARK_RED+"(Chasseur) "+ChatColor.RED+pr.getPlayer().getName()+" a tué "+ChatColor.GREEN+survivor.getPlayer().getName()+" !");
             }
         }
 
-        survivor.getPlayer().sendMessage(ChatColor.DARK_RED+"[CC] "+ChatColor.RED+"Vous êtes mort ! Vous rejoignez l'équipe des Chasseurs !");
+        survivor.getPlayer().sendMessage(ChatColor.RED+"Vous êtes mort ! Vous rejoignez l'équipe des Chasseurs !");
 
         survivor.setTeam(TeamEnum.CHASSEUR);
         survivor.setRole(RoleEnum.CHASSEUR);

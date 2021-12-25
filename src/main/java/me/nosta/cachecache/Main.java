@@ -3,10 +3,7 @@ package me.nosta.cachecache;
 import me.nosta.cachecache.commands.CommandsCompleter;
 import me.nosta.cachecache.commands.GameCommands;
 import me.nosta.cachecache.listeners.*;
-import me.nosta.cachecache.managers.GameManager;
-import me.nosta.cachecache.managers.InventoryManager;
-import me.nosta.cachecache.managers.RoleManager;
-import me.nosta.cachecache.managers.ScoreboardManager;
+import me.nosta.cachecache.managers.*;
 import org.bukkit.Difficulty;
 import org.bukkit.GameRule;
 import org.bukkit.World;
@@ -25,6 +22,8 @@ public class Main extends JavaPlugin {
 		RoleManager.getInstance();
 		InventoryManager.getInstance();
 		ScoreboardManager.getInstance();
+		RunnableManager.getInstance();
+		PowerManager.getInstance();
 		
 		this.config();
 		this.registerListeners();

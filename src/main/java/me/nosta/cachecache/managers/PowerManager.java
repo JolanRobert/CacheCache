@@ -52,7 +52,7 @@ public class PowerManager {
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () ->
                 ninja.getPlayer().playSound(ninja.getPlayer().getLocation(), Sound.ITEM_FIRECHARGE_USE, Integer.MAX_VALUE, 1), 10*20);
 
-        ninja.getPlayer().sendMessage(ChatColor.DARK_GREEN+"(Ninja) "+ChatColor.GREEN+"Camouflage activé !"+" ("+(3-ninja.getPowerUse())+"/3)");
+        ninja.getPlayer().sendMessage(ChatColor.DARK_GREEN+"(Ninja) "+ChatColor.GREEN+"Camouflage activé ! ("+(3-ninja.getPowerUse())+"/3)");
         if (ninja.getPowerUse() > 0) RunnableManager.getInstance().launchRunnable(RunnableEnum.NINJA);
     }
 
@@ -61,8 +61,8 @@ public class PowerManager {
         if (rebelle.getPowerUse() == 0) rebelle.getPlayer().getInventory().remove(Material.IRON_SWORD);
         hunter.getPlayer().teleport(hunter.getPlayer().getLocation().add(0,30,0));
 
-        rebelle.getPlayer().sendMessage(ChatColor.DARK_GREEN+"(Rebelle) "+ChatColor.GREEN+"Vous avez renvoyé "+ChatColor.RED+hunter.getPlayer().getName()+ChatColor.GREEN+" à son spawn ! "+ChatColor.GREEN+(3-rebelle.getPowerUse())+"/3)");
-        hunter.getPlayer().sendMessage(ChatColor.DARK_RED+"(Rebelle) "+ChatColor.RED+"Vous avez été renvoyé au spawn par le Rebelle !");
+        rebelle.getPlayer().sendMessage(ChatColor.DARK_GREEN+"(Rebelle) "+ChatColor.GREEN+"Vous avez renvoyé "+ChatColor.RED+hunter.getPlayer().getName()+ChatColor.GREEN+" à son spawn ! ("+(3-rebelle.getPowerUse())+"/3)");
+        hunter.getPlayer().sendMessage(ChatColor.DARK_RED+"(Chasseur) "+ChatColor.RED+"Vous avez été renvoyé au spawn par le Rebelle !");
     }
 
     public void triggerPowerVeteran(PlayerRole veteran, PlayerRole hunter) {
@@ -82,7 +82,7 @@ public class PowerManager {
 
         veteran.getPlayer().playEffect(EntityEffect.TOTEM_RESURRECT);
 
-        veteran.getPlayer().sendMessage(ChatColor.DARK_GREEN+"(Vétéran) "+ChatColor.GREEN+"Vous avez été protégé de l'attaque de "+ChatColor.RED+hunter.getPlayer().getName()+" ! "+ChatColor.GREEN+(2-veteran.getPowerUse())+"/2)");
-        veteran.getPlayer().sendMessage(ChatColor.DARK_RED+"(Vétéran) "+ChatColor.RED+"Vous avez été étourdi par le Vétéran !");
+        veteran.getPlayer().sendMessage(ChatColor.DARK_GREEN+"(Vétéran) "+ChatColor.GREEN+"Vous avez été protégé de l'attaque de "+ChatColor.RED+hunter.getPlayer().getName()+" ! "+ChatColor.GREEN+"("+(2-veteran.getPowerUse())+"/2)");
+        hunter.getPlayer().sendMessage(ChatColor.DARK_RED+"(Chasseur) "+ChatColor.RED+"Vous avez été étourdi par le Vétéran !");
     }
 }

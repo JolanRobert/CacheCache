@@ -21,36 +21,35 @@ public class PlayerListener implements Listener {
 
         if (event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
 
-        ItemStack mainHand = player.getInventory().getItemInMainHand();
-        ItemStack offHand = player.getInventory().getItemInOffHand();
-
-        if (mainHand.getType() != Material.NETHER_STAR && offHand.getType() != Material.NETHER_STAR) return;
-
-        event.setCancelled(true);
-
         PlayerRole pr = RoleManager.getInstance().getPlayerRoleWithPlayer(player);
         if (pr == null) return;
 
+        RoleEnum role = pr.getRole() == RoleEnum.ESPION ? pr.getCover() : pr.getRole();
 
-        if (pr.getRole() == RoleEnum.CAPITAINE || pr.getCover() == RoleEnum.CAPITAINE) {
-            if (hasCorrectItem(mainHand,offHand,"Ralliement")) {
+        if (role == RoleEnum.CAPITAINE) {
+            if (hasCorrectItem(pr.getPlayer(),Material.NETHER_STAR,"Ralliement")) {
+                event.setCancelled(true);
                 PowerManager.getInstance().triggerPowerCapitaine(pr);
             }
         }
 
-        else if (pr.getRole() == RoleEnum.NINJA || pr.getCover() == RoleEnum.NINJA) {
-            if (hasCorrectItem(mainHand,offHand,"Camouflage")) {
+        else if (role == RoleEnum.NINJA) {
+            if (hasCorrectItem(pr.getPlayer(),Material.NETHER_STAR,"Camouflage")) {
+                event.setCancelled(true);
                 PowerManager.getInstance().triggerPowerNinja(pr);
             }
         }
     }
 
-    public static boolean hasCorrectItem(ItemStack mainHand, ItemStack offHand, String itemName) {
-        if (mainHand.getType() == Material.NETHER_STAR) {
+    public static boolean hasCorrectItem(Player player, Material material, String itemName) {
+        ItemStack mainHand = player.getInventory().getItemInMainHand();
+        ItemStack offHand = player.getInventory().getItemInOffHand();
+
+        if (mainHand.getType() == material) {
             if (mainHand.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.YELLOW+itemName)) return true;
         }
 
-        if (offHand.getType() == Material.NETHER_STAR) {
+        if (offHand.getType() == material) {
             if (offHand.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.YELLOW+itemName)) return true;
         }
 
