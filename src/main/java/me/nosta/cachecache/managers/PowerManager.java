@@ -70,6 +70,11 @@ public class PowerManager {
         veteran.getPlayer().setInvulnerable(true);
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> veteran.getPlayer().setInvulnerable(false), 5*20);
 
+        if (veteran.getPowerUse() > 0) {
+            veteran.getPlayer().removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
+            veteran.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE,Integer.MAX_VALUE, veteran.getPowerUse()-1,false,false));
+        }
+
         hunter.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW,5*20,127,false,false));
         hunter.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.JUMP,5*20,127,false,false));
         hunter.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,5*20,0,false,false));

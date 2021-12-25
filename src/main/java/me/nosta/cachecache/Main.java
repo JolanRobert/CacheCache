@@ -28,8 +28,8 @@ public class Main extends JavaPlugin {
 		
 		this.config();
 		this.registerListeners();
-		this.registerCommands();        
-    }
+		this.registerCommands();
+	}
 	
 	
 	public void config() {
