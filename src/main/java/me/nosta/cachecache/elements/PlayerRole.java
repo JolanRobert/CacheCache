@@ -28,6 +28,7 @@ public class PlayerRole {
 
 	private int powerUse; //for role that have limited usages of their power
 	private int cooldown; // for role that have cooldowns
+	private boolean stun;
 
 	public PlayerRole(Player player) {
 		this.player = player;
@@ -91,6 +92,7 @@ public class PlayerRole {
 				ItemEditor.setDisplayName(dagger, ChatColor.YELLOW+"Dague");
 				ItemEditor.setLore(dagger, new ArrayList<>(Arrays.asList(ChatColor.BLUE+"("+powerUse+" utilisations)",ChatColor.BLUE+"Renvoie un chasseur à son spawn en le frappant")));
 				dagger.addEnchantment(Enchantment.DAMAGE_ALL,1);
+				ItemEditor.hideEnchants(dagger);
 				player.getInventory().addItem(dagger);
 				break;
 			case SNIPER:
@@ -113,6 +115,7 @@ public class PlayerRole {
 		ItemEditor.setUnbreakable(knife);
 		ItemEditor.setDisplayName(knife, ChatColor.YELLOW+"Poignard");
 		knife.addEnchantment(Enchantment.DAMAGE_ALL,1);
+		ItemEditor.hideEnchants(knife);
 		player.getInventory().addItem(knife);
 	}
 
@@ -134,14 +137,16 @@ public class PlayerRole {
 	public PlayerRole getTwin() {return this.twin;}
 	public RoleEnum getCover() {return this.cover;}
 
-	public int getPowerUse() {return this.powerUse;}
-	public void gainPowerUse() {this.powerUse++;}
-	public void losePowerUse() {this.powerUse--;}
-
-	public int getCooldown() {return this.cooldown;}
-	public void setCooldown(int cooldown) {this.cooldown = cooldown;}
-
 	public void setCover(RoleEnum cover) {this.cover = cover;}
 	public void setTwin(PlayerRole twin) {this.twin = twin;}
 	public void setAdmirer(PlayerRole admirer) {this.admirer = admirer;}
+
+	public int getPowerUse() {return this.powerUse;}
+	public void losePowerUse() {this.powerUse--;}
+	public int getCooldown() {return this.cooldown;}
+	public void setCooldown(int cooldown) {this.cooldown = cooldown;}
+	public void setStunStatus(boolean stun) {this.stun = stun;}
+	public boolean isStunned() {return this.stun;}
+
+
 }

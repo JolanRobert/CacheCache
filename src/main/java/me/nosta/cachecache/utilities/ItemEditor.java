@@ -36,4 +36,10 @@ public class ItemEditor {
 		itemMeta.setDisplayName(ChatColor.RESET+displayName);
 		item.setItemMeta(itemMeta);
 	}
+
+	public static void hideEnchants(ItemStack item) {
+		ItemMeta itemMeta = item.getItemMeta();
+		itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+		item.setItemMeta(itemMeta);
+	}
 }

@@ -15,8 +15,8 @@ public enum RoleEnum {
 			"supporter et se suicidera instantanément."),
 	NINJA("Ninja", "Vous pouvez utiliser votre Camouflage 3 fois dans la partie (1m30s de cooldown), lorsque vous le faites vous gagnez temporairement les effets "+
 			"Invisibilité et Speed II."),
-	PRETRE("Prêtre", "Chaque fois qu'un Survivant meurt, un message vous en informe. Une fois dans la partie vous pouvez ressusciter un Survivant en cliquant sur "+
-			"le message dans le chat. Dépassé 6s, le Survivant ne pourra plus être ressuscité. Vous ne pouvez pas vous ressuscitez vous-même."),
+	PRETRE("Prêtre", "Chaque fois qu'un Survivant meurt, un message vous en informe. Une fois dans la partie vous pouvez ressusciter un Survivant en tant que Civil "+
+			"dans un temps limité (6s). Vous ne pouvez pas vous ressusciter vous-même."),
 	REBELLE("Rebelle", "Vous disposez d'une Dague permettant de renvoyer les Chasseurs à leur spawn lorsque vous les touchez (3 fois max)."),
 	SNIPER("Sniper", "Vous disposez d'un Fusil de précision Punch X, toutes les 50s vous recevez une flèche."),
 	VETERAN("Vétéran", "Vous disposez de deux boucliers vous protégeant par deux fois contre les attaques des Chasseurs. Lorsqu'un Chasseur vous frappe, ce dernier "+

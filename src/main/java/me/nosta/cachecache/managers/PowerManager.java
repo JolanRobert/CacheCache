@@ -68,7 +68,14 @@ public class PowerManager {
     public void triggerPowerVeteran(PlayerRole veteran, PlayerRole hunter) {
         veteran.losePowerUse();
         veteran.getPlayer().setInvulnerable(true);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> veteran.getPlayer().setInvulnerable(false), 5*20);
+        hunter.setStunStatus(true);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+                veteran.getPlayer().setInvulnerable(false);
+                hunter.setStunStatus(false);
+            }
+        }, 5*20);
 
         if (veteran.getPowerUse() > 0) {
             veteran.getPlayer().removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
@@ -79,6 +86,10 @@ public class PowerManager {
         hunter.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.JUMP,5*20,127,false,false));
         hunter.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,5*20,0,false,false));
         hunter.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,5*20,0,false,false));
+
+
+
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> veteran.getPlayer().setInvulnerable(false), 5*20);
 
         veteran.getPlayer().playEffect(EntityEffect.TOTEM_RESURRECT);
 

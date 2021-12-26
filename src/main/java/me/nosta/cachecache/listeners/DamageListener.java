@@ -32,6 +32,7 @@ public class DamageListener implements Listener {
             //Hunter hits Survivor
             if (attacker.getTeam() == TeamEnum.CHASSEUR && victim.getTeam() == TeamEnum.SURVIVANT) {
                 if (!PlayerListener.hasCorrectItem(attacker.getPlayer(),Material.GOLDEN_SWORD,"Poignard")) return;
+                if (attacker.isStunned()) return;
 
                 RoleEnum role = victim.getRole() == RoleEnum.ESPION ? victim.getCover() : victim.getRole();
 
