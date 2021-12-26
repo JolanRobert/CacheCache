@@ -2,6 +2,7 @@ package me.nosta.cachecache;
 
 import me.nosta.cachecache.commands.CommandsCompleter;
 import me.nosta.cachecache.commands.GameCommands;
+import me.nosta.cachecache.commands.RoleCommands;
 import me.nosta.cachecache.listeners.*;
 import me.nosta.cachecache.managers.*;
 import org.bukkit.Difficulty;
@@ -58,6 +59,7 @@ public class Main extends JavaPlugin {
 	
 	private void registerCommands() {
 		this.getCommand("cc").setExecutor(GameCommands.getInstance());
+		this.getCommand("role").setExecutor(RoleCommands.getInstance());
 		this.getCommand("cc").setTabCompleter(CommandsCompleter.getInstance());
 	}
 }

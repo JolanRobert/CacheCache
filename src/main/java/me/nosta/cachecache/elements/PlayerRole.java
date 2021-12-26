@@ -28,7 +28,10 @@ public class PlayerRole {
 
 	private int powerUse; //for role that have limited usages of their power
 	private int cooldown; // for role that have cooldowns
+
 	private boolean stun;
+	private boolean invincible;
+	private boolean respawnable;
 
 	public PlayerRole(Player player) {
 		this.player = player;
@@ -45,7 +48,7 @@ public class PlayerRole {
 
 		roleInfo += role.getDescription();
 
-		if (role == RoleEnum.ANGE) roleInfo += ChatColor.DARK_GREEN+"\n(Ange) "+ChatColor.BLUE+"Votre adorateur est "+ChatColor.GREEN+admirer.getPlayer().getName()+".";
+		if (role == RoleEnum.ANGE && admirer != null) roleInfo += ChatColor.DARK_GREEN+"\n(Ange) "+ChatColor.BLUE+"Votre adorateur est "+ChatColor.GREEN+admirer.getPlayer().getName()+".";
 		else if (role == RoleEnum.JUMEAU) roleInfo += ChatColor.DARK_GREEN+"\n(Jumeau) "+ChatColor.BLUE+"Votre Jumeau est "+ChatColor.GREEN+twin.getPlayer().getName()+".";
 		else if (role == RoleEnum.ESPION) roleInfo += ChatColor.DARK_RED+"\n(Espion) "+ChatColor.BLUE+"Votre rôle de couverture est "+ChatColor.RED+cover.getName()+".";
 		else if (role == RoleEnum.CHASSEUR) {
@@ -66,6 +69,9 @@ public class PlayerRole {
 				giveHunterKnife();
 				player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,Integer.MAX_VALUE,0,false,false));
 				break;
+			case ANGE:
+				setInvincible(true);
+				break;
 			case ASTRONAUTE:
 				player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP,Integer.MAX_VALUE,2,false,false));
 				player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING,Integer.MAX_VALUE,0,false,false));
@@ -84,6 +90,9 @@ public class PlayerRole {
 				ItemEditor.setDisplayName(camouflage, ChatColor.YELLOW+"Camouflage");
 				ItemEditor.setLore(camouflage, new ArrayList<>(Arrays.asList(ChatColor.BLUE+"("+powerUse+" utilisations/60s de cooldown)",ChatColor.BLUE+"Rend invisible et octroie un bonus de vitesse pendant 10s")));
 				player.getInventory().addItem(camouflage);
+				break;
+			case PRETRE:
+				powerUse = 1;
 				break;
 			case REBELLE:
 				powerUse = 3;
@@ -136,6 +145,7 @@ public class PlayerRole {
 
 	public PlayerRole getTwin() {return this.twin;}
 	public RoleEnum getCover() {return this.cover;}
+	public PlayerRole getAdmirer() {return this.admirer;}
 
 	public void setCover(RoleEnum cover) {this.cover = cover;}
 	public void setTwin(PlayerRole twin) {this.twin = twin;}
@@ -145,8 +155,12 @@ public class PlayerRole {
 	public void losePowerUse() {this.powerUse--;}
 	public int getCooldown() {return this.cooldown;}
 	public void setCooldown(int cooldown) {this.cooldown = cooldown;}
-	public void setStunStatus(boolean stun) {this.stun = stun;}
-	public boolean isStunned() {return this.stun;}
 
+	public void setInvincible(boolean invincible) {this.invincible = invincible;}
+	public boolean isInvincible() {return this.invincible;}
+	public void setStun(boolean stun) {this.stun = stun;}
+	public boolean isStunned() {return this.stun;}
+	public void setRespawnable(boolean respawnable) {this.respawnable = respawnable;}
+	public boolean isRespawnable() {return this.respawnable;}
 
 }
