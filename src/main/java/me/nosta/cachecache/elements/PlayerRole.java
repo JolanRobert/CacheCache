@@ -91,7 +91,7 @@ public class PlayerRole {
 				powerUse = 3;
 				ItemStack camouflage = new ItemStack(Material.NETHER_STAR);
 				ItemEditor.setDisplayName(camouflage, ChatColor.YELLOW+"Camouflage");
-				ItemEditor.setLore(camouflage, new ArrayList<>(Arrays.asList(ChatColor.BLUE+"("+powerUse+" utilisations/90s de cooldown)",ChatColor.BLUE+"Rend invisible et octroie un bonus de vitesse pendant 10s")));
+				ItemEditor.setLore(camouflage, new ArrayList<>(Arrays.asList(ChatColor.BLUE+"("+powerUse+" utilisations/90s de cooldown)",ChatColor.BLUE+"Rend invisible et octroie un bonus de vitesse pendant 15s")));
 				player.getInventory().addItem(camouflage);
 				break;
 			case PRETRE:

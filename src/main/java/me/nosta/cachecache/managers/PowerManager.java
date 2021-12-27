@@ -56,12 +56,12 @@ public class PowerManager {
         ninja.losePowerUse();
         if (ninja.getPowerUse() == 0) ninja.getPlayer().getInventory().remove(Material.NETHER_STAR);
 
-        ninja.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED,10*20,1,false,false));
-        ninja.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY,10*20,0,false,false));
+        ninja.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED,15*20,1,false,false));
+        ninja.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY,15*20,0,false,false));
 
         ninja.getPlayer().playSound(ninja.getPlayer().getLocation(), Sound.ITEM_FIRECHARGE_USE, Integer.MAX_VALUE, 1);
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () ->
-                ninja.getPlayer().playSound(ninja.getPlayer().getLocation(), Sound.ITEM_FIRECHARGE_USE, Integer.MAX_VALUE, 1), 10*20);
+                ninja.getPlayer().playSound(ninja.getPlayer().getLocation(), Sound.ITEM_FIRECHARGE_USE, Integer.MAX_VALUE, 1), 15*20);
 
         ninja.getPlayer().sendMessage(ChatColor.DARK_GREEN+"(Ninja) "+ChatColor.GREEN+"Camouflage activé ! ("+(3-ninja.getPowerUse())+"/3)");
         if (ninja.getPowerUse() > 0) RunnableManager.getInstance().launchRunnable(RunnableEnum.NINJA);
