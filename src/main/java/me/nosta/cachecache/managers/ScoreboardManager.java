@@ -18,36 +18,32 @@ public class ScoreboardManager {
         return instance;
     }
 
-    private Scoreboard bukkitSB;
+    private Scoreboard customSB;
 
     private Team hunter, survivor;
 
-
-
     public ScoreboardManager() {
-        init();
+        customSB = Bukkit.getScoreboardManager().getNewScoreboard();
+        createTeams();
     }
 
-    public void init() {
-        bukkitSB = Objects.requireNonNull(Bukkit.getScoreboardManager()).getMainScoreboard();
-
-        //Teams
-        if (bukkitSB.getTeam("Hunter") == null) {
-            hunter = bukkitSB.registerNewTeam("Hunter");
+    public void createTeams() {
+        if (customSB.getTeam("Hunter") == null) {
+            hunter = customSB.registerNewTeam("Hunter");
             hunter.setColor(ChatColor.RED);
             setTeamOptions(hunter);
         }
-        else hunter = bukkitSB.getTeam("Hunter");
+        else hunter = customSB.getTeam("Hunter");
 
-        if (bukkitSB.getTeam("Survivor") == null) {
-            survivor = bukkitSB.registerNewTeam("Survivor");
+        if (customSB.getTeam("Survivor") == null) {
+            survivor = customSB.registerNewTeam("Survivor");
             survivor.setColor(ChatColor.GREEN);
             setTeamOptions(survivor);
         }
-        else survivor = bukkitSB.getTeam("Survivor");
+        else survivor = customSB.getTeam("Survivor");
 
         //Remove everyone from teams
-        for (Team team : bukkitSB.getTeams()) {
+        for (Team team : customSB.getTeams()) {
             for (String player : team.getEntries()) {
                 team.removeEntry(player);
             }
@@ -61,7 +57,7 @@ public class ScoreboardManager {
     }
 
     public void joinTeam(TeamEnum team, Player player) {
-        player.setScoreboard(bukkitSB);
+        player.setScoreboard(customSB);
         if (team == TeamEnum.CHASSEUR) {
             survivor.removeEntry(player.getName());
             hunter.addEntry(player.getName());
@@ -72,7 +68,11 @@ public class ScoreboardManager {
         }
     }
 
+    public void createQuests() {
+
+    }
+
     public void resetAll() {
-        init();
+        createTeams();
     }
 }
