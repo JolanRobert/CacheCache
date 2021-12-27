@@ -4,7 +4,7 @@ public class QuestManager {
 
     private static QuestManager instance;
 
-    public QuestManager getInstance() {
+    public static QuestManager getInstance() {
         if (instance == null) instance = new QuestManager();
         return instance;
     }

@@ -25,6 +25,9 @@ public class Main extends JavaPlugin {
 		ScoreboardManager.getInstance();
 		RunnableManager.getInstance();
 		PowerManager.getInstance();
+		QuestManager.getInstance();
+		SpawnManager.getInstance();
+		DeathManager.getInstance();
 		
 		this.config();
 		this.registerListeners();

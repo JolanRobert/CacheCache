@@ -14,7 +14,7 @@ public class SniperRunnable extends BukkitRunnable {
 
     public SniperRunnable(PlayerRole sniper) {
         this.sniper = sniper.getPlayer();
-        this.runTaskTimer(Main.getInstance(),0,50*20);
+        this.runTaskTimer(Main.getInstance(),0,45*20);
     }
 
     @Override

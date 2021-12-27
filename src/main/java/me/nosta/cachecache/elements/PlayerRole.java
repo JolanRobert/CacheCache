@@ -48,9 +48,9 @@ public class PlayerRole {
 
 		roleInfo += role.getDescription();
 
-		if (role == RoleEnum.ANGE && admirer != null) roleInfo += ChatColor.DARK_GREEN+"\n(Ange) "+ChatColor.BLUE+"Votre adorateur est "+ChatColor.GREEN+admirer.getPlayer().getName()+".";
+		if (role == RoleEnum.ESPION) roleInfo += ChatColor.DARK_RED+"\n(Espion) "+ChatColor.BLUE+"Votre rôle de couverture est "+ChatColor.RED+cover.getName()+".";
+		if (role == RoleEnum.ANGE || cover == RoleEnum.ANGE && admirer != null) roleInfo += ChatColor.DARK_GREEN+"\n(Ange) "+ChatColor.BLUE+"Votre adorateur est "+ChatColor.GREEN+admirer.getPlayer().getName()+".";
 		else if (role == RoleEnum.JUMEAU) roleInfo += ChatColor.DARK_GREEN+"\n(Jumeau) "+ChatColor.BLUE+"Votre Jumeau est "+ChatColor.GREEN+twin.getPlayer().getName()+".";
-		else if (role == RoleEnum.ESPION) roleInfo += ChatColor.DARK_RED+"\n(Espion) "+ChatColor.BLUE+"Votre rôle de couverture est "+ChatColor.RED+cover.getName()+".";
 		else if (role == RoleEnum.CHASSEUR) {
 			PlayerRole espion = RoleManager.getInstance().getPlayerRoleWithRole(RoleEnum.ESPION);
 			if (espion != null) roleInfo += ChatColor.DARK_RED+"\n(Chasseur) "+ChatColor.BLUE+"Votre Espion est "+ChatColor.RED+espion.getPlayer().getName()+".";

@@ -7,8 +7,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
-import java.util.Objects;
-
 public class ScoreboardManager {
 
     private static ScoreboardManager instance;
@@ -18,32 +16,32 @@ public class ScoreboardManager {
         return instance;
     }
 
-    private Scoreboard customSB;
+    private Scoreboard bukkitSB;
 
     private Team hunter, survivor;
 
     public ScoreboardManager() {
-        customSB = Bukkit.getScoreboardManager().getNewScoreboard();
+        bukkitSB = Bukkit.getScoreboardManager().getMainScoreboard();
         createTeams();
     }
 
     public void createTeams() {
-        if (customSB.getTeam("Hunter") == null) {
-            hunter = customSB.registerNewTeam("Hunter");
+        if (bukkitSB.getTeam("Hunter") == null) {
+            hunter = bukkitSB.registerNewTeam("Hunter");
             hunter.setColor(ChatColor.RED);
             setTeamOptions(hunter);
         }
-        else hunter = customSB.getTeam("Hunter");
+        else hunter = bukkitSB.getTeam("Hunter");
 
-        if (customSB.getTeam("Survivor") == null) {
-            survivor = customSB.registerNewTeam("Survivor");
+        if (bukkitSB.getTeam("Survivor") == null) {
+            survivor = bukkitSB.registerNewTeam("Survivor");
             survivor.setColor(ChatColor.GREEN);
             setTeamOptions(survivor);
         }
-        else survivor = customSB.getTeam("Survivor");
+        else survivor = bukkitSB.getTeam("Survivor");
 
         //Remove everyone from teams
-        for (Team team : customSB.getTeams()) {
+        for (Team team : bukkitSB.getTeams()) {
             for (String player : team.getEntries()) {
                 team.removeEntry(player);
             }
@@ -57,7 +55,7 @@ public class ScoreboardManager {
     }
 
     public void joinTeam(TeamEnum team, Player player) {
-        player.setScoreboard(customSB);
+        player.setScoreboard(bukkitSB);
         if (team == TeamEnum.CHASSEUR) {
             survivor.removeEntry(player.getName());
             hunter.addEntry(player.getName());

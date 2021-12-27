@@ -6,6 +6,7 @@ import me.nosta.cachecache.enums.RoleEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -26,7 +27,8 @@ public class SpawnManager {
     }
 
     public void initSpawns() {
-        hunterSpawn = new Location(hunterSpawn.getWorld(), 266,70,207,0,0);
+        hunterSpawn = new Location(Bukkit.getWorld("world"), 266,70,207,0,0);
+        survivorSpawns = new ArrayList<>();
 
         survivorSpawns.add(new Location(Bukkit.getWorld("world"),180,65,96.5,90,0)); //Abris Bus
         survivorSpawns.add(new Location(Bukkit.getWorld("world"),167,85,276,180,0)); //Apiculteur
@@ -34,11 +36,11 @@ public class SpawnManager {
         survivorSpawns.add(new Location(Bukkit.getWorld("world"),151,71,251,-90,0)); //Bar clandestin
         survivorSpawns.add(new Location(Bukkit.getWorld("world"),217,77,169,90,0)); //Bibliothèque
         survivorSpawns.add(new Location(Bukkit.getWorld("world"),132,66,256,180,0)); //Biocoop
-        survivorSpawns.add(new Location(Bukkit.getWorld("world"),197,71,83,180,0)); //Breton
+        survivorSpawns.add(new Location(Bukkit.getWorld("world"),197.5,71,83.5,180,0)); //Breton
         survivorSpawns.add(new Location(Bukkit.getWorld("world"),182,72,230,90,0)); //Cinéma
         survivorSpawns.add(new Location(Bukkit.getWorld("world"),162,73.5,74,180,0)); //Discothèque
         survivorSpawns.add(new Location(Bukkit.getWorld("world"),83,65,176,0,0)); //École
-        survivorSpawns.add(new Location(Bukkit.getWorld("world"),198,66,344,-90,0)); //Église
+        survivorSpawns.add(new Location(Bukkit.getWorld("world"),198,70,344,-90,0)); //Église
         survivorSpawns.add(new Location(Bukkit.getWorld("world"),266,75,155,180,0)); //Garage
         survivorSpawns.add(new Location(Bukkit.getWorld("world"),257,66,105,0,0)); //Gare
         survivorSpawns.add(new Location(Bukkit.getWorld("world"),81,79,237,0,0)); //Hélicoptère
@@ -69,4 +71,6 @@ public class SpawnManager {
             playerRole.getPlayer().teleport(rdmLocation);
         }
     }
+
+    public Location getHunterSpawn() {return this.hunterSpawn;}
 }

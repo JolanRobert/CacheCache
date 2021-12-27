@@ -34,10 +34,7 @@ public class PrepareGameRunnable extends BukkitRunnable {
 	public void run() {
 		if (timer < 6) showTitle();
 		else if (timer == 6) selectHunter();
-		else if (timer == 8) {
-			finalOperations();
-			teleportSurvivors();
-		}
+		else if (timer == 8) finalOperations();
 		else if (timer == 13) teleportHunter();
 		timer += 0.25f;
 	}
@@ -62,7 +59,7 @@ public class PrepareGameRunnable extends BukkitRunnable {
 		assignRoles();
 	}
 
-	public void assignRoles() {
+	private void assignRoles() {
 		//Remove Hunter
 		List<PlayerRole> playerRoles = RoleManager.getInstance().getPlayerRoles().stream().filter(pr -> pr.getRole() == null).collect(Collectors.toList());
 		List<RoleEnum> roles = new ArrayList<>(RoleManager.getInstance().getRoles());
@@ -96,20 +93,29 @@ public class PrepareGameRunnable extends BukkitRunnable {
 			}
 		}
 
-		//Spy Handling + Ange Handling
+		//Spy Handling
 		RoleEnum cover;
-		List<PlayerRole> potentialAdmirers = playerRoles.stream().filter(p -> p.getRole() != RoleEnum.CHASSEUR && p.getRole() != RoleEnum.ANGE).collect(Collectors.toList());
 		for (PlayerRole pr : playerRoles) {
 			if (pr.getRole() == RoleEnum.ESPION) {
 				if (roles.size() == 0) cover = RoleEnum.CIVIL;
 				else cover = roles.get(rdm.nextInt(roles.size()));
 				pr.setCover(cover);
-			}
-			else if (pr.getRole() == RoleEnum.ANGE) {
-				if (potentialAdmirers.size() == 0) pr.setAdmirer(null);
-				else pr.setAdmirer(potentialAdmirers.get(rdm.nextInt(potentialAdmirers.size())));
+				break;
 			}
 		}
+
+		//Ange Handling
+		RoleEnum role;
+		List<PlayerRole> potentialAdmirers = playerRoles.stream().filter(p -> p.getRole() != RoleEnum.CHASSEUR && p.getRole() != RoleEnum.ANGE && p.getCover() != RoleEnum.ANGE).collect(Collectors.toList());
+		for (PlayerRole pr : playerRoles) {
+			role = pr.getRole() == RoleEnum.ESPION ? pr.getCover() : pr.getRole();
+			if (role == RoleEnum.ANGE) {
+				if (potentialAdmirers.size() == 0) pr.setAdmirer(null);
+				else pr.setAdmirer(potentialAdmirers.get(rdm.nextInt(potentialAdmirers.size())));
+				break;
+			}
+		}
+
 	}
 
 	public void finalOperations() {
@@ -127,10 +133,11 @@ public class PrepareGameRunnable extends BukkitRunnable {
 			pr.getPlayer().playSound(pr.getPlayer().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP,Integer.MAX_VALUE,1);
 		}
 
-		GameManager.getInstance().startGame();
+		teleportSurvivors();
 	}
 
-	public void teleportSurvivors() {
+	private void teleportSurvivors() {
+		System.out.println("1");
 		for (PlayerRole pr : RoleManager.getInstance().getPlayerRoles()) {
 			if (pr.getTeam() == TeamEnum.SURVIVANT) SpawnManager.getInstance().teleportPlayer(pr);
 		}
@@ -140,6 +147,7 @@ public class PrepareGameRunnable extends BukkitRunnable {
 		PlayerRole hunter = RoleManager.getInstance().getPlayerRoleWithRole(RoleEnum.CHASSEUR);
 		SpawnManager.getInstance().teleportPlayer(hunter);
 
+		GameManager.getInstance().startGame();
 		this.cancel();
 	}
 }

@@ -82,7 +82,7 @@ public class PowerManager {
     public void triggerPowerRebelle(PlayerRole rebelle, PlayerRole hunter) {
         rebelle.losePowerUse();
         if (rebelle.getPowerUse() == 0) rebelle.getPlayer().getInventory().remove(Material.IRON_SWORD);
-        hunter.getPlayer().teleport(hunter.getPlayer().getLocation().add(0,30,0));
+        hunter.getPlayer().teleport(SpawnManager.getInstance().getHunterSpawn());
 
         rebelle.getPlayer().sendMessage(ChatColor.DARK_GREEN+"(Rebelle) "+ChatColor.GREEN+"Vous avez renvoyé "+ChatColor.RED+hunter.getPlayer().getName()+ChatColor.GREEN+" à son spawn ! ("+(3-rebelle.getPowerUse())+"/3)");
         hunter.getPlayer().sendMessage(ChatColor.DARK_RED+"(Chasseur) "+ChatColor.RED+"Vous avez été renvoyé au spawn par le Rebelle !");

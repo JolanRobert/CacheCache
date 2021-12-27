@@ -18,7 +18,7 @@ public enum RoleEnum {
 	PRETRE("Prêtre", "Chaque fois qu'un Survivant meurt, un message vous en informe. Une fois dans la partie vous pouvez ressusciter un Survivant en tant que Civil "+
 			"dans un temps limité (10s). Vous ne pouvez pas vous ressusciter vous-même."),
 	REBELLE("Rebelle", "Vous disposez d'une Dague permettant de renvoyer les Chasseurs à leur spawn lorsque vous les touchez (3 fois max)."),
-	SNIPER("Sniper", "Vous disposez d'un Fusil de précision Punch X, toutes les 50s vous recevez une flèche."),
+	SNIPER("Sniper", "Vous disposez d'un Fusil de précision Punch X, toutes les 45s vous recevez une flèche."),
 	VETERAN("Vétéran", "Vous disposez de deux boucliers vous protégeant par deux fois contre les attaques des Chasseurs. Lorsqu'un Chasseur vous frappe, ce dernier "+
 			"sera étourdi brièvement et vous perdrez un bouclier.");
 	
