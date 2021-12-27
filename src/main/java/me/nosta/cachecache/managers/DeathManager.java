@@ -31,7 +31,7 @@ public class DeathManager {
 
         for (PlayerRole pr : RoleManager.getInstance().getPlayerRoles()) {
             if (pr.getTeam() == TeamEnum.CHASSEUR) {
-                pr.getPlayer().sendMessage(ChatColor.DARK_RED+"(Chasseur) "+ChatColor.RED+pr.getPlayer().getName()+" a tué "+ChatColor.GREEN+survivor.getPlayer().getName()+" !");
+                pr.getPlayer().sendMessage(ChatColor.DARK_RED+"(Chasseur) "+ChatColor.RED+hunter.getPlayer().getName()+" a tué "+ChatColor.GREEN+survivor.getPlayer().getName()+" !");
             }
         }
 
@@ -63,6 +63,7 @@ public class DeathManager {
     public void pretreHandling(PlayerRole dead) {
         PlayerRole pretre = RoleManager.getInstance().getPlayerRoleWithRole(RoleEnum.PRETRE);
         if (pretre == null) return;
+        if (pretre == dead) return;
         if (pretre.getPowerUse() == 0) return;
 
         TextComponent msg = new TextComponent(ChatColor.DARK_GREEN+"(Prêtre) "+ChatColor.GREEN+dead.getPlayer().getName()+" est mort ! Cliquer sur ce message pour le ressusciter.");

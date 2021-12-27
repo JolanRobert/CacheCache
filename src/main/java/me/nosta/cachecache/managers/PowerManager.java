@@ -73,6 +73,7 @@ public class PowerManager {
         dead.setTeam(TeamEnum.SURVIVANT);
         dead.setRole(RoleEnum.CIVIL);
         dead.clearAll();
+        dead.getPlayer().teleport(pretre.getPlayer().getLocation());
 
         pretre.getPlayer().sendMessage(ChatColor.DARK_GREEN+"(Prêtre) "+ChatColor.GREEN+"Vous avez ressuscité "+dead.getPlayer().getName()+ChatColor.GREEN+" !");
         dead.getPlayer().sendMessage(ChatColor.GREEN+"Vous avez été ressuscité par le Prêtre ! Vous retournez dans l'équipe des Survivants en tant que simple Civil.");
@@ -101,7 +102,7 @@ public class PowerManager {
 
         if (veteran.getPowerUse() > 0) {
             veteran.getPlayer().removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
-            veteran.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE,Integer.MAX_VALUE, veteran.getPowerUse()-1,false,false));
+            veteran.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,Integer.MAX_VALUE, veteran.getPowerUse()-1,false,false));
         }
 
         hunter.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW,5*20,127,false,false));

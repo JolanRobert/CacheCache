@@ -75,16 +75,16 @@ public class PrepareGameRunnable extends BukkitRunnable {
 		roles.removeAll(Collections.singleton(RoleEnum.JUMEAU)); //spy can't be twin
 
 		//Twin Handling
-		List<PlayerRole> twins = playerRoles.stream().filter(p -> p.getRole() == RoleEnum.JUMEAU).collect(Collectors.toList());
-		if (twins.size() == 1) {
+		PlayerRole twin = RoleManager.getInstance().getPlayerRoleWithRole(RoleEnum.JUMEAU);
+		if (twin != null) {
 			List<PlayerRole> survivors = playerRoles.stream().filter(p -> p.getRole() != RoleEnum.CHASSEUR && p.getRole() != RoleEnum.JUMEAU).collect(Collectors.toList());
-			if (survivors.size() == 0) twins.get(0).setRole(RoleEnum.CIVIL);
+			if (survivors.size() == 0) twin.setRole(RoleEnum.CIVIL);
 			else {
 				PlayerRole newTwin = survivors.get(rdm.nextInt(survivors.size()));
 				roles.add(newTwin.getRole());
 				newTwin.setRole(RoleEnum.JUMEAU);
-				twins.get(0).setTwin(newTwin);
-				newTwin.setTwin(twins.get(0));
+				twin.setTwin(newTwin);
+				newTwin.setTwin(twin);
 			}
 		}
 

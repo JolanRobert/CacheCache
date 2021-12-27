@@ -24,22 +24,33 @@ public class DamageListener implements Listener {
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
         event.setDamage(0);
+        PlayerRole victim, attacker;
+        RoleEnum role;
 
-        PlayerRole victim = RoleManager.getInstance().getPlayerRoleWithPlayer((Player)event.getEntity());
-        PlayerRole attacker = RoleManager.getInstance().getPlayerRoleWithPlayer((Player)event.getDamager());
+        //Bow damage handling
+        if (event.getEntity() instanceof Player && event.getDamager() instanceof Arrow && ((Arrow) event.getDamager()).getShooter() instanceof Player) {
+            victim = RoleManager.getInstance().getPlayerRoleWithPlayer((Player)event.getEntity());
+            attacker = RoleManager.getInstance().getPlayerRoleWithPlayer((Player)((Arrow) event.getDamager()).getShooter());
+
+            if (attacker.getRole() == RoleEnum.SNIPER && victim.getRole() == RoleEnum.CHASSEUR) {
+                victim.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,5*20,0,false,false));
+            }
+            return;
+        }
+
+        victim = RoleManager.getInstance().getPlayerRoleWithPlayer((Player)event.getEntity());
+        attacker = RoleManager.getInstance().getPlayerRoleWithPlayer((Player)event.getDamager());
 
         if (attacker == null || victim == null) return;
         if (attacker.isStunned()) return;
         if (victim.isInvincible()) event.setCancelled(true);
-
-        RoleEnum role = victim.getRole() == RoleEnum.ESPION ? victim.getCover() : victim.getRole();
 
         //Melee damage handling
         if (event.getEntity() instanceof Player && event.getDamager() instanceof Player) {
             //Hunter hits Survivor
             if (attacker.getTeam() == TeamEnum.CHASSEUR && victim.getTeam() == TeamEnum.SURVIVANT) {
                 if (!DeathManager.getInstance().hasCorrectItem(attacker.getPlayer(),Material.GOLDEN_SWORD,"Poignard")) return;
-
+                role = victim.getRole() == RoleEnum.ESPION ? victim.getCover() : victim.getRole();
                 switch (role) {
                     case ANGE:
                         if (victim.isInvincible()) PowerManager.getInstance().triggerPowerAnge(victim,attacker);
@@ -70,17 +81,11 @@ public class DamageListener implements Listener {
             }
 
             //Rebelle hits Hunter
-            else if (attacker.getRole() == RoleEnum.REBELLE && victim.getRole() == RoleEnum.CHASSEUR) {
+            else if (attacker.getTeam() == TeamEnum.SURVIVANT && victim.getTeam() == TeamEnum.CHASSEUR) {
+                role = attacker.getRole() == RoleEnum.ESPION ? attacker.getCover() : attacker.getRole();
                 if (role == RoleEnum.REBELLE && attacker.getPowerUse() > 0) {
                     if (DeathManager.getInstance().hasCorrectItem(attacker.getPlayer(), Material.IRON_SWORD,"Dague")) PowerManager.getInstance().triggerPowerRebelle(attacker,victim);
                 }
-            }
-        }
-
-        //Bow damage handling
-        else if (event.getEntity() instanceof Player && event.getDamager() instanceof Arrow && ((Arrow) event.getDamager()).getShooter() instanceof Player) {
-            if (attacker.getRole() == RoleEnum.SNIPER && victim.getRole() == RoleEnum.CHASSEUR) {
-                victim.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,5*20,0,false,false));
             }
         }
     }

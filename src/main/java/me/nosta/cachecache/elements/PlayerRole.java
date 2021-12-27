@@ -70,7 +70,10 @@ public class PlayerRole {
 				player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,Integer.MAX_VALUE,0,false,false));
 				break;
 			case ANGE:
-				setInvincible(true);
+				if (admirer != null) {
+					powerUse = 1;
+					setInvincible(true);
+				}
 				break;
 			case ASTRONAUTE:
 				player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP,Integer.MAX_VALUE,2,false,false));
@@ -88,7 +91,7 @@ public class PlayerRole {
 				powerUse = 3;
 				ItemStack camouflage = new ItemStack(Material.NETHER_STAR);
 				ItemEditor.setDisplayName(camouflage, ChatColor.YELLOW+"Camouflage");
-				ItemEditor.setLore(camouflage, new ArrayList<>(Arrays.asList(ChatColor.BLUE+"("+powerUse+" utilisations/60s de cooldown)",ChatColor.BLUE+"Rend invisible et octroie un bonus de vitesse pendant 10s")));
+				ItemEditor.setLore(camouflage, new ArrayList<>(Arrays.asList(ChatColor.BLUE+"("+powerUse+" utilisations/90s de cooldown)",ChatColor.BLUE+"Rend invisible et octroie un bonus de vitesse pendant 10s")));
 				player.getInventory().addItem(camouflage);
 				break;
 			case PRETRE:

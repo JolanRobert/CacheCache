@@ -40,7 +40,6 @@ public class JumeauRunnable extends BukkitRunnable {
         Vector difference = targetPos.subtract(playerPos).toVector().normalize();
         double alpha = (Math.atan2(difference.getZ(), difference.getX()) - (Math.PI / 2));
         double yaw = playerPos.getYaw()-Math.toDegrees(alpha);
-        System.out.println(yaw);
         if (yaw >= -45 && yaw <= 45) return " ↑ ";
         else if (yaw >= 45 && yaw <= 135) return " ← ";
         else if (yaw >= -135 && yaw <= -45) return " → ";
