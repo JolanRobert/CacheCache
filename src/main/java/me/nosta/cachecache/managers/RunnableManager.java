@@ -26,6 +26,9 @@ public class RunnableManager {
             case PREPARE_GAME:
                 new PrepareGameRunnable();
                 break;
+            case INGAME:
+                new IngameRunnable();
+                break;
             case CAPITAINE:
                 PlayerRole capitaine = RoleManager.getInstance().getPlayerRoleWithRole(RoleEnum.CAPITAINE);
                 if (capitaine != null) capitaineRunnable = new CapitaineRunnable(capitaine);

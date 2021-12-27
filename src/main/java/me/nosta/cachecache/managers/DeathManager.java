@@ -35,12 +35,13 @@ public class DeathManager {
             }
         }
 
-        survivor.getPlayer().sendMessage(ChatColor.RED+"Vous êtes mort ! Vous rejoignez l'équipe des Chasseurs.");
-
         survivor.setTeam(TeamEnum.CHASSEUR);
         survivor.setRole(RoleEnum.CHASSEUR);
         survivor.clearAll();
         survivor.giveHunterKnife();
+
+        survivor.getPlayer().sendMessage(ChatColor.RED+"Vous êtes mort ! Vous rejoignez l'équipe des Chasseurs.");
+        SpawnManager.getInstance().teleportPlayer(survivor);
 
         survivor.setRespawnable(true);
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> survivor.setRespawnable(false),10*20);

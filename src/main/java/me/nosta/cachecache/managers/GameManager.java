@@ -29,6 +29,7 @@ public class GameManager {
 		RunnableManager.getInstance().launchRunnable(RunnableEnum.CAPITAINE);
 		RunnableManager.getInstance().launchRunnable(RunnableEnum.JUMEAU);
 		RunnableManager.getInstance().launchRunnable(RunnableEnum.SNIPER);
+		RunnableManager.getInstance().launchRunnable(RunnableEnum.INGAME);
 	}
 	
 	public void endGame() {

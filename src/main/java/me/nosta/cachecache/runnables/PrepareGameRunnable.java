@@ -6,10 +6,14 @@ import me.nosta.cachecache.enums.RoleEnum;
 import me.nosta.cachecache.enums.TeamEnum;
 import me.nosta.cachecache.managers.GameManager;
 import me.nosta.cachecache.managers.RoleManager;
+import me.nosta.cachecache.managers.SpawnManager;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitScheduler;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,7 +34,11 @@ public class PrepareGameRunnable extends BukkitRunnable {
 	public void run() {
 		if (timer < 6) showTitle();
 		else if (timer == 6) selectHunter();
-		else if (timer == 8) finalOperations();
+		else if (timer == 8) {
+			finalOperations();
+			teleportSurvivors();
+		}
+		else if (timer == 13) teleportHunter();
 		timer += 0.25f;
 	}
 
@@ -118,7 +126,20 @@ public class PrepareGameRunnable extends BukkitRunnable {
 
 			pr.getPlayer().playSound(pr.getPlayer().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP,Integer.MAX_VALUE,1);
 		}
-		this.cancel();
+
 		GameManager.getInstance().startGame();
+	}
+
+	public void teleportSurvivors() {
+		for (PlayerRole pr : RoleManager.getInstance().getPlayerRoles()) {
+			if (pr.getTeam() == TeamEnum.SURVIVANT) SpawnManager.getInstance().teleportPlayer(pr);
+		}
+	}
+
+	public void teleportHunter() {
+		PlayerRole hunter = RoleManager.getInstance().getPlayerRoleWithRole(RoleEnum.CHASSEUR);
+		SpawnManager.getInstance().teleportPlayer(hunter);
+
+		this.cancel();
 	}
 }
