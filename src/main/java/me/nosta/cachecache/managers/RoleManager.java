@@ -19,36 +19,17 @@ public class RoleManager {
 
     private List<PlayerRole> playerRoles = new ArrayList<>();
     private List<RoleEnum> roles = new ArrayList<>();
-    private int nbNonCivils;
 
     public RoleManager() {
-        this.init();
+        init();
     }
 
     public void init() {
-        nbNonCivils = 1; //Chasseur
-
-        for (RoleEnum r : roles) {
-            if (r == RoleEnum.JUMEAU) nbNonCivils += 2;
-            else nbNonCivils++;
-        }
-
         Bukkit.getOnlinePlayers().forEach(this::addPlayerRole);
     }
 
-    public void addRole(RoleEnum role) {
-        roles.add(role);
-
-        if (role == RoleEnum.JUMEAU) nbNonCivils += 2;
-        else nbNonCivils++;
-    }
-
-    public void removeRole(RoleEnum role) {
-        roles.remove(role);
-
-        if (role == RoleEnum.JUMEAU) nbNonCivils -= 2;
-        else nbNonCivils--;
-    }
+    public void addRole(RoleEnum role) {roles.add(role);}
+    public void removeRole(RoleEnum role) {roles.remove(role);}
 
     public void addPlayerRole(Player player) {
         PlayerRole pr = new PlayerRole(player);
@@ -84,7 +65,6 @@ public class RoleManager {
         return null;
     }
 
-    public int getNbNonCivils() {return nbNonCivils;}
     public List<RoleEnum> getRoles() {return roles;}
     public List<PlayerRole> getPlayerRoles() {return playerRoles;}
 }

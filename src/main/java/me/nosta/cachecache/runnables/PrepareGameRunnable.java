@@ -33,13 +33,18 @@ public class PrepareGameRunnable extends BukkitRunnable {
 	@Override
 	public void run() {
 		if (timer < 6) showTitle();
-		else if (timer == 6) selectHunter();
-		else if (timer == 8) finalOperations();
-		else if (timer == 13) teleportHunter();
+		else if (timer == 6) assignRoles();
+		else if (timer == 8) revealRoles();
+
+		if (timer >= 8 && timer < 12) countdownSurvivors();
+		else if (timer == 13) teleportSurvivors();
+
+		if (timer >= 13 && timer < 22) countdownHunter();
+		else if (timer == 23) teleportHunter();
 		timer += 0.25f;
 	}
 
-	public void showTitle() {
+	private void showTitle() {
 		if (timer <= 2 || timer <= 4 && timer%0.5f == 0 || timer < 6 && timer%1 == 0) {
 			Player rdmPlayer = RoleManager.getInstance().getPlayerRoles().get(rdm.nextInt(RoleManager.getInstance().getPlayerRoles().size())).getPlayer();
 			for (PlayerRole pr : RoleManager.getInstance().getPlayerRoles()) {
@@ -49,23 +54,28 @@ public class PrepareGameRunnable extends BukkitRunnable {
 		}
 	}
 
-	public void selectHunter() {
-		Player rdmPlayer = RoleManager.getInstance().getPlayerRoles().get(rdm.nextInt(RoleManager.getInstance().getPlayerRoles().size())).getPlayer();
-		for (PlayerRole pr : RoleManager.getInstance().getPlayerRoles()) {
-			pr.getPlayer().sendTitle(ChatColor.RED+rdmPlayer.getName(),ChatColor.DARK_RED+"sera le chasseur !",0,40,20);
-			pr.getPlayer().playSound(pr.getPlayer().getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL,Integer.MAX_VALUE,1);
-			if (rdmPlayer == pr.getPlayer()) pr.setRole(RoleEnum.CHASSEUR);
-		}
-		assignRoles();
+	private void assignRoles() {
+		List<PlayerRole> playerRoles = RoleManager.getInstance().getPlayerRoles();
+		List<RoleEnum> roles = RoleManager.getInstance().getRoles();
+
+		chooseHunter(playerRoles);
+		survivorsRoles(playerRoles,roles);
+		jumeauHandling(playerRoles,roles);
+		espionHandling(playerRoles,roles);
+		angeHandling(playerRoles);
 	}
 
-	private void assignRoles() {
-		//Remove Hunter
-		List<PlayerRole> playerRoles = RoleManager.getInstance().getPlayerRoles().stream().filter(pr -> pr.getRole() == null).collect(Collectors.toList());
-		List<RoleEnum> roles = new ArrayList<>(RoleManager.getInstance().getRoles());
+	private void chooseHunter(List<PlayerRole> playerRoles) {
+		PlayerRole hunter = playerRoles.get(rdm.nextInt(playerRoles.size()));
+		hunter.setRole(RoleEnum.CHASSEUR);
+		for (PlayerRole pr : RoleManager.getInstance().getPlayerRoles()) {
+			pr.getPlayer().sendTitle(ChatColor.RED+hunter.getPlayer().getName(),ChatColor.DARK_RED+"sera le chasseur !",0,40,20);
+			pr.getPlayer().playSound(pr.getPlayer().getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL,Integer.MAX_VALUE,1);
+		}
+	}
 
+	private void survivorsRoles(List<PlayerRole> playerRoles, List<RoleEnum> roles) {
 		RoleEnum rdmRole;
-
 		for (PlayerRole pr : playerRoles) {
 			if (roles.size() == 0) {
 				pr.setRole(RoleEnum.CIVIL);
@@ -76,76 +86,82 @@ public class PrepareGameRunnable extends BukkitRunnable {
 			pr.setRole(rdmRole);
 			roles.remove(rdmRole);
 		}
-
-		roles.removeAll(Collections.singleton(RoleEnum.JUMEAU)); //spy can't be twin
-
-		//Twin Handling
-		PlayerRole twin = RoleManager.getInstance().getPlayerRoleWithRole(RoleEnum.JUMEAU);
-		if (twin != null) {
-			List<PlayerRole> survivors = playerRoles.stream().filter(p -> p.getRole() != RoleEnum.CHASSEUR && p.getRole() != RoleEnum.JUMEAU).collect(Collectors.toList());
-			if (survivors.size() == 0) twin.setRole(RoleEnum.CIVIL);
-			else {
-				PlayerRole newTwin = survivors.get(rdm.nextInt(survivors.size()));
-				roles.add(newTwin.getRole());
-				newTwin.setRole(RoleEnum.JUMEAU);
-				twin.setTwin(newTwin);
-				newTwin.setTwin(twin);
-			}
-		}
-
-		//Spy Handling
-		RoleEnum cover;
-		for (PlayerRole pr : playerRoles) {
-			if (pr.getRole() == RoleEnum.ESPION) {
-				if (roles.size() == 0) cover = RoleEnum.CIVIL;
-				else cover = roles.get(rdm.nextInt(roles.size()));
-				pr.setCover(cover);
-				break;
-			}
-		}
-
-		//Ange Handling
-		RoleEnum role;
-		List<PlayerRole> potentialAdmirers = playerRoles.stream().filter(p -> p.getRole() != RoleEnum.CHASSEUR && p.getRole() != RoleEnum.ANGE && p.getCover() != RoleEnum.ANGE).collect(Collectors.toList());
-		for (PlayerRole pr : playerRoles) {
-			role = pr.getRole() == RoleEnum.ESPION ? pr.getCover() : pr.getRole();
-			if (role == RoleEnum.ANGE) {
-				if (potentialAdmirers.size() == 0) pr.setAdmirer(null);
-				else pr.setAdmirer(potentialAdmirers.get(rdm.nextInt(potentialAdmirers.size())));
-				break;
-			}
-		}
-
 	}
 
-	public void finalOperations() {
+	private void jumeauHandling(List<PlayerRole> playerRoles, List<RoleEnum> roles) {
+		PlayerRole twin = RoleManager.getInstance().getPlayerRoleWithRole(RoleEnum.JUMEAU);
+		if (twin == null) return;
+
+		List<PlayerRole> potentialTwins = playerRoles.stream().filter(p -> p.getRole() != RoleEnum.CHASSEUR && p.getRole() != RoleEnum.JUMEAU).collect(Collectors.toList());
+		if (potentialTwins.size() == 0) twin.setRole(RoleEnum.CIVIL);
+		else {
+			PlayerRole newTwin = potentialTwins.get(rdm.nextInt(potentialTwins.size()));
+			roles.add(newTwin.getRole());
+			newTwin.setRole(RoleEnum.JUMEAU);
+			twin.setTwin(newTwin);
+			newTwin.setTwin(twin);
+		}
+	}
+
+	private void espionHandling(List<PlayerRole> playerRoles, List<RoleEnum> roles) {
+		PlayerRole spy = RoleManager.getInstance().getPlayerRoleWithRole(RoleEnum.ESPION);
+		if (spy == null) return;
+
+		if (roles.size() == 0) spy.setCover(RoleEnum.CIVIL);
+		else {
+			RoleEnum cover = roles.get(rdm.nextInt(roles.size()));
+			spy.setCover(cover);
+		}
+	}
+
+	private void angeHandling(List<PlayerRole> playerRoles) {
+		PlayerRole ange = RoleManager.getInstance().getPlayerRoleWithRole(RoleEnum.ANGE);
+		if (ange == null) return;
+
+		List<PlayerRole> potentialAdmirers = playerRoles.stream().filter(p -> p.getRole() != RoleEnum.CHASSEUR
+				&& p.getRole() != RoleEnum.ANGE && p.getCover() != RoleEnum.ANGE).collect(Collectors.toList());
+
+		if (potentialAdmirers.size() == 0) ange.setAdmirer(null);
+		else ange.setAdmirer(potentialAdmirers.get(rdm.nextInt(potentialAdmirers.size())));
+	}
+
+	private void revealRoles() {
 		for (PlayerRole pr : RoleManager.getInstance().getPlayerRoles()) {
-			//Role Infos
 			pr.showRoleInfo();
 
-			//Teams
 			if (pr.getRole() == RoleEnum.CHASSEUR) pr.setTeam(TeamEnum.CHASSEUR);
 			else pr.setTeam(TeamEnum.SURVIVANT);
 
-			//Items and Effects
-			pr.giveRolePowers();
-
 			pr.getPlayer().playSound(pr.getPlayer().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP,Integer.MAX_VALUE,1);
 		}
+	}
 
-		teleportSurvivors();
+	private void countdownSurvivors() {
+		for (PlayerRole pr : RoleManager.getInstance().getPlayerRoles()) {
+			pr.getPlayer().sendMessage(ChatColor.GOLD+"[CC] "+ChatColor.BLUE+"Téléportation des Survivants dans "+(13-timer)+"s");
+		}
 	}
 
 	private void teleportSurvivors() {
-		System.out.println("1");
 		for (PlayerRole pr : RoleManager.getInstance().getPlayerRoles()) {
 			if (pr.getTeam() == TeamEnum.SURVIVANT) SpawnManager.getInstance().teleportPlayer(pr);
 		}
 	}
 
-	public void teleportHunter() {
-		PlayerRole hunter = RoleManager.getInstance().getPlayerRoleWithRole(RoleEnum.CHASSEUR);
-		SpawnManager.getInstance().teleportPlayer(hunter);
+	private void countdownHunter() {
+		for (PlayerRole pr : RoleManager.getInstance().getPlayerRoles()) {
+			pr.getPlayer().sendMessage(ChatColor.GOLD+"[CC] "+ChatColor.BLUE+"Téléportation du Chasseur dans "+(23-timer)+"s");
+		}
+	}
+
+	private void teleportHunter() {
+		for (PlayerRole pr : RoleManager.getInstance().getPlayerRoles()) {
+			pr.giveRolePowers();
+
+			if (pr.getRole() == RoleEnum.CHASSEUR) SpawnManager.getInstance().teleportPlayer(pr);
+
+			pr.getPlayer().playSound(pr.getPlayer().getLocation(), Sound.ENTITY_WOLF_GROWL,Integer.MAX_VALUE,1);
+		}
 
 		GameManager.getInstance().startGame();
 		this.cancel();

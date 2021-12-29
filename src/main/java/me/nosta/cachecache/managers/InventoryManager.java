@@ -9,6 +9,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class InventoryManager {
 	
@@ -32,9 +33,7 @@ public class InventoryManager {
 		ItemEditor.setDisplayName(item, "Chasseur");
 		ItemEditor.setLore(item, ChatColor.GREEN+""+ChatColor.BOLD+"ON"+ChatColor.GOLD+" [LOCK]");
 		this.configInventory.setItem(0, item);
-
 		this.configInventory.setItem(1, item);
-		UpdateNbCivil();
 		
 		item.setType(Material.RED_TERRACOTTA);
 		
@@ -49,6 +48,8 @@ public class InventoryManager {
 		ItemStack close = new ItemStack(Material.BARRIER);
 		ItemEditor.setDisplayName(close, ChatColor.RED+""+ChatColor.BOLD+"Fermer");
 		this.configInventory.setItem(26, close);
+
+		UpdateNbCivil();
 	}
 	
 	public void ChangeRoleState(int slot, boolean isActive) {
@@ -70,8 +71,10 @@ public class InventoryManager {
 	}
 
 	public void UpdateNbCivil() {
-		int nbCivils = RoleManager.getInstance().getPlayerRoles().size()-RoleManager.getInstance().getNbNonCivils();
-		if (nbCivils < 0) nbCivils = 0;
+		List<RoleEnum> roles = RoleManager.getInstance().getRoles();
+		int nbCivils = roles.size();
+		if (roles.contains(RoleEnum.JUMEAU)) nbCivils++;
+
 		if (nbCivils == 0) this.configInventory.getContents()[1].setType(Material.RED_TERRACOTTA);
 		else this.configInventory.getContents()[1].setType(Material.LIME_TERRACOTTA);
 		ItemEditor.setDisplayName(this.configInventory.getContents()[1], "Civil ("+nbCivils+")");

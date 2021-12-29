@@ -14,19 +14,21 @@ import java.util.stream.Collectors;
 
 public class CapitaineRunnable extends BukkitRunnable {
 
-    Player capitaine;
+    PlayerRole capitaine;
     List<PlayerRole> hunters;
 
     public CapitaineRunnable(PlayerRole capitaine) {
-        this.capitaine = capitaine.getPlayer();
+        this.capitaine = capitaine;
         this.runTaskTimer(Main.getInstance(),0,1*20);
     }
 
     @Override
     public void run() {
+        if (capitaine.getRole() != RoleEnum.CAPITAINE) this.cancel();
+
         hunters = RoleManager.getInstance().getPlayerRoles().stream().filter(pr -> pr.getRole() == RoleEnum.CHASSEUR).collect(Collectors.toList());
         for (PlayerRole pr : hunters) {
-            if (capitaine.getLocation().distance(pr.getPlayer().getLocation()) <= 30) {
+            if (capitaine.getPlayer().getLocation().distance(pr.getPlayer().getLocation()) <= 30) {
                 pr.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,25,0,false,false));
             }
         }

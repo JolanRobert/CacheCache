@@ -2,7 +2,8 @@ package me.nosta.cachecache.managers;
 
 import me.nosta.cachecache.Main;
 import me.nosta.cachecache.enums.GameState;
-import me.nosta.cachecache.enums.RunnableEnum;
+import me.nosta.cachecache.runnables.IngameRunnable;
+import me.nosta.cachecache.runnables.PrepareGameRunnable;
 import org.bukkit.Bukkit;
 
 public class GameManager {
@@ -21,15 +22,13 @@ public class GameManager {
 
 	public void prepareGame() {
 		this.setState(GameState.STARTING);
-		RunnableManager.getInstance().launchRunnable(RunnableEnum.PREPARE_GAME);
+		new PrepareGameRunnable();
 	}
 
 	public void startGame() {
 		this.setState(GameState.PLAYING);
-		RunnableManager.getInstance().launchRunnable(RunnableEnum.CAPITAINE);
-		RunnableManager.getInstance().launchRunnable(RunnableEnum.JUMEAU);
-		RunnableManager.getInstance().launchRunnable(RunnableEnum.SNIPER);
-		RunnableManager.getInstance().launchRunnable(RunnableEnum.INGAME);
+		RunnableManager.getInstance().startGameRoleRunnables();
+		new IngameRunnable();
 	}
 	
 	public void endGame() {

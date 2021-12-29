@@ -2,6 +2,7 @@ package me.nosta.cachecache.commands;
 
 import me.nosta.cachecache.enums.GameState;
 import me.nosta.cachecache.managers.GameManager;
+import me.nosta.cachecache.managers.SpawnManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -58,6 +59,10 @@ public class GameCommands implements CommandExecutor {
 		else if (args[0].equalsIgnoreCase("stop") && args[1].equalsIgnoreCase("confirm")) {
 			if (GameManager.getInstance().getState() == GameState.WAITING) return this.cancelCommand(player, "Aucune partie n'est en cours.");
 			else ce.endGame(player);
+		}
+
+		else if (args[0].equalsIgnoreCase("tp")) {
+			SpawnManager.getInstance().debugTP(player,Integer.parseInt(args[1]));
 		}
 		
 		return true;

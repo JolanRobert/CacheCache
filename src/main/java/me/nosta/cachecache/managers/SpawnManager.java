@@ -5,6 +5,7 @@ import me.nosta.cachecache.enums.GameState;
 import me.nosta.cachecache.enums.RoleEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +71,10 @@ public class SpawnManager {
             Location rdmLocation = survivorSpawns.get(rdm.nextInt(survivorSpawns.size()));
             playerRole.getPlayer().teleport(rdmLocation);
         }
+    }
+
+    public void debugTP(Player player, int spawn) {
+        player.teleport(survivorSpawns.get(spawn));
     }
 
     public Location getHunterSpawn() {return this.hunterSpawn;}

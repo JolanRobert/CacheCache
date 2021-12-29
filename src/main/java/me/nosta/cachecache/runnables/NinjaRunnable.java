@@ -2,6 +2,7 @@ package me.nosta.cachecache.runnables;
 
 import me.nosta.cachecache.Main;
 import me.nosta.cachecache.elements.PlayerRole;
+import me.nosta.cachecache.enums.RoleEnum;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -13,11 +14,13 @@ public class NinjaRunnable extends BukkitRunnable {
     public NinjaRunnable(PlayerRole ninja) {
         this.ninja = ninja;
         ninja.setCooldown(90);
-        this.runTaskTimer(Main.getInstance(),0,1*20);
+        this.runTaskTimer(Main.getInstance(),1*20,1*20);
     }
 
     @Override
     public void run() {
+        if (ninja.getRole() != RoleEnum.NINJA) this.cancel();
+
         ninja.setCooldown(ninja.getCooldown()-1);
         if (ninja.getCooldown() == 0) {
             ninja.getPlayer().sendMessage(ChatColor.DARK_GREEN+"(Ninja) "+ChatColor.GREEN+"Camouflage rechargé !");

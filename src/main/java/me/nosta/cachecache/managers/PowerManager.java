@@ -3,7 +3,6 @@ package me.nosta.cachecache.managers;
 import me.nosta.cachecache.Main;
 import me.nosta.cachecache.elements.PlayerRole;
 import me.nosta.cachecache.enums.RoleEnum;
-import me.nosta.cachecache.enums.RunnableEnum;
 import me.nosta.cachecache.enums.TeamEnum;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -64,7 +63,7 @@ public class PowerManager {
                 ninja.getPlayer().playSound(ninja.getPlayer().getLocation(), Sound.ITEM_FIRECHARGE_USE, Integer.MAX_VALUE, 1), 15*20);
 
         ninja.getPlayer().sendMessage(ChatColor.DARK_GREEN+"(Ninja) "+ChatColor.GREEN+"Camouflage activé ! ("+(3-ninja.getPowerUse())+"/3)");
-        if (ninja.getPowerUse() > 0) RunnableManager.getInstance().launchRunnable(RunnableEnum.NINJA);
+        if (ninja.getPowerUse() > 0) RunnableManager.getInstance().launchNinjaRunnable(ninja);
     }
 
     public void triggerPowerPretre(PlayerRole pretre, PlayerRole dead) {
@@ -107,6 +106,7 @@ public class PowerManager {
 
         hunter.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW,5*20,127,false,false));
         hunter.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.JUMP,5*20,127,false,false));
+        hunter.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION,5*20,255,false,false));
         hunter.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,5*20,0,false,false));
         hunter.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,5*20,0,false,false));
 
