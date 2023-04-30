@@ -1,0 +1,8 @@
+name: CacheCache
+version: '${project.version}'
+main: me.nosta.cachecache.Main
+api-version: 1.17
+authors: [ Nosta ]
+commands:
+  cc:
+  role:
